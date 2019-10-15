@@ -1,0 +1,51 @@
+/**
+ * _variables
+ * @author ydr.me
+ * @create 2019-08-08 11:07:15
+ * @update 2019-08-08 11:07:15
+ */
+
+// 侧边颜色
+$app-aside-bg: rgb(48, 65, 86);
+$app-aside-font-color: rgb(191, 203, 217);
+$app-aside-font-active: rgb(64, 158, 255);
+$app-aside-sub-bg: #1f2d3d;
+$app-aside-sub-hover: #263445;
+$app-aside-item-hover: #001528;
+
+// 背景色
+$app-body-bg: #f5f9fd;
+
+// 主要：前景色
+$app-primary-color: #4a8bfe;
+// 主要：背景
+$app-primary-bg: #d6e5ff;
+
+// 基本：前景色
+$app-base-color: #686e82;
+$app-base-hover: #3b3d49;
+
+// 成功：前景色
+$app-success-color: #3ec5a2;
+
+// 警告：前景色
+$app-warn-color: #fe694a;
+
+// 危险：前景色
+$app-danger-color: #f76950;
+
+// 边框颜色
+$app-border-color: #d7d8dc;
+
+// 静音：前景色
+$app-muted-color: #c0c5d3;
+
+// 灰
+$app-grey-color: #9BA1B5;
+
+// 轻色：前景色
+$app-light-color: #f6f7f8;
+
+// 应用宽度
+$app-width: 1440px;
+$app-aside-width: 200px;

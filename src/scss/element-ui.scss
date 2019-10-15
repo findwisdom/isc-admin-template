@@ -1,0 +1,40 @@
+/**
+ * element-ui
+ * @author ydr.me
+ * @create 2019-08-08 16:53:04
+ * @update 2019-08-08 16:53:04
+ */
+
+@import 'variables';
+
+.el-button {
+    &__text-delete {
+        color: $app-danger-color !important;
+
+        &:hover,
+        &:focus {
+            color: lighten($app-danger-color, 5%) !important;
+        }
+    }
+}
+
+.el-menu {
+    background-color: $app-aside-sub-bg;
+    border-right: solid 1px $app-aside-sub-bg;
+    .el-submenu__title {
+        height: 50px;
+        line-height: 50px;
+        color: $app-aside-font-color;
+    }
+    .el-submenu__title i {
+        color: $app-aside-font-color;
+    }
+    .el-submenu__title:focus,
+    .el-submenu__title:hover {
+        background-color: $app-aside-sub-hover;
+        //color: #00b2f8;
+    }
+    .el-submenu__title:focus {
+        color: #fff;
+    }
+}

@@ -1,0 +1,45 @@
+@import 'variables';
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body,
+input,
+button {
+  font-family: 'Helvetica Neue', Helvetica, Tahoma, Arial, 'PingFang SC',
+    'Hiragino Sans GB', 'Heiti SC', 'Microsoft YaHei', SimHei, sans-serif;
+  font-size: 14px;
+}
+
+body {
+  background: $app-body-bg;
+}
+
+a {
+  text-decoration: none;
+  color: $app-base-color;
+
+  &:hover {
+    color: $app-base-hover;
+  }
+}
+
+ul, ol {
+  list-style: none;
+}
+
+.scrollbar {
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    background: rgba(144, 146, 152, 0.3);
+  }
+}
+
+
