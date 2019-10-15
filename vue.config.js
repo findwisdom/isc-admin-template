@@ -32,16 +32,8 @@ module.exports = {
             .rule('svg-sprite')
             .use('svgo-loader')
             .loader('svgo-loader');
-        config.resolve.alias
-            .set('@', resolve('src'))
-            .set('@components', resolve('src/components'))
-            .set('@views', resolve('src/views'))
-            .set('@enums', resolve('src/enums'))
-            .set('@utils', resolve('src/utils'))
-            .set('@services', resolve('src/services'))
-            .set('@store', resolve('src/store'))
-            .set('@router', resolve('src/router'))
-            .set('@validations', resolve('src/validations'));
+        config.resolve.alias.set('@', resolve('src'));
+
         config.optimization.minimize(true);
         config.optimization.splitChunks({ chunks: 'all' });
         // 开启js、css压缩

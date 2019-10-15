@@ -1,4 +1,4 @@
-import axios from '@services/axios';
+import axios from '@/services/axios';
 
 export function redirect() {
     window.location.href = 'http://10.30.30.241:8091/qrcode?site=wo';

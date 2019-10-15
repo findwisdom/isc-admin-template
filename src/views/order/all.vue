@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { getAllRepair, setOrderDetail } from '@services/order';
+import { getAllRepair, setOrderDetail } from '@/services/order';
 import { mapState } from 'vuex';
 import TableHeader from '../../components/table/TableHeader';
 import TableFooter from '../../components/table/TableFooter';

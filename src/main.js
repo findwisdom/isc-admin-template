@@ -8,18 +8,18 @@
 import Vue from 'vue';
 import lang from 'element-ui/lib/locale/lang/zh-CN';
 import locale from 'element-ui/lib/locale';
-import elements from '@utils/elements';
+import elements from '@/utils/elements';
 import App from './App.vue';
 import router from './router/index';
-import store from '@store/index';
-import SvgIcon from '@components/SvgIcon';
+import store from '@/store/index';
+import SvgIcon from '@/components/SvgIcon';
 import 'normalize.css';
 import 'element-ui/lib/theme-chalk/index.css';
 import './scss/common.scss';
 import './scss/element-ui.scss';
 import './scss/dialog-form.scss';
 import './scss/table-actions.scss';
-import '@services/axios';
+import '@/services/axios';
 
 Vue.use(elements);
 Vue.component('svg-icon', SvgIcon);

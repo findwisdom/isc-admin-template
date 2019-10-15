@@ -45,12 +45,12 @@
 </template>
 
 <script>
-import { getUserList } from '@services/user';
-import TableHeader from '@components/table/TableHeader';
-import TableFooter from '@components/table/TableFooter';
-import RoleDialog from '@components/dialog/user/RoleDialog';
-import { fill } from '@utils/object';
-import { error } from '@utils/message';
+import { getUserList } from '@/services/user';
+import TableHeader from '@/components/table/TableHeader';
+import TableFooter from '@/components/table/TableFooter';
+import RoleDialog from '@/components/dialog/user/RoleDialog';
+import { fill } from '@/utils/object';
+import { error } from '@/utils/message';
 
 export default {
     components: {

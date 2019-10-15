@@ -7,7 +7,7 @@
 
 'use strict';
 
-import axios from '@services/axios';
+import axios from '@/services/axios';
 
 /**
  * 创建工单

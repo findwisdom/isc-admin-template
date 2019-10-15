@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { deleteBusiness, getBusinessListByPage, getFlowListByBusinessKey } from '@services/operation';
+import { deleteBusiness, getBusinessListByPage, getFlowListByBusinessKey } from '@/services/operation';
 import TableHeader from '../../components/table/TableHeader';
 import TableFooter from '../../components/table/TableFooter';
 import OrderTypeDialog from '../../components/dialog/backstage/OrderTypeDialog';

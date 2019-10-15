@@ -1,4 +1,4 @@
-import axios from '@services/axios';
+import axios from '@/services/axios';
 /**
  * 获取用户列表数据
  * @param pageSize

@@ -13,9 +13,9 @@
 </template>
 
 <script>
-import AppHeader from '@components/app/AppHeader';
-import AppAside from '@components/app/AppAside';
-import AppMain from '@components/app/AppMain';
+import AppHeader from '@/components/app/AppHeader';
+import AppAside from '@/components/app/AppAside';
+import AppMain from '@/components/app/AppMain';
 
 export default {
     name: 'App',

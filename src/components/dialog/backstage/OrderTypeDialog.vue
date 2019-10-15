@@ -68,10 +68,10 @@
 </template>
 
 <script>
-import AppDialog from '@components/app/AppDialog';
-import { alert, success, error } from '@utils/message';
-import validation from '@validations/gateway';
-import { getOperationList, createBusiness, updateBusiness } from '@services/operation';
+import AppDialog from '@/components/app/AppDialog';
+import { alert, success, error } from '@/utils/message';
+import validation from '@/validations/gateway';
+import { getOperationList, createBusiness, updateBusiness } from '@/services/operation';
 
 export default {
     name: 'GatewayDialog',
