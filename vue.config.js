@@ -48,7 +48,6 @@ module.exports = {
     configureWebpack: {
         resolve: {
             alias: {
-                '@': resolve('src'),
                 components: path.join(__dirname, 'components')
             }
         }
