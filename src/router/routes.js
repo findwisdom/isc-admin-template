@@ -104,5 +104,10 @@ export default [
                 meta: { title: '角色管理', icon: 'nav-role' }
             }
         ]
+    },
+    {
+        path: '*',
+        hidden: true,
+        redirect: '/about'
     }
 ];
