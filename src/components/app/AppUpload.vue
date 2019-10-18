@@ -5,9 +5,9 @@
 </template>
 
 <script>
-import { loading, error } from '../../utils/message';
+import { loading, error } from '@/utils/message';
 import axiox from 'axios';
-import { each } from '../../utils/object';
+import { each } from '@/utils/object';
 
 let ld = null;
 

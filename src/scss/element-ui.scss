@@ -17,7 +17,9 @@
         }
     }
 }
-
+.el-scrollbar__wrap {
+    overflow-x: hidden;
+}
 .el-menu {
     background-color: $app-aside-sub-bg;
     border-right: solid 1px $app-aside-sub-bg;

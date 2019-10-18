@@ -1,4 +1,4 @@
-import axios from '@services/axios';
+import axios from '@/services/axios';
 
 export async function getOperationList() {
     const res = await axios({

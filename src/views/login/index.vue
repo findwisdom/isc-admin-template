@@ -84,8 +84,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../../scss/variables';
-
 $bg: #283443;
 $light_gray: #fff;
 $cursor: #fff;

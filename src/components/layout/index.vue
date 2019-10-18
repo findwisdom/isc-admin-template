@@ -13,9 +13,9 @@
 </template>
 
 <script>
-import AppHeader from '@components/app/AppHeader';
-import AppAside from '@components/app/AppAside';
-import AppMain from '@components/app/AppMain';
+import AppHeader from '@/components/app/AppHeader';
+import AppAside from '@/components/app/AppAside';
+import AppMain from '@/components/app/AppMain';
 
 export default {
     name: 'App',
@@ -27,7 +27,7 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-@import './../../scss/variables';
+@import '../../scss/variables';
 
 .container {
     padding-top: 62px;

@@ -1,4 +1,4 @@
-import axios from '@services/axios';
+import axios from '@/services/axios';
 import axiosApprovalRepair from 'axios';
 import qs from 'qs';
 

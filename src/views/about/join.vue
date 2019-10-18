@@ -1,3 +1,3 @@
 <template>
-    <div>media</div>
+    <div>join</div>
 </template>

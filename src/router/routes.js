@@ -7,87 +7,133 @@
 
 'use strict';
 
-import Layout from '@components/layout';
+import Layout from '@/components/layout';
 export default [
     {
         path: '/login',
-        component: () => import('@views/login/index.vue'),
+        component: () => import('@/views/login/index.vue'),
         hidden: true
     },
     {
-        path: '/banner',
-        component: Layout,
-        redirect: '/banner/manage',
-        meta: { title: 'Banner', icon: 'nav-role' },
-        children: [
-            {
-                path: 'manage',
-                name: 'banner-manage',
-                component: () => import('@views/banner/index.vue'),
-                meta: { title: 'Banner管理', icon: 'nav-role' }
-            }
-        ]
+        path: '/404',
+        component: () => import('@/views/404'),
+        hidden: true
     },
     {
-        path: '/about',
+        path: '/',
         component: Layout,
-        redirect: '/about/manage',
-        meta: { title: '媒体中心', icon: 'nav-role' },
+        redirect: '/case',
+        meta: { title: '智能化解决方案', icon: 'nav-pets' },
         children: [
             {
-                path: 'manage',
-                name: 'about-manage',
-                component: () => import('@views/about/index.vue'),
-                meta: { title: '新闻管理', icon: 'nav-role' }
+                path: 'case',
+                name: 'solution-case',
+                component: () => import('@/views/solution/case.vue'),
+                meta: { title: '案例管理', icon: 'nav-pets' }
             }
         ]
     },
     {
         path: '/media',
         component: Layout,
-        redirect: '/media/manage',
-        meta: { title: '关于我们', icon: 'nav-role' },
+        redirect: '/media/events',
+        meta: { title: '媒体中心', icon: 'nav-computer' },
         children: [
             {
-                path: 'manage',
-                name: 'media-manage',
-                component: () => import('@views/media/index.vue'),
-                meta: { title: '公司简介', icon: 'nav-role' }
+                path: 'events',
+                name: 'media-events',
+                component: () => import('@/views/media/event.vue'),
+                meta: { title: '公司大事记', icon: 'nav-computer' }
+            },
+            {
+                path: 'news',
+                name: 'media-news',
+                component: () => import('@/views/media/news.vue'),
+                meta: { title: '媒体报道', icon: 'nav-appliances' }
             }
         ]
     },
     {
-        path: '/order',
+        path: '/product',
         component: Layout,
-        redirect: '/order/backlog/role',
-        meta: { title: '工单管理', icon: 'nav-manager' },
+        redirect: '/about/events',
+        meta: { title: '产品与服务', icon: 'nav-product' },
         children: [
             {
-                path: 'backlog',
-                name: 'order-backlog',
-                meta: { title: '待办工单' },
-                redirect: '/order/backlog/role',
-                component: () => import('@views/user/role.vue'),
-                children: [
-                    {
-                        path: 'role',
-                        name: 'order-backlog-role',
-                        component: () => import('@views/user/role.vue'),
-                        meta: { title: '角色管理' }
-                    },
-                    {
-                        path: 'all',
-                        name: 'order-backlog-all',
-                        component: () => import('@views/order/all.vue'),
-                        meta: { title: '权限' }
-                    }
-                ]
+                path: 'comput',
+                name: 'product-comput',
+                component: () => import('@/views/product/comput.vue'),
+                meta: { title: '边缘计算', icon: 'nav-education' }
             },
             {
-                path: 'all',
-                name: 'order-all',
-                component: () => import('@views/order/all.vue'),
-                meta: { title: '所有工单' }
+                path: 'app',
+                name: 'product-app',
+                component: () => import('@/views/product/app.vue'),
+                meta: { title: '智能终端', icon: 'nav-app' }
+            },
+            {
+                path: 'product',
+                name: 'product-product',
+                component: () => import('@/views/product/product.vue'),
+                meta: { title: 'app产品', icon: 'nav-toy' }
+            }
+        ]
+    },
+    {
+        path: '/integration',
+        component: Layout,
+        redirect: '/integration/detail',
+        meta: { title: '集成商平台', icon: 'nav-integration' },
+        children: [
+            {
+                path: 'detail',
+                name: 'integration-detail',
+                component: () => import('@/views/integration/detail.vue'),
+                meta: { title: '详细信息', icon: 'nav-detail' }
+            },
+            {
+                path: 'eduction',
+                name: 'integration-eduction',
+                component: () => import('@/views/integration/eduction.vue'),
+                meta: { title: '入门', icon: 'nav-eduction' }
+            },
+            {
+                path: 'document',
+                name: 'integration-document',
+                component: () => import('@/views/integration/document.vue'),
+                meta: { title: '文档', icon: 'nav-book' }
+            },
+            {
+                path: 'question',
+                name: 'integration-question',
+                component: () => import('@/views/integration/question.vue'),
+                meta: { title: '常见问题', icon: 'nav-question' }
+            }
+        ]
+    },
+    {
+        path: '/about',
+        component: Layout,
+        redirect: '/about/partner',
+        meta: { title: '关于我们', icon: 'nav-role' },
+        children: [
+            {
+                path: 'partner',
+                name: 'about-partner',
+                component: () => import('@/views/about/partner.vue'),
+                meta: { title: '合作伙伴', icon: 'nav-partner' }
+            },
+            {
+                path: 'contact',
+                name: 'about-contact',
+                component: () => import('@/views/about/contract.vue'),
+                meta: { title: '联系我们', icon: 'nav-contract' }
+            },
+            {
+                path: 'join',
+                name: 'about-join',
+                component: () => import('@/views/about/join.vue'),
+                meta: { title: '加入我们', icon: 'nav-join' }
             }
         ]
     },
@@ -95,14 +141,15 @@ export default [
         path: '/user',
         component: Layout,
         redirect: '/user/role',
-        meta: { title: '用户管理', icon: 'nav-role' },
+        meta: { title: '用户管理', icon: 'nav-user' },
         children: [
             {
                 path: 'role',
                 name: 'user-role',
-                component: () => import('@views/user/role.vue'),
-                meta: { title: '角色管理', icon: 'nav-role' }
+                component: () => import('@/views/user/role.vue'),
+                meta: { title: '角色管理', icon: 'nav-user' }
             }
         ]
-    }
+    },
+    { path: '*', redirect: '/404', hidden: true }
 ];

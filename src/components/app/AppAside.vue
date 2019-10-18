@@ -1,9 +1,9 @@
 <template>
-    <div>
-        <div class="system-header">
-            <div class="system-header__brand"></div>
-        </div>
-        <el-scrollbar>
+    <div style="height: 100vh;overflow: hidden">
+        <el-scrollbar style="height: 100%">
+            <div class="system-header">
+                <div class="system-header__brand"></div>
+            </div>
             <el-menu
                 router
                 class="app-aside"
@@ -20,7 +20,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import SidebarItem from '@components/SidebarItem';
+import SidebarItem from '@/components/SidebarItem';
 
 export default {
     name: 'AppAside',

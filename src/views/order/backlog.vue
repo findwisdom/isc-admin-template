@@ -39,10 +39,10 @@
 </template>
 
 <script>
-import { getTodoRepair, setOrderDetail } from '@services/order';
-import TableHeader from '../../components/table/TableHeader';
-import TableFooter from '../../components/table/TableFooter';
-import { error } from '../../utils/message';
+import { getTodoRepair, setOrderDetail } from '@/services/order';
+import TableHeader from '@/components/table/TableHeader';
+import TableFooter from '@/components/table/TableFooter';
+import { error } from '@/utils/message';
 
 export default {
     components: {

@@ -125,13 +125,13 @@
     </div>
 </template>
 <script>
-import AppUploadList from '@components/app/AppUploadList';
-import validation from '@validations/create';
-import { error, success } from '@utils/message';
-import { getOrderDetail, getAttachmentList } from '@services/order';
-import { getBusinessList, getFlowListByBusinessKey } from '@services/operation';
-import { approvalRepair, getApprovalList, handleRepair } from '@services/dispose';
-import donwload from '@utils/donwload';
+import AppUploadList from '@/components/app/AppUploadList';
+import validation from '@/validations/create';
+import { error, success } from '@/utils/message';
+import { getOrderDetail, getAttachmentList } from '@/services/order';
+import { getBusinessList, getFlowListByBusinessKey } from '@/services/operation';
+import { approvalRepair, getApprovalList, handleRepair } from '@/services/dispose';
+import donwload from '@/utils/donwload';
 export default {
     name: 'create',
     data() {

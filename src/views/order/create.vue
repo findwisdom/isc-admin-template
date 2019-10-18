@@ -87,14 +87,14 @@
     </div>
 </template>
 <script>
-import AppUpload from '@components/app/AppUpload';
-import AppUploadList from '@components/app/AppUploadList';
-import { createRepair, saveRepair, getOrderDetail, getAttachmentList, deleteRepair } from '@services/order';
-import { getBusinessList } from '@services/operation';
-import { success, error } from '@utils/message';
-import { fill } from '@utils/object';
-import validation from '@validations/create';
-import donwload from '@utils/donwload';
+import AppUpload from '@/components/app/AppUpload';
+import AppUploadList from '@/components/app/AppUploadList';
+import { createRepair, saveRepair, getOrderDetail, getAttachmentList, deleteRepair } from '@/services/order';
+import { getBusinessList } from '@/services/operation';
+import { success, error } from '@/utils/message';
+import { fill } from '@/utils/object';
+import validation from '@/validations/create';
+import donwload from '@/utils/donwload';
 import moment from 'moment';
 export default {
     name: 'create',

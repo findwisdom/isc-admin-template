@@ -33,11 +33,11 @@
 </template>
 
 <script>
-import AppDialog from '../../app/AppDialog';
-import { alert, success, error } from '../../../utils/message';
-import validation from '../../../validations/gateway';
-import { getOperationList } from '@services/operation';
-import { setUserRole } from '@services/user';
+import AppDialog from '@/components/app/AppDialog';
+import { alert, success, error } from '@/utils/message';
+import validation from '@/validations/gateway';
+import { getOperationList } from '@/services/operation';
+import { setUserRole } from '@/services/user';
 export default {
     name: 'RoleDialog',
     components: {

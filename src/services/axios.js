@@ -4,7 +4,7 @@
  * @createdAt 2019年08月17日16:08:32
  */
 
-import { stringify } from '../utils/querystring';
+import { stringify } from '@/utils/querystring';
 import axios from 'axios';
 
 const service = axios.create({
