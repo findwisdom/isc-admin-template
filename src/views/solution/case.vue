@@ -1,11 +1,11 @@
 <template>
     <div>
         <TableHeader :keywords.sync="keywords" placeholder="请输入用户名进行搜索" @search="onSearch">
-            <!--<ul class="table-actions">-->
-            <!--<li>-->
-            <!--<el-button type="primary" icon="el-icon-plus" size="mini" @click="onAdd">新建用户</el-button>-->
-            <!--</li>-->
-            <!--</ul>-->
+            <ul class="table-actions">
+                <li>
+                    <el-button type="primary" icon="el-icon-plus" size="mini" @click="onAdd">新建</el-button>
+                </li>
+            </ul>
         </TableHeader>
 
         <el-table :data="pageList" size="mini" v-loading="loading">

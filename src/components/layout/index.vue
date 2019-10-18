@@ -27,7 +27,7 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-@import './../../scss/variables';
+@import '../../scss/variables';
 
 .container {
     padding-top: 62px;

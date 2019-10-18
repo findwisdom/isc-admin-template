@@ -1,6 +1,6 @@
 <template>
     <div>
-        <TableHeader :keywords.sync="keywords" placeholder="请输入工单标题" @search="onSearch">
+        <TableHeader :keywords.sync="keywords" placeholder="请输入案例名称" @search="onSearch">
             <ul class="table-actions">
                 <li>
                     <el-button type="primary" icon="el-icon-plus" size="mini" @click="onAdd">新建</el-button>
@@ -9,21 +9,18 @@
         </TableHeader>
 
         <el-table :data="pageList" size="mini" v-loading="loading">
-            <el-table-column prop="serialNumber" label="流水号"></el-table-column>
-            <el-table-column prop="title" label="标题"></el-table-column>
-            <el-table-column prop="business.name" label="业务类型"></el-table-column>
-            <el-table-column prop="flow.approverRole.name" label="当前状态"></el-table-column>
-            <el-table-column prop="creatorUser.name" label="创建人"></el-table-column>
-            <el-table-column prop="startTime" label="创建时间"></el-table-column>
-            <el-table-column prop="updatedAt" label="更新时间"></el-table-column>
+            <el-table-column prop="serialNumber" label="案例名称"></el-table-column>
+            <el-table-column prop="title" label="简介"></el-table-column>
+            <el-table-column prop="business" label="图片"></el-table-column>
+            <el-table-column prop="owner" label="归属"></el-table-column>
             <el-table-column label="操作" align="center" width="100px">
                 <template slot-scope="scope">
                     <div>
-                        <el-button v-if="scope.row.flowId === 0" size="mini" type="text" @click="onCreate(scope.row)">
-                            待提交
+                        <el-button v-if="scope.row.flowId === 0" size="mini" type="text" @click="onEdit(scope.row)">
+                            编辑
                         </el-button>
-                        <el-button v-else size="mini" type="text" @click="onDispose(scope.row)">
-                            {{ scope.row | orderFlow }}
+                        <el-button v-if="scope.row.flowId === 0" size="mini" type="text" @click="onEdit(scope.row)">
+                            删除
                         </el-button>
                     </div>
                 </template>
@@ -35,11 +32,10 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import { getAllRepair, setOrderDetail } from '@/services/order';
+// import { getTodoRepair, setOrderDetail } from '@/services/order';
 import TableHeader from '@/components/table/TableHeader';
 import TableFooter from '@/components/table/TableFooter';
-import { error } from '@/utils/message';
+// import { error } from '@/utils/message';
 
 export default {
     components: {
@@ -79,9 +75,6 @@ export default {
             }
         }
     },
-    computed: {
-        ...mapState(['projectId'])
-    },
     watch: {
         pageNumber() {
             this.getList();
@@ -95,23 +88,20 @@ export default {
     },
     methods: {
         async getList() {
-            let data = null;
+            // let data = null;
             this.loading = true;
 
-            try {
-                data = await getAllRepair(this.pageSize, this.pageNumber, this.keywords);
-            } catch (err) {
-                error(err);
-                data = { records: [], total: 0 };
-            } finally {
-                this.loading = false;
-            }
-
-            data.records.forEach(item => {
-                item.operatingSystem *= 1;
-            });
-            this.pageList = data.records;
-            this.pageTotal = data.total;
+            // try {
+            //     data = await getTodoRepair(this.pageSize, this.pageNumber, this.keywords);
+            // } catch (err) {
+            //     error(err);
+            //     data = { records: [], total: 0 };
+            // } finally {
+            this.loading = false;
+            // }
+            //
+            // this.pageList = data.records;
+            // this.pageTotal = data.total;
         },
 
         onSearch() {
@@ -123,21 +113,14 @@ export default {
             this.$router.push({ path: '/order/create' });
         },
 
-        onCreate(row) {
-            setOrderDetail(row);
-            this.$router.push({ path: `/order/create`, query: { repairId: row.id } });
-        },
-
-        onDispose(row) {
-            setOrderDetail(row);
-            this.$router.push({ path: `/order/dispose/${row.id}` });
+        onEdit(row) {
+            console.log(row);
         }
     }
 };
 </script>
 
 <style scoped lang="scss">
-@import '../../scss/variables';
 .table-des {
     margin-left: 40px;
     .table-count {

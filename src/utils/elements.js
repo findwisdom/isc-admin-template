@@ -3,6 +3,8 @@
  * @description 全局elements插件.
  * */
 
+import Vue from 'vue';
+
 import {
     Scrollbar,
     DatePicker,
@@ -29,7 +31,9 @@ import {
     Loading,
     Breadcrumb,
     BreadcrumbItem,
-    Pagination
+    Pagination,
+    Upload,
+    Message
 } from 'element-ui';
 
 const elementList = [
@@ -58,8 +62,12 @@ const elementList = [
     Loading,
     Breadcrumb,
     BreadcrumbItem,
-    Pagination
+    Pagination,
+    Upload,
+    Message
 ];
+Vue.prototype.$message = Message;
+
 const elements = {
     install: function(Vue) {
         elementList.forEach(comp => {

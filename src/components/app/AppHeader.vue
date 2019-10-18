@@ -29,8 +29,8 @@
 
 <script>
 import { mapState } from 'vuex';
-import AppMenu from './AppMenu';
-import AppBreadcrumb from '../app/AppBreadcrumb';
+import AppMenu from '@/components/app/AppBreadcrumb';
+import AppBreadcrumb from '@/components/app/AppBreadcrumb';
 
 let timeId = 0;
 

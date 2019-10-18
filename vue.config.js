@@ -1,6 +1,5 @@
 const path = require('path');
 const CompressionPlugin = require('compression-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 function resolve(dir) {
     return path.join(__dirname, dir);
@@ -35,25 +34,17 @@ module.exports = {
             .loader('svgo-loader');
         config.resolve.alias.set('@', resolve('src'));
 
-        config.when(process.env.NODE_ENV === 'production', config => {
+        // 开启js、css压缩
+        if (process.env.NODE_ENV === 'production') {
             config.optimization.splitChunks({ chunks: 'all' });
-            // gzip
-            config.plugin('compressionPlugin').use(CompressionPlugin, [
-                {
-                    test: /\.(js|css|json|txt|html|ico|svg)(\?.*)?$/i, // 匹配文件名
+            config.plugin('compressionPlugin').use(
+                new CompressionPlugin({
+                    test: /\.js$|\.html$|.\css/, // 匹配文件名
                     threshold: 10240, // 对超过10k的数据压缩
                     deleteOriginalAssets: false // 不删除源文件
-                }
-            ]);
-        });
-        // 打包分析
-        config.when(process.env.IS_ANALYZ, config => {
-            config.plugin('webpack-report').use(BundleAnalyzerPlugin, [
-                {
-                    analyzerMode: 'static'
-                }
-            ]);
-        });
+                })
+            );
+        }
     },
     pluginOptions: {
         svgSprite: {
@@ -87,8 +78,7 @@ module.exports = {
                 // @/ is an alias to src/
                 // so this assumes you have a file named `src/variables.scss`
                 data: `
-                   @import "@/scss/_variables.scss";
-                   @import "@/scss/common.scss";
+                   @import "@/scss/variables.scss";
               `
             }
         }
