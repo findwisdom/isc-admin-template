@@ -2,13 +2,17 @@
     <div :class="{ fullscreen: fullscreen }" class="tinymce-container" :style="{ width: containerWidth }">
         <textarea :id="tinymceId" class="tinymce-textarea" />
         <div class="editor-custom-btn-container">
-            <editorImage color="#1890ff" class="editor-upload-btn" @successCBK="imageSuccessCBK" />
+            <AppUpload class="editor-upload-btn" action="/api/baseinfo/tag/importTags" @success="imageSuccessCBK">
+                <el-button icon="el-icon-upload" size="mini" type="primary" @click="dialogVisible = true">
+                    导入图片
+                </el-button>
+            </AppUpload>
         </div>
     </div>
 </template>
 
 <script>
-import editorImage from './components/EditorImage';
+import AppUpload from '@/components/app/AppUpload';
 import plugins from './plugins';
 import toolbar from './toolbar';
 import load from './dynamicLoadScript';
@@ -17,7 +21,7 @@ const tinymceCDN = 'https://cdn.jsdelivr.net/npm/tinymce-all-in-one@4.9.3/tinymc
 
 export default {
     name: 'Tinymce',
-    components: { editorImage },
+    components: { AppUpload },
     props: {
         id: {
             type: String,
@@ -66,9 +70,6 @@ export default {
         };
     },
     computed: {
-        language() {
-            return this.languageTypeList[this.$store.getters.language];
-        },
         containerWidth() {
             const width = this.width;
             if (/^[\d]+(\.[\d]+)?$/.test(width)) {
@@ -83,10 +84,6 @@ export default {
             if (!this.hasChange && this.hasInit) {
                 this.$nextTick(() => window.tinymce.get(this.tinymceId).setContent(val || ''));
             }
-        },
-        language() {
-            this.destroyTinymce();
-            this.$nextTick(() => this.initTinymce());
         }
     },
     mounted() {
@@ -117,8 +114,8 @@ export default {
         initTinymce() {
             const _this = this;
             window.tinymce.init({
-                language: this.language,
                 selector: `#${this.tinymceId}`,
+                language: this.languageTypeList['zh'],
                 height: this.height,
                 body_class: 'panel-body ',
                 object_resizing: false,
@@ -150,39 +147,6 @@ export default {
                         _this.fullscreen = e.state;
                     });
                 }
-                // 整合七牛上传
-                // images_dataimg_filter(img) {
-                //   setTimeout(() => {
-                //     const $image = $(img);
-                //     $image.removeAttr('width');
-                //     $image.removeAttr('height');
-                //     if ($image[0].height && $image[0].width) {
-                //       $image.attr('data-wscntype', 'image');
-                //       $image.attr('data-wscnh', $image[0].height);
-                //       $image.attr('data-wscnw', $image[0].width);
-                //       $image.addClass('wscnph');
-                //     }
-                //   }, 0);
-                //   return img
-                // },
-                // images_upload_handler(blobInfo, success, failure, progress) {
-                //   progress(0);
-                //   const token = _this.$store.getters.token;
-                //   getToken(token).then(response => {
-                //     const url = response.data.qiniu_url;
-                //     const formData = new FormData();
-                //     formData.append('token', response.data.qiniu_token);
-                //     formData.append('key', response.data.qiniu_key);
-                //     formData.append('file', blobInfo.blob(), url);
-                //     upload(formData).then(() => {
-                //       success(url);
-                //       progress(100);
-                //     })
-                //   }).catch(err => {
-                //     failure('出现未知问题，刷新页面，或者联系程序员')
-                //     console.log(err);
-                //   });
-                // },
             });
         },
         destroyTinymce() {
