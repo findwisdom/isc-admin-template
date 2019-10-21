@@ -53,7 +53,7 @@ export default [
             },
             {
                 path: 'news/edit/:id',
-                name: 'media-news-edit',
+                name: 'media-news',
                 hidden: true,
                 component: () => import('@/views/media/news/edit.vue'),
                 meta: { title: '编辑媒体报道' }
