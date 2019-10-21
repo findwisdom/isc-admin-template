@@ -8,7 +8,7 @@
                 <el-input v-model="formData.intro"></el-input>
             </el-form-item>
             <el-form-item label="排序" prop="order">
-                <el-input type="order" v-model.number="formData.order" autocomplete="off"></el-input>
+                <el-input-number v-model.number="formData.order"></el-input-number>
             </el-form-item>
             <el-form-item label="封面" prop="cover" ref="upload">
                 <AppUpload class="editor-upload-btn" action="https://httpbin.org/post" @success="imageSuccessCBK">

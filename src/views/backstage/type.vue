@@ -26,12 +26,7 @@
                 <template slot-scope="scope">
                     <div>
                         <el-button size="mini" type="text" @click="onEdit(scope.$index, scope.row)">编辑</el-button>
-                        <el-button
-                            size="mini"
-                            type="text"
-                            class="el-button__text-delete"
-                            @click="onTrash(scope.$index, scope.row)"
-                        >
+                        <el-button size="mini" type="text" class="el-button__text-delete" @click="onTrash(scope.row)">
                             删除
                         </el-button>
                     </div>
@@ -179,9 +174,10 @@ export default {
             this.dialog.orderTypeVisible = true;
         },
 
-        async onTrash(index, item) {
+        async onTrash(item) {
             try {
                 await confirm(`确认删除选中的工单类型吗？`);
+                console.log(item);
             } catch (err) {
                 return;
             }
