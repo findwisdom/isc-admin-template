@@ -48,7 +48,6 @@
             <img width="100%" :src="viewImg" alt="" />
         </el-dialog>
         <TableFooter :page-number.sync="pageNumber" :page-size.sync="pageSize" :page-total="pageTotal"></TableFooter>
-
         <ProductDialog @success="onDialogSuccess" :form="dialog.form" :visible.sync="dialog.visible"></ProductDialog>
     </div>
 </template>
