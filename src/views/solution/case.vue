@@ -20,7 +20,7 @@
             </el-table-column>
             <el-table-column prop="description" label="案例介绍"></el-table-column>
             <el-table-column prop="solutionId" label="所属解决方案"></el-table-column>
-            <el-table-column prop="updatedAt" label="修改时间"></el-table-column>
+            <el-table-column prop="time" label="更新时间"></el-table-column>
             <el-table-column label="操作" align="center" width="100px">
                 <template slot-scope="scope">
                     <div>
@@ -184,28 +184,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-.table-des {
-    margin-left: 40px;
-    .table-count {
-        font-size: 22px;
-        color: $app-primary-color;
-        margin: 0 5px;
-    }
-}
-.table-img {
-    width: 50px;
-    height: 38px;
-}
-.table-item-space {
-    padding: 0 10px;
-    cursor: pointer;
-    width: 200px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-}
-.img-hover {
-    cursor: pointer;
-}
-</style>
+<style scoped lang="scss"></style>

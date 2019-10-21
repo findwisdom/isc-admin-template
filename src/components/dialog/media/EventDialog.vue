@@ -64,7 +64,7 @@ export default {
             }
         },
         actionName() {
-            return (this.form.id ? '编辑' : '添加') + '用户';
+            return (this.form.id ? '编辑' : '添加') + '事记';
         }
     },
     methods: {
