@@ -48,8 +48,15 @@ export default [
             {
                 path: 'news',
                 name: 'media-news',
-                component: () => import('@/views/media/news.vue'),
+                component: () => import('@/views/media/news/news.vue'),
                 meta: { title: '媒体报道', icon: 'nav-appliances' }
+            },
+            {
+                path: 'news/edit/:id',
+                name: 'media-news-edit',
+                hidden: true,
+                component: () => import('@/views/media/news/edit.vue'),
+                meta: { title: '编辑媒体报道' }
             }
         ]
     },
@@ -151,5 +158,9 @@ export default [
             }
         ]
     },
-    { path: '*', redirect: '/404', hidden: true }
+    {
+        path: '*',
+        hidden: true,
+        redirect: '/about'
+    }
 ];

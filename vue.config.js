@@ -33,9 +33,10 @@ module.exports = {
             .use('svgo-loader')
             .loader('svgo-loader');
         config.resolve.alias.set('@', resolve('src'));
-        config.optimization.splitChunks({ chunks: 'all' });
+
         // 开启js、css压缩
         if (process.env.NODE_ENV === 'production') {
+            config.optimization.splitChunks({ chunks: 'all' });
             config.plugin('compressionPlugin').use(
                 new CompressionPlugin({
                     test: /\.js$|\.html$|.\css/, // 匹配文件名
@@ -43,13 +44,6 @@ module.exports = {
                     deleteOriginalAssets: false // 不删除源文件
                 })
             );
-        }
-    },
-    configureWebpack: {
-        resolve: {
-            alias: {
-                components: path.join(__dirname, 'components')
-            }
         }
     },
     pluginOptions: {
