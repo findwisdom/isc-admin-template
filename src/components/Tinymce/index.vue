@@ -2,9 +2,10 @@
     <div :class="{ fullscreen: fullscreen }" class="tinymce-container" :style="{ width: containerWidth }">
         <textarea :id="tinymceId" class="tinymce-textarea" />
         <div class="editor-custom-btn-container">
-            <AppUpload class="editor-upload-btn" action="/api/baseinfo/tag/importTags" @success="imageSuccessCBK">
+            <!-- TODO:action -->
+            <AppUpload class="editor-upload-btn" action="https://httpbin.org/post" @success="imageSuccessCBK">
                 <el-button icon="el-icon-upload" size="mini" type="primary" @click="dialogVisible = true">
-                    导入图片
+                    添加图片
                 </el-button>
             </AppUpload>
         </div>
@@ -165,11 +166,9 @@ export default {
         getContent() {
             window.tinymce.get(this.tinymceId).getContent();
         },
-        imageSuccessCBK(arr) {
-            const _this = this;
-            arr.forEach(v => {
-                window.tinymce.get(_this.tinymceId).insertContent(`<img class="wscnph" src="${v.url}" >`);
-            });
+        imageSuccessCBK(data) {
+            // TODO:根据接口返回值切换src，url/data:image
+            window.tinymce.get(this.tinymceId).insertContent(`<img class="wscnph" src="${data.files.file}" >`);
         }
     }
 };
