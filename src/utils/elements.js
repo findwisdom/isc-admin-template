@@ -6,6 +6,7 @@
 import Vue from 'vue';
 
 import {
+    InputNumber,
     Scrollbar,
     DatePicker,
     Tooltip,
@@ -37,6 +38,7 @@ import {
 } from 'element-ui';
 
 const elementList = [
+    InputNumber,
     Scrollbar,
     DatePicker,
     Tooltip,
