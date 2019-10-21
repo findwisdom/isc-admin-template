@@ -20,7 +20,7 @@ export default {
         },
         accept: {
             type: String,
-            default: '.rar,.zip,.arj,.z,.7z'
+            default: '.png,.jpg,.jpeg'
         },
         name: {
             type: String,
