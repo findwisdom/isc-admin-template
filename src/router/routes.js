@@ -26,10 +26,10 @@ export default [
         meta: { title: '智能化解决方案', icon: 'nav-pets' },
         children: [
             {
-                path: 'manage',
-                name: 'banner-manage',
-                component: () => import('@views/banner/index.vue'),
-                meta: { title: 'Banner管理', icon: 'nav-role' }
+                path: 'case',
+                name: 'solution-case',
+                component: () => import('@/views/solution/case.vue'),
+                meta: { title: '案例管理', icon: 'nav-role' }
             }
         ]
     },
