@@ -183,5 +183,9 @@ export default {
     }
 };
 </script>
-
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.table-img {
+    width: 50px;
+    height: 38px;
+}
+</style>

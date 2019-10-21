@@ -67,22 +67,10 @@ export default [
         meta: { title: '产品与服务', icon: 'nav-product' },
         children: [
             {
-                path: 'comput',
-                name: 'product-comput',
-                component: () => import('@/views/product/comput.vue'),
-                meta: { title: '边缘计算', icon: 'nav-education' }
-            },
-            {
-                path: 'app',
-                name: 'product-app',
-                component: () => import('@/views/product/app.vue'),
-                meta: { title: '智能终端', icon: 'nav-app' }
-            },
-            {
                 path: 'product',
                 name: 'product-product',
                 component: () => import('@/views/product/product.vue'),
-                meta: { title: 'app产品', icon: 'nav-toy' }
+                meta: { title: '产品管理', icon: 'nav-toy' }
             }
         ]
     },
