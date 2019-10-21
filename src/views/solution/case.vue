@@ -13,7 +13,7 @@
             <el-table-column prop="name" label="案例名称"></el-table-column>
             <el-table-column prop="picture" label="案例图片">
                 <template slot-scope="scope">
-                    <div>
+                    <div @click="handlePicturePreview(scope.row)" class="img-hover">
                         <img :src="scope.row.picture" :alt="scope.row.name" class="table-img" />
                     </div>
                 </template>
@@ -37,10 +37,12 @@
                 </template>
             </el-table-column>
         </el-table>
-
+        <el-dialog :visible.sync="dialogVisible">
+            <img width="100%" :src="viewImg" alt="" />
+        </el-dialog>
         <TableFooter :page-number.sync="pageNumber" :page-size.sync="pageSize" :page-total="pageTotal"></TableFooter>
 
-        <RoleDialog @success="onRoleDialogSuccess" :form="dialog.form" :visible.sync="dialog.visible"></RoleDialog>
+        <CaseDialog @success="onDialogSuccess" :form="dialog.form" :visible.sync="dialog.visible"></CaseDialog>
     </div>
 </template>
 
@@ -48,7 +50,7 @@
 // import { getUserList } from '@/services/user';
 import TableHeader from '@/components/table/TableHeader';
 import TableFooter from '@/components/table/TableFooter';
-import RoleDialog from '@/components/dialog/user/RoleDialog';
+import CaseDialog from '@/components/dialog/solution/CaseDialog';
 import { fill } from '@/utils/object';
 // import { error } from '@/utils/message';
 
@@ -56,7 +58,7 @@ export default {
     components: {
         TableHeader,
         TableFooter,
-        RoleDialog
+        CaseDialog
     },
     data() {
         return {
@@ -78,7 +80,9 @@ export default {
             dialog: {
                 visible: false,
                 form: this.generateFrom()
-            }
+            },
+            viewImg: '',
+            dialogVisible: false
         };
     },
     filters: {
@@ -110,11 +114,15 @@ export default {
                     order: null,
                     picture: null,
                     description: null,
-                    solutionId: null,
-                    updateTime: null
+                    solutionId: null
                 },
                 item
             );
+        },
+
+        handlePicturePreview(file) {
+            this.viewImg = file.picture;
+            this.dialogVisible = true;
         },
 
         async getList() {
@@ -131,8 +139,8 @@ export default {
             //     this.loading = false;
             // }
 
-            this.pageList = data.records;
-            this.pageTotal = data.total;
+            // this.pageList = data.records;
+            // this.pageTotal = data.total;
         },
 
         onSearch() {
@@ -141,17 +149,17 @@ export default {
         },
 
         onAdd() {
-            this.dialog.roleForm = this.generateRoleFrom();
-            this.dialog.roleVisible = true;
+            this.dialog.form = this.generateFrom();
+            this.dialog.visible = true;
         },
 
-        onRoleDialogSuccess() {
+        onDialogSuccess() {
             this.getList();
         },
 
         onEdit(index, item) {
-            this.dialog.roleForm = this.generateRoleFrom({ ...item, role: item.groupList[0].roleKey });
-            this.dialog.roleVisible = true;
+            this.dialog.form = this.generateFrom(item);
+            this.dialog.visible = true;
         },
 
         async onTrash(index, item) {
@@ -196,5 +204,8 @@ export default {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+}
+.img-hover {
+    cursor: pointer;
 }
 </style>
