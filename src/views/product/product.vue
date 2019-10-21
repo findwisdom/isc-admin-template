@@ -136,7 +136,7 @@ export default {
         },
 
         async getList() {
-            let data = null;
+            // let data = null;
             this.loading = true;
             this.loading = false;
 
@@ -172,9 +172,10 @@ export default {
             this.dialog.visible = true;
         },
 
-        async onTrash(index, item) {
+        async onTrash(item) {
             try {
                 await confirm(`确认删除选中的角色吗？`);
+                console.log(item);
             } catch (err) {
                 return;
             }
