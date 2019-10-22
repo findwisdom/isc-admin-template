@@ -35,7 +35,10 @@ import {
     BreadcrumbItem,
     Pagination,
     Upload,
-    Message
+    Message,
+    Tree,
+    Collapse,
+    CollapseItem
 } from 'element-ui';
 
 const elementList = [
@@ -68,7 +71,10 @@ const elementList = [
     BreadcrumbItem,
     Pagination,
     Upload,
-    Message
+    Message,
+    Tree,
+    Collapse,
+    CollapseItem
 ];
 Vue.prototype.$message = Message;
 
