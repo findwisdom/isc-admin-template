@@ -16,32 +16,32 @@
                 <el-form-item label="产品名称" prop="name" class="is-required">
                     <el-input v-model="form.name" placeholder="请输入产品名称" maxlength="40"></el-input>
                 </el-form-item>
-                <el-form-item label="顺序" prop="name">
+                <el-form-item label="顺序" prop="order">
                     <el-input-number v-model="form.order"></el-input-number>
                 </el-form-item>
                 <el-form-item label="产品banner图" prop="banner" class="is-required">
                     <app-upload
                         :action="uploadUrl"
-                        @error="uploadError"
-                        @success="onUploadSuccess"
+                        @error="uploadBannerError"
+                        @success="UploadBannerSuccess"
                         style="display: inline-block"
                     >
                         <app-upload-img v-show="form.banner" :url="form.banner" />
                         <app-upload-img v-show="!form.banner" />
                     </app-upload>
                 </el-form-item>
-                <el-form-item label="封面图" prop="pictrue" class="is-required">
+                <el-form-item label="封面图" prop="picture" class="is-required">
                     <app-upload
                         :action="uploadUrl"
-                        @error="uploadError"
-                        @success="onUploadSuccess"
+                        @error="uploadPictureError"
+                        @success="UploadPictureSuccess"
                         style="display: inline-block"
                     >
                         <app-upload-img v-show="form.picture" :url="form.picture" />
                         <app-upload-img v-show="!form.picture" />
                     </app-upload>
                 </el-form-item>
-                <el-form-item label="产品介绍" prop="name" class="is-required">
+                <el-form-item label="产品介绍" prop="description" class="is-required">
                     <el-input
                         v-model="form.description"
                         placeholder="请输入产品介绍"
@@ -50,7 +50,7 @@
                         maxlength="300"
                     ></el-input>
                 </el-form-item>
-                <el-form-item label="产品所属" prop="role">
+                <el-form-item label="产品所属" prop="productTypeId" class="is-required">
                     <el-select v-model="form.productTypeId" placeholder="请选择产品所属">
                         <el-option
                             v-for="option in osTypeOptions"
@@ -70,11 +70,11 @@ import AppDialog from '@/components/app/AppDialog';
 import AppUpload from '@/components/app/AppUpload';
 import AppUploadImg from '@/components/app/AppUploadImg';
 import { alert, success, error } from '@/utils/message';
-import validation from '@/validations/gateway';
-import { getOperationList } from '@/services/operation';
-import { setUserRole } from '@/services/user';
+import validation from '@/validations/product';
+import { uploadUrl } from '@/services/upload';
+import { createProduct, updateProduct, getProductType } from '@/services/product';
 export default {
-    name: 'RoleDialog',
+    name: 'ProductDialog',
     components: {
         AppDialog,
         AppUpload,
@@ -96,7 +96,7 @@ export default {
         return {
             loading: false,
             osTypeOptions: [],
-            uploadUrl: '',
+            uploadUrl,
             rules: validation(this)
         };
     },
@@ -110,12 +110,24 @@ export default {
             }
         },
         actionName() {
-            return (this.form.id ? '编辑' : '添加') + '案例';
+            return (this.form.id ? '编辑' : '添加') + '产品';
         }
     },
     methods: {
-        uploadError() {},
-        onUploadSuccess() {},
+        uploadPictureError(error) {
+            console.log(error);
+        },
+        UploadPictureSuccess(data) {
+            this.form.picture = data.url;
+            success('上传成功');
+        },
+        uploadBannerError(error) {
+            console.log(error);
+        },
+        UploadBannerSuccess(data) {
+            this.form.banner = data.url;
+            success('上传成功');
+        },
         clearValidate() {
             this.$nextTick(() => {
                 const form = this.$refs.form;
@@ -139,7 +151,11 @@ export default {
             }
             try {
                 this.loading = true;
-                await setUserRole(this.form.id, this.form.role);
+                if (this.form.id) {
+                    await createProduct(this.form);
+                } else {
+                    await updateProduct(this.form);
+                }
             } catch (err) {
                 return await alert(err);
             } finally {
@@ -154,8 +170,8 @@ export default {
     async created() {
         let data = null;
         try {
-            data = await getOperationList();
-            this.osTypeOptions = data.map(item => ({ label: item.name, value: item.roleKey }));
+            data = await getProductType();
+            this.osTypeOptions = data.map(item => ({ label: item.name, value: item.id }));
         } catch (err) {
             error(err);
         }

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <TableHeader :keywords.sync="keywords" placeholder="请输入标题进行搜索" @search="onSearch">
+        <TableHeader :keywords.sync="keywords" placeholder="请输入产品名称进行搜索" @search="onSearch">
             <ul class="table-actions">
                 <li>
                     <el-button type="primary" icon="el-icon-plus" size="mini" @click="onAdd">新建</el-button>
@@ -13,16 +13,12 @@
             <el-table-column prop="name" label="产品名称"></el-table-column>
             <el-table-column prop="banner" label="产品banner图">
                 <template slot-scope="scope">
-                    <div @click="handlePicturePreview(scope.row)" class="img-hover">
-                        <img :src="scope.row.picture" :alt="scope.row.name" class="table-img" />
-                    </div>
+                    <Thumbnail :picture="scope.row.banner" />
                 </template>
             </el-table-column>
             <el-table-column prop="picture" label="封面图">
                 <template slot-scope="scope">
-                    <div @click="handlePicturePreview(scope.row)" class="img-hover">
-                        <img :src="scope.row.picture" :alt="scope.row.name" class="table-img" />
-                    </div>
+                    <Thumbnail :picture="scope.row.picture" />
                 </template>
             </el-table-column>
             <el-table-column prop="description" label="简介"></el-table-column>
@@ -44,27 +40,26 @@
                 </template>
             </el-table-column>
         </el-table>
-        <el-dialog :visible.sync="dialogVisible">
-            <img width="100%" :src="viewImg" alt="" />
-        </el-dialog>
         <TableFooter :page-number.sync="pageNumber" :page-size.sync="pageSize" :page-total="pageTotal"></TableFooter>
         <ProductDialog @success="onDialogSuccess" :form="dialog.form" :visible.sync="dialog.visible"></ProductDialog>
     </div>
 </template>
 
 <script>
-// import { getUserList } from '@/services/user';
+import { getProductList, deleteProduct } from '@/services/product';
 import TableHeader from '@/components/table/TableHeader';
 import TableFooter from '@/components/table/TableFooter';
 import ProductDialog from '@/components/dialog/product/ProductDialog';
+import Thumbnail from '@/components/Thumbnail';
 import { fill } from '@/utils/object';
-// import { error } from '@/utils/message';
+import { error, loading } from '@/utils/message';
 
 export default {
     components: {
         TableHeader,
         TableFooter,
-        ProductDialog
+        ProductDialog,
+        Thumbnail
     },
     data() {
         return {
@@ -88,20 +83,10 @@ export default {
             dialog: {
                 visible: false,
                 form: this.generateFrom()
-            },
-            viewImg: '',
-            dialogVisible: false
+            }
         };
     },
-    filters: {
-        orderFlow(value) {
-            if (Array.isArray(value.groupList)) {
-                return value.groupList[0].name;
-            } else {
-                return '';
-            }
-        }
-    },
+    filters: {},
     watch: {
         pageNumber() {
             this.getList();
@@ -123,33 +108,26 @@ export default {
                     order: null,
                     picture: null,
                     description: null,
-                    content: null
+                    productTypeId: null
                 },
                 item
             );
         },
-
-        handlePicturePreview(file) {
-            this.viewImg = file.picture;
-            this.dialogVisible = true;
-        },
-
         async getList() {
-            // let data = null;
+            let data = null;
             this.loading = true;
-            this.loading = false;
+            try {
+                data = await getProductList(this.pageSize, this.pageNumber, this.keywords);
+                this.loading = false;
+            } catch (err) {
+                error(err);
+                data = { records: [], total: 0 };
+            } finally {
+                this.loading = false;
+            }
 
-            // try {
-            //     data = await getUserList(this.pageSize, this.pageNumber, this.keywords);
-            // } catch (err) {
-            //     error(err);
-            //     data = { records: [], total: 0 };
-            // } finally {
-            //     this.loading = false;
-            // }
-
-            // this.pageList = data.records;
-            // this.pageTotal = data.total;
+            this.pageList = data.records;
+            this.pageTotal = data.total;
         },
 
         onSearch() {
@@ -173,22 +151,22 @@ export default {
 
         async onTrash(item) {
             try {
-                await confirm(`确认删除选中的角色吗？`);
+                await confirm(`确认删除选中的产品吗？`);
                 console.log(item);
             } catch (err) {
                 return;
             }
 
-            // const ld = loading('删除中');
+            const ld = loading('删除中');
 
-            // try {
-            //     await remove(item.id);
-            //     await this.getList();
-            // } catch (err) {
-            //     await alert(err);
-            // } finally {
-            //     ld.close();
-            // }
+            try {
+                await deleteProduct(item.id);
+                await this.getList();
+            } catch (err) {
+                await alert(err);
+            } finally {
+                ld.close();
+            }
         }
     }
 };

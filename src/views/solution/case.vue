@@ -13,9 +13,7 @@
             <el-table-column prop="name" label="案例名称"></el-table-column>
             <el-table-column prop="picture" label="案例图片">
                 <template slot-scope="scope">
-                    <div @click="handlePicturePreview(scope.row)" class="img-hover">
-                        <img :src="scope.row.picture" :alt="scope.row.name" class="table-img" />
-                    </div>
+                    <Thumbnail :picture="scope.row.picture" />
                 </template>
             </el-table-column>
             <el-table-column prop="description" label="案例介绍"></el-table-column>
@@ -32,9 +30,6 @@
                 </template>
             </el-table-column>
         </el-table>
-        <el-dialog :visible.sync="dialogVisible">
-            <img width="100%" :src="viewImg" alt="" />
-        </el-dialog>
         <TableFooter :page-number.sync="pageNumber" :page-size.sync="pageSize" :page-total="pageTotal"></TableFooter>
         <CaseDialog @success="onDialogSuccess" :form="dialog.form" :visible.sync="dialog.visible"></CaseDialog>
     </div>
@@ -45,6 +40,7 @@ import { getCaseList, deleteCase } from '@/services/solution';
 import TableHeader from '@/components/table/TableHeader';
 import TableFooter from '@/components/table/TableFooter';
 import CaseDialog from '@/components/dialog/solution/CaseDialog';
+import Thumbnail from '@/components/Thumbnail';
 import { fill } from '@/utils/object';
 import { error, loading } from '@/utils/message';
 
@@ -52,7 +48,8 @@ export default {
     components: {
         TableHeader,
         TableFooter,
-        CaseDialog
+        CaseDialog,
+        Thumbnail
     },
     data() {
         return {
@@ -75,19 +72,10 @@ export default {
                 visible: false,
                 form: this.generateFrom()
             },
-            viewImg: '',
             dialogVisible: false
         };
     },
-    filters: {
-        orderFlow(value) {
-            if (Array.isArray(value.groupList)) {
-                return value.groupList[0].name;
-            } else {
-                return '';
-            }
-        }
-    },
+    filters: {},
     watch: {
         pageNumber() {
             this.getList();
@@ -112,11 +100,6 @@ export default {
                 },
                 item
             );
-        },
-
-        handlePicturePreview(file) {
-            this.viewImg = file.picture;
-            this.dialogVisible = true;
         },
 
         async getList() {
@@ -177,9 +160,4 @@ export default {
     }
 };
 </script>
-<style scoped lang="scss">
-.table-img {
-    width: 50px;
-    height: 38px;
-}
-</style>
+<style scoped lang="scss"></style>
