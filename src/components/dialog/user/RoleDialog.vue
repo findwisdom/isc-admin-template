@@ -13,19 +13,14 @@
 
         <template v-slot:default>
             <el-form ref="form" :model="form" :rules="rules" label-width="80px" size="mini">
-                <!--<el-form-item label="用户姓名" prop="name" class="is-required">-->
-                <!--<el-input v-model="form.name"></el-input>-->
-                <!--</el-form-item>-->
-
-                <el-form-item label="所属角色" prop="role" class="is-required">
-                    <el-select v-model="form.role" placeholder="请选择所属角色">
-                        <el-option
-                            v-for="option in osTypeOptions"
-                            :key="option.value"
-                            :label="option.label"
-                            :value="option.value"
-                        ></el-option>
-                    </el-select>
+                <el-form-item label="用户名" prop="name" class="is-required">
+                    <el-input v-model="form.name"></el-input>
+                </el-form-item>
+                <el-form-item label="密码" prop="email" class="is-required">
+                    <el-input type="password" v-model="form.password"></el-input>
+                </el-form-item>
+                <el-form-item label="邮箱" prop="email" class="is-required">
+                    <el-input v-model="form.email"></el-input>
                 </el-form-item>
             </el-form>
         </template>
@@ -34,10 +29,9 @@
 
 <script>
 import AppDialog from '@/components/app/AppDialog';
-import { alert, success, error } from '@/utils/message';
+import { alert, success } from '@/utils/message';
 import validation from '@/validations/gateway';
-import { getOperationList } from '@/services/operation';
-import { setUserRole } from '@/services/user';
+import { createUser, updateUser } from '@/services/user';
 export default {
     name: 'RoleDialog',
     components: {
@@ -100,7 +94,11 @@ export default {
             console.log(this.form);
             try {
                 this.loading = true;
-                await setUserRole(this.form.id, this.form.role);
+                if (this.form.id) {
+                    await createUser(this.form);
+                } else {
+                    await updateUser(this.form);
+                }
             } catch (err) {
                 return await alert(err);
             } finally {
@@ -112,14 +110,6 @@ export default {
             this.$emit('success');
         }
     },
-    async created() {
-        let data = null;
-        try {
-            data = await getOperationList();
-            this.osTypeOptions = data.map(item => ({ label: item.name, value: item.roleKey }));
-        } catch (err) {
-            error(err);
-        }
-    }
+    async created() {}
 };
 </script>

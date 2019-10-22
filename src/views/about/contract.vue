@@ -1,6 +1,6 @@
 <template>
     <div>
-        <TableHeader :keywords.sync="keywords" placeholder="请输入标题进行搜索" @search="onSearch">
+        <TableHeader :keywords.sync="keywords" placeholder="请输入名称进行搜索" @search="onSearch">
             <ul class="table-actions">
                 <li>
                     <el-button type="primary" icon="el-icon-plus" size="mini" @click="onAdd">新建</el-button>
@@ -37,12 +37,12 @@
 </template>
 
 <script>
-// import { getUserList } from '@/services/user';
+import { getCompanyList, deleteCompany } from '@/services/about';
 import TableHeader from '@/components/table/TableHeader';
 import TableFooter from '@/components/table/TableFooter';
 import ContractDialog from '@/components/dialog/about/ContractDialog';
 import { fill } from '@/utils/object';
-// import { error } from '@/utils/message';
+import { error, loading } from '@/utils/message';
 
 export default {
     components: {
@@ -120,21 +120,20 @@ export default {
         },
 
         async getList() {
-            // let data = null;
+            let data = null;
             this.loading = true;
-            this.loading = false;
+            try {
+                data = await getCompanyList(this.pageSize, this.pageNumber, this.keywords);
+                this.loading = false;
+            } catch (err) {
+                error(err);
+                data = { records: [], total: 0 };
+            } finally {
+                this.loading = false;
+            }
 
-            // try {
-            //     data = await getUserList(this.pageSize, this.pageNumber, this.keywords);
-            // } catch (err) {
-            //     error(err);
-            //     data = { records: [], total: 0 };
-            // } finally {
-            //     this.loading = false;
-            // }
-
-            // this.pageList = data.records;
-            // this.pageTotal = data.total;
+            this.pageList = data.records;
+            this.pageTotal = data.total;
         },
 
         onSearch() {
@@ -164,16 +163,16 @@ export default {
                 return;
             }
 
-            // const ld = loading('删除中');
+            const ld = loading('删除中');
 
-            // try {
-            //     await remove(item.id);
-            //     await this.getList();
-            // } catch (err) {
-            //     await alert(err);
-            // } finally {
-            //     ld.close();
-            // }
+            try {
+                await deleteCompany(item.id);
+                await this.getList();
+            } catch (err) {
+                await alert(err);
+            } finally {
+                ld.close();
+            }
         }
     }
 };

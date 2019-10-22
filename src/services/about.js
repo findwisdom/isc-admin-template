@@ -185,3 +185,65 @@ export async function deletePatent(id) {
     });
     return res.data;
 }
+
+/** 获取公司列表
+ *
+ * @param pageSize
+ * @param pageNumber
+ * @param name
+ * @returns {Promise<*>}
+ */
+export async function getCompanyList(pageSize, pageNumber, name) {
+    const res = await axios({
+        url: '/api/operation/user/getUserList',
+        params: {
+            pageSize,
+            pageNumber,
+            name
+        }
+    });
+    return res.data;
+}
+
+/** 新增专利名称
+ *
+ * @param form
+ * @returns {Promise<*>}
+ */
+
+export async function createCompany(form) {
+    const res = await axios({
+        url: '/api/operation/repair/createRepair',
+        method: 'post',
+        data: form
+    });
+    return res.data;
+}
+
+/**
+ * 更新专利名称
+ * @param form
+ * @returns {Promise<*>}
+ */
+
+export async function updateCompany(form) {
+    const res = await axios({
+        url: '/api/operation/business/updateBusiness',
+        method: 'put',
+        data: form
+    });
+    return res.data;
+}
+
+/** 删除专利名称
+ *
+ * @param id
+ * @returns {Promise<*>}
+ */
+export async function deleteCompany(id) {
+    const res = await axios({
+        url: `/api/operation/repair/deleteRepair/${id}`,
+        method: 'delete'
+    });
+    return res.data;
+}

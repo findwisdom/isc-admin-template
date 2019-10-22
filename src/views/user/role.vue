@@ -1,34 +1,21 @@
 <template>
     <div>
         <TableHeader :keywords.sync="keywords" placeholder="请输入用户名进行搜索" @search="onSearch">
-            <!--<ul class="table-actions">-->
-            <!--<li>-->
-            <!--<el-button type="primary" icon="el-icon-plus" size="mini" @click="onAdd">新建用户</el-button>-->
-            <!--</li>-->
-            <!--</ul>-->
+            <ul class="table-actions">
+                <li>
+                    <el-button type="primary" icon="el-icon-plus" size="mini" @click="onAdd">新建用户</el-button>
+                </li>
+            </ul>
         </TableHeader>
 
         <el-table :data="pageList" size="mini" v-loading="loading">
             <el-table-column prop="id" label="编号"></el-table-column>
-            <el-table-column prop="name" label="用户姓名"></el-table-column>
-            <el-table-column prop="role" label="角色" width="200px">
-                <template slot-scope="scope">
-                    {{ scope.row | orderFlow }}
-                </template>
-            </el-table-column>
-            <el-table-column prop="updatedAt" label="修改时间"></el-table-column>
+            <el-table-column prop="name" label="用户名"></el-table-column>
+            <el-table-column prop="email" label="邮箱"></el-table-column>
             <el-table-column label="操作" align="center" width="100px">
                 <template slot-scope="scope">
                     <div>
                         <el-button size="mini" type="text" @click="onEdit(scope.$index, scope.row)">编辑</el-button>
-                        <!--<el-button-->
-                        <!--size="mini"-->
-                        <!--type="text"-->
-                        <!--class="el-button__text-delete"-->
-                        <!--@click="onTrash(scope.$index, scope.row)"-->
-                        <!--&gt;-->
-                        <!--删除-->
-                        <!--</el-button>-->
                     </div>
                 </template>
             </el-table-column>
@@ -45,12 +32,12 @@
 </template>
 
 <script>
-import { getUserList } from '@/services/user';
+import { getUserList, deleteUser } from '@/services/user';
 import TableHeader from '@/components/table/TableHeader';
 import TableFooter from '@/components/table/TableFooter';
 import RoleDialog from '@/components/dialog/user/RoleDialog';
 import { fill } from '@/utils/object';
-import { error } from '@/utils/message';
+import { error, loading } from '@/utils/message';
 
 export default {
     components: {
@@ -69,11 +56,8 @@ export default {
                 {
                     id: 'xx',
                     name: 'xx',
-                    account: 'xxx',
-                    role: 'xxx',
-                    department: 'xxx',
-                    createTime: 'xx',
-                    updateTime: 'xxx'
+                    password: 'xxx',
+                    email: 'xxx'
                 }
             ],
             dialog: {
@@ -82,15 +66,7 @@ export default {
             }
         };
     },
-    filters: {
-        orderFlow(value) {
-            if (Array.isArray(value.groupList)) {
-                return value.groupList[0].name;
-            } else {
-                return '';
-            }
-        }
-    },
+    filters: {},
     watch: {
         pageNumber() {
             this.getList();
@@ -107,13 +83,9 @@ export default {
             return fill(
                 {
                     id: undefined,
-                    projectId: this.projectId,
                     name: null,
-                    account: null,
-                    role: null,
-                    department: null,
-                    updateTime: null,
-                    createTime: null
+                    password: null,
+                    email: null
                 },
                 item
             );
@@ -153,26 +125,26 @@ export default {
         onEdit(index, item) {
             this.dialog.roleForm = this.generateRoleFrom({ ...item, role: item.groupList[0].roleKey });
             this.dialog.roleVisible = true;
-        }
+        },
 
-        // async onTrash(index, item) {
-        //     try {
-        //         await confirm(`确认删除选中的角色吗？`);
-        //     } catch (err) {
-        //         return;
-        //     }
-        //
-        //     const ld = loading('删除中');
-        //
-        //     try {
-        //         await remove(item.id);
-        //         await this.getList();
-        //     } catch (err) {
-        //         await alert(err);
-        //     } finally {
-        //         ld.close();
-        //     }
-        // }
+        async onTrash(index, item) {
+            try {
+                await confirm(`确认删除选中的角色吗？`);
+            } catch (err) {
+                return;
+            }
+
+            const ld = loading('删除中');
+
+            try {
+                await deleteUser(item.id);
+                await this.getList();
+            } catch (err) {
+                await alert(err);
+            } finally {
+                ld.close();
+            }
+        }
     }
 };
 </script>

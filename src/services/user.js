@@ -18,13 +18,45 @@ export async function getUserList(pageSize, pageNumber, name) {
     return res.data;
 }
 
-export async function setUserRole(userId, roleKey) {
+/** 新增用户
+ *
+ * @param form
+ * @returns {Promise<*>}
+ */
+
+export async function createUser(form) {
     const res = await axios({
-        url: '/api/operation/user-role/setUserRole',
-        params: {
-            userId,
-            roleKey
-        }
+        url: '/api/operation/repair/createRepair',
+        method: 'post',
+        data: form
+    });
+    return res.data;
+}
+
+/**
+ * 更新用户
+ * @param form
+ * @returns {Promise<*>}
+ */
+
+export async function updateUser(form) {
+    const res = await axios({
+        url: '/api/operation/business/updateBusiness',
+        method: 'put',
+        data: form
+    });
+    return res.data;
+}
+
+/** 删除用户
+ *
+ * @param id
+ * @returns {Promise<*>}
+ */
+export async function deleteUser(id) {
+    const res = await axios({
+        url: `/api/operation/repair/deleteRepair/${id}`,
+        method: 'delete'
     });
     return res.data;
 }

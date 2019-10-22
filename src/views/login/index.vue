@@ -9,7 +9,7 @@
                 <el-input
                     ref="username"
                     v-model="loginForm.username"
-                    placeholder="Username"
+                    placeholder="请输入用户名"
                     name="username"
                     type="text"
                     tabindex="1"
@@ -19,11 +19,9 @@
             <el-form-item prop="password">
                 <span class="svg-container"></span>
                 <el-input
-                    :key="passwordType"
                     ref="password"
                     v-model="loginForm.password"
-                    :type="passwordType"
-                    placeholder="Password"
+                    placeholder="请输入密码"
                     name="password"
                     tabindex="2"
                     auto-complete="on"
@@ -53,21 +51,10 @@ export default {
                 password: '111111'
             },
             loading: false,
-            passwordType: 'password',
             redirect: undefined
         };
     },
     methods: {
-        showPwd() {
-            if (this.passwordType === 'password') {
-                this.passwordType = '';
-            } else {
-                this.passwordType = 'password';
-            }
-            this.$nextTick(() => {
-                this.$refs.password.focus();
-            });
-        },
         handleLogin() {
             this.$refs.loginForm.validate(valid => {
                 if (valid) {

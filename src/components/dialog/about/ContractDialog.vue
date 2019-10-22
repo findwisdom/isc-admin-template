@@ -23,18 +23,12 @@
                     <el-input v-model="form.address" placeholder="请输入公司地址" maxlength="40"></el-input>
                 </el-form-item>
                 <el-form-item label="邮箱" prop="email" class="is-required">
-                    <el-input v-model="form.email" placeholder="请输入公司地址" maxlength="40"></el-input>
-                </el-form-item>
-                <el-form-item label="公司地址" prop="name" class="is-required">
-                    <el-input v-model="form.address" placeholder="请输入公司地址" maxlength="40"></el-input>
+                    <el-input v-model="form.email" placeholder="请输入邮箱" maxlength="40"></el-input>
                 </el-form-item>
                 <el-form-item label="电话" prop="phone" class="is-required">
                     <el-input v-model="form.phone" placeholder="请输入联系电话" maxlength="40"></el-input>
                 </el-form-item>
-                <el-form-item label="电话" prop="phone" class="is-required">
-                    <el-input v-model="form.phone" placeholder="请输入联系电话" maxlength="40"></el-input>
-                </el-form-item>
-                <el-form-item label="是否主公司" prop="phone" class="is-required">
+                <el-form-item label="是否主公司">
                     <el-switch
                         v-model="form.mainCompany"
                         active-color="#13ce66"
@@ -50,10 +44,9 @@
 
 <script>
 import AppDialog from '@/components/app/AppDialog';
-import { alert, success, error } from '@/utils/message';
-import validation from '@/validations/gateway';
-import { getOperationList } from '@/services/operation';
-import { setUserRole } from '@/services/user';
+import { alert, success } from '@/utils/message';
+import validation from '@/validations/contract';
+import { createCompany, updateCompany } from '@/services/about';
 export default {
     name: 'RoleDialog',
     components: {
@@ -89,12 +82,10 @@ export default {
             }
         },
         actionName() {
-            return (this.form.id ? '编辑' : '添加') + '伙伴';
+            return (this.form.id ? '编辑' : '添加') + '公司';
         }
     },
     methods: {
-        uploadError() {},
-        onUploadSuccess() {},
         clearValidate() {
             this.$nextTick(() => {
                 const form = this.$refs.form;
@@ -118,7 +109,11 @@ export default {
             }
             try {
                 this.loading = true;
-                await setUserRole(this.form.id, this.form.role);
+                if (this.form.id) {
+                    await createCompany(this.form);
+                } else {
+                    await updateCompany(this.form);
+                }
             } catch (err) {
                 return await alert(err);
             } finally {
@@ -130,14 +125,6 @@ export default {
             this.$emit('success');
         }
     },
-    async created() {
-        let data = null;
-        try {
-            data = await getOperationList();
-            this.osTypeOptions = data.map(item => ({ label: item.name, value: item.roleKey }));
-        } catch (err) {
-            error(err);
-        }
-    }
+    async created() {}
 };
 </script>

@@ -156,6 +156,38 @@ export const url = () => {
     };
 };
 
+export const phone = () => {
+    return (rule, value, next) => {
+        const validate = rule.enable ? rule.enable() : true;
+
+        if (!value || !validate) {
+            return next();
+        }
+
+        if (/^[1][3,4,5,7,8][0-9]{9}$/.test(value)) {
+            return next();
+        }
+
+        next(new Error());
+    };
+};
+
+export const email = () => {
+    return (rule, value, next) => {
+        const validate = rule.enable ? rule.enable() : true;
+
+        if (!value || !validate) {
+            return next();
+        }
+
+        if (/^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/.test(value)) {
+            return next();
+        }
+
+        next(new Error());
+    };
+};
+
 export const format = () => {
     return function(rule, value, next) {
         const validate = rule.enable ? rule.enable() : true;

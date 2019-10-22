@@ -51,7 +51,7 @@
 import AppDialog from '@/components/app/AppDialog';
 import AppUpload from '@/components/app/AppUpload';
 import AppUploadImg from '@/components/app/AppUploadImg';
-import { alert, success, error } from '@/utils/message';
+import { alert, success } from '@/utils/message';
 import validation from '@/validations/honour';
 import { createPatent, updatePatent } from '@/services/about';
 export default {
