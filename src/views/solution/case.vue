@@ -36,18 +36,17 @@
             <img width="100%" :src="viewImg" alt="" />
         </el-dialog>
         <TableFooter :page-number.sync="pageNumber" :page-size.sync="pageSize" :page-total="pageTotal"></TableFooter>
-
         <CaseDialog @success="onDialogSuccess" :form="dialog.form" :visible.sync="dialog.visible"></CaseDialog>
     </div>
 </template>
 
 <script>
-// import { getUserList } from '@/services/user';
+import { getCaseList, deleteCase } from '@/services/solution';
 import TableHeader from '@/components/table/TableHeader';
 import TableFooter from '@/components/table/TableFooter';
 import CaseDialog from '@/components/dialog/solution/CaseDialog';
 import { fill } from '@/utils/object';
-// import { error } from '@/utils/message';
+import { error, loading } from '@/utils/message';
 
 export default {
     components: {
@@ -121,21 +120,20 @@ export default {
         },
 
         async getList() {
-            // let data = null;
+            let data = null;
             this.loading = true;
-            this.loading = false;
+            try {
+                data = await getCaseList(this.pageSize, this.pageNumber, this.keywords);
+                this.loading = false;
+            } catch (err) {
+                error(err);
+                data = { records: [], total: 0 };
+            } finally {
+                this.loading = false;
+            }
 
-            // try {
-            //     data = await getUserList(this.pageSize, this.pageNumber, this.keywords);
-            // } catch (err) {
-            //     error(err);
-            //     data = { records: [], total: 0 };
-            // } finally {
-            //     this.loading = false;
-            // }
-
-            // this.pageList = data.records;
-            // this.pageTotal = data.total;
+            this.pageList = data.records;
+            this.pageTotal = data.total;
         },
 
         onSearch() {
@@ -159,22 +157,22 @@ export default {
 
         async onTrash(item) {
             try {
-                await confirm(`确认删除选中的角色吗？`);
+                await confirm(`确认删除选中的案例吗？`);
                 console.log(item);
             } catch (err) {
                 return;
             }
 
-            // const ld = loading('删除中');
+            const ld = loading('删除中');
 
-            // try {
-            //     await remove(item.id);
-            //     await this.getList();
-            // } catch (err) {
-            //     await alert(err);
-            // } finally {
-            //     ld.close();
-            // }
+            try {
+                await deleteCase(item.id);
+                await this.getList();
+            } catch (err) {
+                await alert(err);
+            } finally {
+                ld.close();
+            }
         }
     }
 };

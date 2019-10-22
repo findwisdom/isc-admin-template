@@ -30,6 +30,16 @@
                         <app-upload-img v-show="!form.picture" />
                     </app-upload>
                 </el-form-item>
+                <el-form-item label="产品类型" prop="role">
+                    <el-select v-model="form.type" placeholder="请选择产品所属">
+                        <el-option
+                            v-for="option in osTypeOptions"
+                            :key="option.value"
+                            :label="option.label"
+                            :value="option.value"
+                        ></el-option>
+                    </el-select>
+                </el-form-item>
                 <el-form-item label="获得时间" prop="email" class="is-required">
                     <el-date-picker v-model="form.obtainTime" type="date" placeholder="选择日期"></el-date-picker>
                 </el-form-item>

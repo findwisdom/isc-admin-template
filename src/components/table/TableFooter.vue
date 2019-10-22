@@ -57,6 +57,7 @@ export default {
             this.$emit('update:pageNumber', value);
         },
         handleSizeChange(value) {
+            this.$emit('update:pageNumber', 1);
             this.$emit('update:pageSize', value);
         }
     }

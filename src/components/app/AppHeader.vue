@@ -28,8 +28,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import AppMenu from '@/components/app/AppBreadcrumb';
+import AppMenu from '@/components/app/AppMenu';
 import AppBreadcrumb from '@/components/app/AppBreadcrumb';
 
 let timeId = 0;
@@ -45,14 +44,9 @@ export default {
         };
     },
 
-    computed: {
-        ...mapState(['accountName', 'accountMobile', 'projectName', 'accountRole'])
-    },
+    computed: {},
 
     methods: {
-        onExit() {
-            alert('暂时不支持退出园区开发，请在菜单的“园区切换”里进行操作');
-        },
         onMouseEnter() {
             this.userPanel = true;
             clearTimeout(timeId);

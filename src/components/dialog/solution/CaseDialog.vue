@@ -16,10 +16,10 @@
                 <el-form-item label="案例名称" prop="name" class="is-required">
                     <el-input v-model="form.name" placeholder="请输入案例名称" maxlength="40"></el-input>
                 </el-form-item>
-                <el-form-item label="案例排序" prop="name">
+                <el-form-item label="案例排序" prop="order">
                     <el-input-number v-model="form.order"></el-input-number>
                 </el-form-item>
-                <el-form-item label="案例图片" prop="name" class="is-required">
+                <el-form-item label="案例图片" prop="picture" class="is-required">
                     <app-upload
                         :action="uploadUrl"
                         @error="uploadError"
@@ -30,7 +30,7 @@
                         <app-upload-img v-show="!form.picture" />
                     </app-upload>
                 </el-form-item>
-                <el-form-item label="案例介绍" prop="name" class="is-required">
+                <el-form-item label="案例介绍" prop="description" class="is-required">
                     <el-input
                         v-model="form.description"
                         placeholder="请输入案例介绍"
@@ -39,7 +39,7 @@
                         maxlength="300"
                     ></el-input>
                 </el-form-item>
-                <el-form-item label="所属解决方案" prop="role">
+                <el-form-item label="所属解决方案" prop="solutionId" class="is-required">
                     <el-select v-model="form.solutionId" placeholder="请选择所属解决方案">
                         <el-option
                             v-for="option in osTypeOptions"
@@ -58,12 +58,12 @@
 import AppDialog from '@/components/app/AppDialog';
 import AppUpload from '@/components/app/AppUpload';
 import AppUploadImg from '@/components/app/AppUploadImg';
+import validation from '@/validations/case';
 import { alert, success, error } from '@/utils/message';
-import validation from '@/validations/gateway';
-import { getOperationList } from '@/services/operation';
-import { setUserRole } from '@/services/user';
+import { uploadUrl } from '@/services/upload';
+import { createCase, getSolutionList } from '@/services/solution';
 export default {
-    name: 'RoleDialog',
+    name: 'CaseDialog',
     components: {
         AppDialog,
         AppUpload,
@@ -83,9 +83,9 @@ export default {
     },
     data() {
         return {
+            uploadUrl,
             loading: false,
             osTypeOptions: [],
-            uploadUrl: '',
             rules: validation(this)
         };
     },
@@ -103,8 +103,13 @@ export default {
         }
     },
     methods: {
-        uploadError() {},
-        onUploadSuccess() {},
+        uploadError(err) {
+            console.log(err);
+        },
+        onUploadSuccess(data) {
+            this.form.picture = data.url;
+            success('上传成功');
+        },
         clearValidate() {
             this.$nextTick(() => {
                 const form = this.$refs.form;
@@ -128,7 +133,7 @@ export default {
             }
             try {
                 this.loading = true;
-                await setUserRole(this.form.id, this.form.role);
+                await createCase(this.form.id, this.form.role);
             } catch (err) {
                 return await alert(err);
             } finally {
@@ -143,8 +148,8 @@ export default {
     async created() {
         let data = null;
         try {
-            data = await getOperationList();
-            this.osTypeOptions = data.map(item => ({ label: item.name, value: item.roleKey }));
+            data = await getSolutionList();
+            this.osTypeOptions = data.map(item => ({ label: item.name, value: item.id }));
         } catch (err) {
             error(err);
         }
