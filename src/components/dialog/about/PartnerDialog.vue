@@ -36,12 +36,11 @@
 import AppDialog from '@/components/app/AppDialog';
 import AppUpload from '@/components/app/AppUpload';
 import AppUploadImg from '@/components/app/AppUploadImg';
-import { alert, success, error } from '@/utils/message';
-import validation from '@/validations/gateway';
-import { getOperationList } from '@/services/operation';
-import { setUserRole } from '@/services/user';
+import { alert, success } from '@/utils/message';
+import validation from '@/validations/partner';
+import { createPartner, updatePartner } from '@/services/about';
 export default {
-    name: 'RoleDialog',
+    name: 'PartnerDialog',
     components: {
         AppDialog,
         AppUpload,
@@ -106,7 +105,11 @@ export default {
             }
             try {
                 this.loading = true;
-                await setUserRole(this.form.id, this.form.role);
+                if (this.form.id) {
+                    await createPartner(this.form);
+                } else {
+                    await updatePartner(this.form);
+                }
             } catch (err) {
                 return await alert(err);
             } finally {
@@ -118,14 +121,6 @@ export default {
             this.$emit('success');
         }
     },
-    async created() {
-        let data = null;
-        try {
-            data = await getOperationList();
-            this.osTypeOptions = data.map(item => ({ label: item.name, value: item.roleKey }));
-        } catch (err) {
-            error(err);
-        }
-    }
+    async created() {}
 };
 </script>

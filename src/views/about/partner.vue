@@ -1,6 +1,6 @@
 <template>
     <div>
-        <TableHeader :keywords.sync="keywords" placeholder="请输入标题进行搜索" @search="onSearch">
+        <TableHeader :keywords.sync="keywords" placeholder="请输入伙伴名称进行搜索" @search="onSearch">
             <ul class="table-actions">
                 <li>
                     <el-button type="primary" icon="el-icon-plus" size="mini" @click="onAdd">新建</el-button>
@@ -11,11 +11,10 @@
         <el-table :data="pageList" size="mini" v-loading="loading">
             <el-table-column prop="id" label="编号"></el-table-column>
             <el-table-column prop="name" label="伙伴名称"></el-table-column>
+            <el-table-column prop="order" label="排序"></el-table-column>
             <el-table-column prop="picture" label="图片">
                 <template slot-scope="scope">
-                    <div @click="handlePicturePreview(scope.row)" class="img-hover">
-                        <img :src="scope.row.picture" :alt="scope.row.name" class="table-img" />
-                    </div>
+                    <Thumbnail :picture="scope.row.picture" />
                 </template>
             </el-table-column>
             <el-table-column label="操作" align="center" width="100px">
@@ -29,9 +28,6 @@
                 </template>
             </el-table-column>
         </el-table>
-        <el-dialog :visible.sync="dialogVisible">
-            <img width="100%" :src="viewImg" alt="" />
-        </el-dialog>
         <TableFooter :page-number.sync="pageNumber" :page-size.sync="pageSize" :page-total="pageTotal"></TableFooter>
 
         <PartnerDialog @success="onDialogSuccess" :form="dialog.form" :visible.sync="dialog.visible"></PartnerDialog>
@@ -39,18 +35,20 @@
 </template>
 
 <script>
-// import { getUserList } from '@/services/user';
+import { getPartnerList, deletePartner } from '@/services/about';
 import TableHeader from '@/components/table/TableHeader';
 import TableFooter from '@/components/table/TableFooter';
 import PartnerDialog from '@/components/dialog/about/PartnerDialog';
+import Thumbnail from '@/components/Thumbnail';
 import { fill } from '@/utils/object';
-// import { error } from '@/utils/message';
+import { error, loading } from '@/utils/message';
 
 export default {
     components: {
         TableHeader,
         TableFooter,
-        PartnerDialog
+        PartnerDialog,
+        Thumbnail
     },
     data() {
         return {
@@ -63,15 +61,14 @@ export default {
                 {
                     id: 'xx',
                     name: 'xx',
+                    order: 1,
                     picture: 'http://b-ssl.duitang.com/uploads/blog/201312/04/20131204184148_hhXUT.jpeg'
                 }
             ],
             dialog: {
                 visible: false,
                 form: this.generateFrom()
-            },
-            viewImg: '',
-            dialogVisible: false
+            }
         };
     },
     filters: {
@@ -100,33 +97,27 @@ export default {
                 {
                     id: undefined,
                     name: null,
+                    order: null,
                     picture: null
                 },
                 item
             );
         },
-
-        handlePicturePreview(file) {
-            this.viewImg = file.picture;
-            this.dialogVisible = true;
-        },
-
         async getList() {
-            // let data = null;
+            let data = null;
             this.loading = true;
-            this.loading = false;
+            try {
+                data = await getPartnerList(this.pageSize, this.pageNumber, this.keywords);
+                this.loading = false;
+            } catch (err) {
+                error(err);
+                data = { records: [], total: 0 };
+            } finally {
+                this.loading = false;
+            }
 
-            // try {
-            //     data = await getUserList(this.pageSize, this.pageNumber, this.keywords);
-            // } catch (err) {
-            //     error(err);
-            //     data = { records: [], total: 0 };
-            // } finally {
-            //     this.loading = false;
-            // }
-
-            // this.pageList = data.records;
-            // this.pageTotal = data.total;
+            this.pageList = data.records;
+            this.pageTotal = data.total;
         },
 
         onSearch() {
@@ -150,49 +141,24 @@ export default {
 
         async onTrash(item) {
             try {
-                await confirm(`确认删除选中的角色吗？`);
-                console.log(item);
+                await confirm(`确认删除选中的合作伙伴吗？`);
             } catch (err) {
                 return;
             }
 
-            // const ld = loading('删除中');
+            const ld = loading('删除中');
 
-            // try {
-            //     await remove(item.id);
-            //     await this.getList();
-            // } catch (err) {
-            //     await alert(err);
-            // } finally {
-            //     ld.close();
-            // }
+            try {
+                await deletePartner(item.id);
+                await this.getList();
+            } catch (err) {
+                await alert(err);
+            } finally {
+                ld.close();
+            }
         }
     }
 };
 </script>
 
-<style scoped lang="scss">
-.table-des {
-    margin-left: 40px;
-    .table-count {
-        font-size: 22px;
-        color: $app-primary-color;
-        margin: 0 5px;
-    }
-}
-.table-img {
-    width: 50px;
-    height: 38px;
-}
-.table-item-space {
-    padding: 0 10px;
-    cursor: pointer;
-    width: 200px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-}
-.img-hover {
-    cursor: pointer;
-}
-</style>
+<style scoped lang="scss"></style>

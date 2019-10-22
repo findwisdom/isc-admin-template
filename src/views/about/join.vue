@@ -1,6 +1,6 @@
 <template>
     <div>
-        <TableHeader :keywords.sync="keywords" placeholder="请输入标题进行搜索" @search="onSearch">
+        <TableHeader :keywords.sync="keywords" placeholder="请输入岗位名称进行搜索" @search="onSearch">
             <ul class="table-actions">
                 <li>
                     <el-button type="primary" icon="el-icon-plus" size="mini" @click="onAdd">新建</el-button>
@@ -15,7 +15,7 @@
             <el-table-column prop="duty" label="岗位职责"></el-table-column>
             <el-table-column prop="qualification" label="任职资格"></el-table-column>
             <el-table-column prop="publishTime" label="发布时间"></el-table-column>
-            <el-table-column prop="browserTimes" label="浏览次数"></el-table-column>
+            <el-table-column prop="viewCount" label="浏览次数"></el-table-column>
             <el-table-column>
                 <template slot-scope="scope">
                     <div>
@@ -37,12 +37,12 @@
 </template>
 
 <script>
-// import { getUserList } from '@/services/user';
+import { getCareerList, deleteCareer } from '@/services/about';
 import TableHeader from '@/components/table/TableHeader';
 import TableFooter from '@/components/table/TableFooter';
 import JoinDialog from '@/components/dialog/about/JoinDialog';
 import { fill } from '@/utils/object';
-// import { error } from '@/utils/message';
+import { error, loading } from '@/utils/message';
 
 export default {
     components: {
@@ -64,6 +64,7 @@ export default {
                     name: '前端',
                     duty: '写代码',
                     publishTime: '2018-03-12',
+                    viewCount: '245',
                     qualification: '任职资格'
                 }
             ],
@@ -102,11 +103,9 @@ export default {
                     id: null,
                     city: null,
                     name: null,
-                    address: null,
-                    email: null,
-                    phone: null,
-                    postCode: null,
-                    mainCompany: false
+                    duty: null,
+                    publishTime: null,
+                    qualification: null
                 },
                 item
             );
@@ -118,21 +117,21 @@ export default {
         },
 
         async getList() {
-            // let data = null;
+            let data = null;
             this.loading = true;
             this.loading = false;
 
-            // try {
-            //     data = await getUserList(this.pageSize, this.pageNumber, this.keywords);
-            // } catch (err) {
-            //     error(err);
-            //     data = { records: [], total: 0 };
-            // } finally {
-            //     this.loading = false;
-            // }
+            try {
+                data = await getCareerList(this.pageSize, this.pageNumber, this.keywords);
+            } catch (err) {
+                error(err);
+                data = { records: [], total: 0 };
+            } finally {
+                this.loading = false;
+            }
 
-            // this.pageList = data.records;
-            // this.pageTotal = data.total;
+            this.pageList = data.records;
+            this.pageTotal = data.total;
         },
 
         onSearch() {
@@ -162,16 +161,16 @@ export default {
                 return;
             }
 
-            // const ld = loading('删除中');
+            const ld = loading('删除中');
 
-            // try {
-            //     await remove(item.id);
-            //     await this.getList();
-            // } catch (err) {
-            //     await alert(err);
-            // } finally {
-            //     ld.close();
-            // }
+            try {
+                await deleteCareer(item.id);
+                await this.getList();
+            } catch (err) {
+                await alert(err);
+            } finally {
+                ld.close();
+            }
         }
     }
 };
