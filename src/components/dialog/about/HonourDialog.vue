@@ -13,32 +13,34 @@
 
         <template v-slot:default>
             <el-form ref="form" :model="form" :rules="rules" label-width="120px" size="mini">
-                <el-form-item label="城市" prop="city" class="is-required">
-                    <el-input v-model="form.city" placeholder="请输入城市" maxlength="40"></el-input>
+                <el-form-item label="名称" prop="name" class="is-required">
+                    <el-input v-model="form.name" placeholder="请输入名称" maxlength="40"></el-input>
                 </el-form-item>
-                <el-form-item label="岗位名称" prop="name" class="is-required">
-                    <el-input v-model="form.name" placeholder="请输入岗位名称" maxlength="40"></el-input>
+                <el-form-item label="排序" prop="order">
+                    <el-input-number v-model.number="form.order"></el-input-number>
                 </el-form-item>
-                <el-form-item label="岗位职责" prop="address" class="is-required">
+                <el-form-item label="图片" prop="name" class="is-required">
+                    <app-upload
+                        :action="uploadUrl"
+                        @error="uploadError"
+                        @success="onUploadSuccess"
+                        style="display: inline-block"
+                    >
+                        <app-upload-img v-show="form.picture" :url="form.picture" />
+                        <app-upload-img v-show="!form.picture" />
+                    </app-upload>
+                </el-form-item>
+                <el-form-item label="获得时间" prop="email" class="is-required">
+                    <el-date-picker v-model="form.obtainTime" type="date" placeholder="选择日期"></el-date-picker>
+                </el-form-item>
+                <el-form-item label="备注" prop="remark" class="is-required">
                     <el-input
                         type="textarea"
                         :rows="4"
-                        v-model="form.duty"
-                        placeholder="请输入岗位职责"
+                        v-model="form.remark"
+                        placeholder="请输入备注"
                         maxlength="200"
                     ></el-input>
-                </el-form-item>
-                <el-form-item label="任职资格" prop="email" class="is-required">
-                    <el-input
-                        type="textarea"
-                        :rows="4"
-                        v-model="form.qualification"
-                        placeholder="请输入任职资格"
-                        maxlength="200"
-                    ></el-input>
-                </el-form-item>
-                <el-form-item label="发布时间" prop="email" class="is-required">
-                    <el-date-picker v-model="form.publishTime" type="date" placeholder="选择日期"></el-date-picker>
                 </el-form-item>
             </el-form>
         </template>
@@ -47,6 +49,8 @@
 
 <script>
 import AppDialog from '@/components/app/AppDialog';
+import AppUpload from '@/components/app/AppUpload';
+import AppUploadImg from '@/components/app/AppUploadImg';
 import { alert, success, error } from '@/utils/message';
 import validation from '@/validations/gateway';
 import { getOperationList } from '@/services/operation';
@@ -54,7 +58,9 @@ import { setUserRole } from '@/services/user';
 export default {
     name: 'RoleDialog',
     components: {
-        AppDialog
+        AppDialog,
+        AppUpload,
+        AppUploadImg
     },
     props: {
         visible: {
