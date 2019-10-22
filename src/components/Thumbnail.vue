@@ -3,9 +3,7 @@
         <div class="table-thumbnail" @click="onPreview()" :style="{ width, height }">
             <img :src="picture" :alt="alt" class="table-thumbnail-img" />
             <span class="table-thumbnail-actions">
-                <span class="table-thumbnail-actions-preview">
-                    <i class="el-icon-zoom-in"></i>
-                </span>
+                <svg-icon name="icon-enlarge"></svg-icon>
             </span>
         </div>
         <el-dialog :visible.sync="visible">
