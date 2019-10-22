@@ -129,6 +129,12 @@ export default [
                 name: 'about-join',
                 component: () => import('@/views/about/join.vue'),
                 meta: { title: '加入我们', icon: 'nav-join' }
+            },
+            {
+                path: 'honour',
+                name: 'about-honour',
+                component: () => import('@/views/about/honour.vue'),
+                meta: { title: '专利荣誉', icon: 'nav-honour' }
             }
         ]
     },

@@ -10,7 +10,10 @@
 
         <el-table :data="pageList" size="mini" v-loading="loading">
             <el-table-column prop="id" label="编号"></el-table-column>
-            <el-table-column prop="name" label="伙伴名称"></el-table-column>
+            <el-table-column prop="order" label="排序"></el-table-column>
+            <el-table-column prop="name" label="名称"></el-table-column>
+            <el-table-column prop="type" label="类型"></el-table-column>
+            <el-table-column prop="obtainTime" label="获得时间"></el-table-column>
             <el-table-column prop="picture" label="图片">
                 <template slot-scope="scope">
                     <div @click="handlePicturePreview(scope.row)" class="img-hover">
@@ -18,6 +21,7 @@
                     </div>
                 </template>
             </el-table-column>
+            <el-table-column prop="remark" label="备注"></el-table-column>
             <el-table-column label="操作" align="center" width="100px">
                 <template slot-scope="scope">
                     <div>
@@ -34,7 +38,7 @@
         </el-dialog>
         <TableFooter :page-number.sync="pageNumber" :page-size.sync="pageSize" :page-total="pageTotal"></TableFooter>
 
-        <PartnerDialog @success="onDialogSuccess" :form="dialog.form" :visible.sync="dialog.visible"></PartnerDialog>
+        <HonourDialog @success="onDialogSuccess" :form="dialog.form" :visible.sync="dialog.visible"></HonourDialog>
     </div>
 </template>
 
@@ -42,7 +46,7 @@
 // import { getUserList } from '@/services/user';
 import TableHeader from '@/components/table/TableHeader';
 import TableFooter from '@/components/table/TableFooter';
-import PartnerDialog from '@/components/dialog/about/PartnerDialog';
+import HonourDialog from '@/components/dialog/about/HonourDialog';
 import { fill } from '@/utils/object';
 // import { error } from '@/utils/message';
 
@@ -50,7 +54,7 @@ export default {
     components: {
         TableHeader,
         TableFooter,
-        PartnerDialog
+        HonourDialog
     },
     data() {
         return {
@@ -62,8 +66,12 @@ export default {
             pageList: [
                 {
                     id: 'xx',
-                    name: 'xx',
-                    picture: 'http://b-ssl.duitang.com/uploads/blog/201312/04/20131204184148_hhXUT.jpeg'
+                    order: 'xx',
+                    name: 'XX',
+                    type: 'XX',
+                    obtainTime: '2019-04-14',
+                    picture: 'http://b-ssl.duitang.com/uploads/blog/201312/04/20131204184148_hhXUT.jpeg',
+                    remark: 'DSADDSADSA'
                 }
             ],
             dialog: {
@@ -99,8 +107,12 @@ export default {
             return fill(
                 {
                     id: undefined,
-                    name: null,
-                    picture: null
+                    order: undefined,
+                    name: undefined,
+                    type: undefined,
+                    obtainTime: null,
+                    picture: undefined,
+                    remark: undefined
                 },
                 item
             );
