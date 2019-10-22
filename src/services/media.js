@@ -104,3 +104,17 @@ export async function getNewsContent(id) {
     });
     return res.data;
 }
+
+/**
+ * 提交媒体报道
+ * @param form
+ * @returns {Promise<void>}
+ */
+export async function createUpdateNews(form) {
+    const res = await service({
+        url: `${url}/createUpdate`,
+        method: 'post',
+        data: form
+    });
+    return res.data;
+}

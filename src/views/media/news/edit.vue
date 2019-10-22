@@ -15,18 +15,26 @@
             </el-form-item>
             <el-form-item label="封面" prop="picture" ref="upload" class="uploadPicture">
                 <AppUpload class="editor-upload-btn" action="https://httpbin.org/post" @success="imageSuccessCBK">
-                    <el-button icon="el-icon-upload" size="mini" type="primary" @click="dialogVisible = true">
+                    <el-button icon="el-icon-upload" type="primary" @click="dialogVisible = true">
                         上传封面
                     </el-button>
                 </AppUpload>
-                <AppUploadList :data="uploadList" @deleteItem="deletePicture"></AppUploadList>
+                <AppUploadList
+                    :data="uploadList"
+                    @deleteItem="deletePicture"
+                    @clickItem="previewPicture"
+                ></AppUploadList>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="submit('form')" size="mini">提交</el-button>
+                <el-button type="primary" @click="onSubmit('form')">提交</el-button>
             </el-form-item>
         </el-form>
 
         <tinymce v-model="formData.content" :height="400" />
+
+        <el-dialog :visible.sync="visible">
+            <img width="100%" :src="formData.picture" alt="封面图" />
+        </el-dialog>
     </div>
 </template>
 
@@ -35,14 +43,15 @@ import Tinymce from '@/components/Tinymce';
 import AppUpload from '@/components/app/AppUpload';
 import AppUploadList from '@/components/app/AppUploadList';
 import validation from '@/validations/news';
-import { getNewsContent } from '@/services/media';
-import { error } from '@/utils/message';
+import { getNewsContent, createUpdateNews } from '@/services/media';
+import { error, loading } from '@/utils/message';
 
 export default {
     name: 'TinymcePage',
     components: { Tinymce, AppUpload, AppUploadList },
     data() {
         return {
+            id: this.$route.query.id,
             formData: {
                 title: '',
                 description: '',
@@ -52,11 +61,14 @@ export default {
                 content: ''
             },
             uploadList: [],
+            visible: false,
             rules: validation(this)
         };
     },
     created() {
-        this.getContent();
+        if (this.id) {
+            this.getContent();
+        }
     },
     methods: {
         async getContent() {
@@ -65,6 +77,7 @@ export default {
 
             try {
                 data = await getNewsContent();
+                this.uploadList = this.generateUploadList(data.picture);
             } catch (err) {
                 error(err);
                 // TODO: service
@@ -78,6 +91,7 @@ export default {
                     publishTime: '2018-11-13',
                     content: '<h1 style="text-align: center;">Welcome to the TinyMCE demo!</h1>'
                 };
+                this.uploadList = this.generateUploadList(data.picture);
             } finally {
                 this.loading = false;
             }
@@ -86,15 +100,28 @@ export default {
         },
         imageSuccessCBK(data) {
             // TODO:根据接口返回值调整
+            const url = data.files.file;
             this.$refs.upload.clearValidate();
-            this.formData.picture = data.files.file;
-            this.uploadList = [{ name: data.name }];
+            this.formData.picture = url;
+            this.uploadList = this.generateUploadList(url);
+        },
+        generateUploadList(url) {
+            let name = '封面图';
+            if (typeof url === 'string') {
+                const arr = url.split('/');
+                const len = arr.length - 1;
+                name = arr[len];
+            }
+            return [{ name, url }];
         },
         deletePicture() {
-            this.formData.cover = '';
+            this.formData.picture = '';
             this.uploadList = [];
         },
-        submit(formName) {
+        previewPicture() {
+            this.visible = true;
+        },
+        onSubmit(formName) {
             this.$refs[formName].validate(valid => {
                 if (!valid) {
                     return false;
@@ -103,8 +130,20 @@ export default {
                     this.$message.error('请编辑报道内容！');
                     return false;
                 }
-                // TODO:提交接口
+                this.submitNews();
             });
+        },
+        async submitNews() {
+            const ld = loading('提交中');
+            // TODO:提交接口
+            try {
+                await createUpdateNews(this.formData);
+                this.$router.push('/media/news');
+            } catch (err) {
+                error(err);
+            } finally {
+                ld.close();
+            }
         }
     }
 };
