@@ -67,7 +67,7 @@ export default {
         justify-content: center;
         align-items: center;
         &:hover {
-            opacity: 0.5;
+            opacity: 0.7;
         }
     }
 }

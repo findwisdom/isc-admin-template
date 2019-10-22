@@ -63,7 +63,6 @@ export default {
             this.getList();
         },
         pageSize() {
-            this.pageNumber = 1;
             this.getList();
         }
     },
@@ -137,32 +136,3 @@ export default {
     }
 };
 </script>
-
-<style scoped lang="scss">
-.table-thumbnail {
-    cursor: pointer;
-    color: #fff;
-    width: 50px;
-    height: 38px;
-    position: relative;
-    &-img {
-        width: 100%;
-        height: 100%;
-    }
-    &-actions {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: $app-base-color;
-        opacity: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        &:hover {
-            opacity: 0.5;
-        }
-    }
-}
-</style>

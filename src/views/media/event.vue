@@ -67,7 +67,6 @@ export default {
             this.getList();
         },
         pageSize() {
-            this.pageNumber = 1;
             this.getList();
         }
     },
