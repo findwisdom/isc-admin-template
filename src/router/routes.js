@@ -52,7 +52,7 @@ export default [
                 meta: { title: '媒体报道', icon: 'nav-appliances' }
             },
             {
-                path: 'news/edit/:id',
+                path: 'news/edit',
                 name: 'media-news',
                 hidden: true,
                 component: () => import('@/views/media/news/edit.vue'),
