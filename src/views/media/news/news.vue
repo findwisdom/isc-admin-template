@@ -13,18 +13,16 @@
             <el-table-column prop="title" label="标题"></el-table-column>
             <el-table-column prop="picture" label="封面图">
                 <template slot-scope="scope">
-                    <div @click="handlePicturePreview(scope.row)" class="img-hover">
-                        <img :src="scope.row.picture" :alt="scope.row.name" class="table-img" />
-                    </div>
+                    <Thumbnail :picture="scope.row.picture" />
                 </template>
             </el-table-column>
             <el-table-column prop="description" label="简介"></el-table-column>
-            <el-table-column prop="order" label="顺序"></el-table-column>
-            <el-table-column prop="time" label="发布时间"></el-table-column>
+            <el-table-column prop="order" label="排序"></el-table-column>
+            <el-table-column prop="publishTime" label="发布时间"></el-table-column>
             <el-table-column label="操作" align="center" width="100px">
                 <template slot-scope="scope">
                     <div>
-                        <el-button size="mini" type="text" @click="onEdit(scope.$index, scope.row)">编辑</el-button>
+                        <el-button size="mini" type="text" @click="onEdit(scope.row)">编辑</el-button>
                         <el-button size="mini" type="text" class="el-button__text-delete" @click="onTrash(scope.row)">
                             删除
                         </el-button>
@@ -32,28 +30,23 @@
                 </template>
             </el-table-column>
         </el-table>
-        <el-dialog :visible.sync="dialogVisible">
-            <img width="100%" :src="viewImg" alt="" />
-        </el-dialog>
-        <TableFooter :page-number.sync="pageNumber" :page-size.sync="pageSize" :page-total="pageTotal"></TableFooter>
 
-        <CaseDialog @success="onDialogSuccess" :form="dialog.form" :visible.sync="dialog.visible"></CaseDialog>
+        <TableFooter :page-number.sync="pageNumber" :page-size.sync="pageSize" :page-total="pageTotal"></TableFooter>
     </div>
 </template>
 
 <script>
-// import { getUserList } from '@/services/user';
+import { getNewsList, removeNews } from '@/services/media';
 import TableHeader from '@/components/table/TableHeader';
 import TableFooter from '@/components/table/TableFooter';
-import CaseDialog from '@/components/dialog/solution/CaseDialog';
-import { fill } from '@/utils/object';
-// import { error } from '@/utils/message';
+import Thumbnail from '@/components/Thumbnail';
+import { error, confirm, loading } from '@/utils/message';
 
 export default {
     components: {
         TableHeader,
         TableFooter,
-        CaseDialog
+        Thumbnail
     },
     data() {
         return {
@@ -62,38 +55,15 @@ export default {
             pageNumber: 1,
             pageSize: 10,
             pageTotal: 0,
-            pageList: [
-                {
-                    id: 'xx',
-                    title: 'xx',
-                    picture: 'http://b-ssl.duitang.com/uploads/blog/201312/04/20131204184148_hhXUT.jpeg',
-                    description: 'xxx',
-                    order: null,
-                    time: '2019-04-21'
-                }
-            ],
-            dialog: {
-                visible: false,
-                form: this.generateFrom()
-            },
-            viewImg: '',
-            dialogVisible: false
+            pageList: []
         };
-    },
-    filters: {
-        orderFlow(value) {
-            if (Array.isArray(value.groupList)) {
-                return value.groupList[0].name;
-            } else {
-                return '';
-            }
-        }
     },
     watch: {
         pageNumber() {
             this.getList();
         },
         pageSize() {
+            this.pageNumber = 1;
             this.getList();
         }
     },
@@ -101,41 +71,36 @@ export default {
         this.getList();
     },
     methods: {
-        generateFrom(item) {
-            return fill(
-                {
-                    id: undefined,
-                    name: null,
-                    order: null,
-                    picture: null,
-                    description: null,
-                    content: null
-                },
-                item
-            );
-        },
-
-        handlePicturePreview(file) {
-            this.viewImg = file.picture;
-            this.dialogVisible = true;
-        },
-
         async getList() {
-            // let data = null;
+            let data = null;
             this.loading = true;
-            this.loading = false;
 
-            // try {
-            //     data = await getUserList(this.pageSize, this.pageNumber, this.keywords);
-            // } catch (err) {
-            //     error(err);
-            //     data = { records: [], total: 0 };
-            // } finally {
-            //     this.loading = false;
-            // }
+            try {
+                data = await getNewsList(this.pageSize, this.pageNumber, this.keywords);
+            } catch (err) {
+                error(err);
+                // TODO: service
+                // data = { records: [], total: 0 };
+                data = {
+                    records: [
+                        {
+                            id: 1,
+                            title: '迈入亿级时代，物联网企业成功突围的两种商业模式',
+                            publishTime: '2018-11-13',
+                            description:
+                                '面对碎片化的物联网市场，如何创造商业价值？面对B端这根难啃的骨头，如何找到“肥肉”、如何变现？',
+                            picture: 'https://www.apple.com/cn/icloud/images/screen_apps_collaborate_ipad_large_2x.jpg',
+                            order: 2
+                        }
+                    ],
+                    total: 1
+                };
+            } finally {
+                this.loading = false;
+            }
 
-            // this.pageList = data.records;
-            // this.pageTotal = data.total;
+            this.pageList = data.records;
+            this.pageTotal = data.total;
         },
 
         onSearch() {
@@ -144,64 +109,60 @@ export default {
         },
 
         onAdd() {
-            this.dialog.form = this.generateFrom();
-            this.dialog.visible = true;
+            this.$router.push('/media/news/edit');
         },
 
-        onDialogSuccess() {
-            this.getList();
-        },
-
-        onEdit(index, item) {
-            this.dialog.form = this.generateFrom(item);
-            this.dialog.visible = true;
+        onEdit(item) {
+            this.$router.push(`/media/news/edit/?id=${item.id}`);
         },
 
         async onTrash(item) {
             try {
-                await confirm(`确认删除选中的角色吗？`);
-                console.log(item);
+                await confirm(`确认删除选中的媒体报道吗？`);
             } catch (err) {
                 return;
             }
 
-            // const ld = loading('删除中');
+            const ld = loading('删除中');
 
-            // try {
-            //     await remove(item.id);
-            //     await this.getList();
-            // } catch (err) {
-            //     await alert(err);
-            // } finally {
-            //     ld.close();
-            // }
+            try {
+                await removeNews(item.id);
+                await this.getList();
+            } catch (err) {
+                await error(err);
+            } finally {
+                ld.close();
+            }
         }
     }
 };
 </script>
 
 <style scoped lang="scss">
-.table-des {
-    margin-left: 40px;
-    .table-count {
-        font-size: 22px;
-        color: $app-primary-color;
-        margin: 0 5px;
-    }
-}
-.table-img {
+.table-thumbnail {
+    cursor: pointer;
+    color: #fff;
     width: 50px;
     height: 38px;
-}
-.table-item-space {
-    padding: 0 10px;
-    cursor: pointer;
-    width: 200px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-}
-.img-hover {
-    cursor: pointer;
+    position: relative;
+    &-img {
+        width: 100%;
+        height: 100%;
+    }
+    &-actions {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: $app-base-color;
+        opacity: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &:hover {
+            opacity: 0.5;
+        }
+    }
 }
 </style>

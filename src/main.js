@@ -1,10 +1,3 @@
-/**
- * main
- * @author ydr.me
- * @create 2019-08-21 11:58:55
- * @update 2019-08-21 11:58:55
- */
-
 import Vue from 'vue';
 import lang from 'element-ui/lib/locale/lang/zh-CN';
 import locale from 'element-ui/lib/locale';

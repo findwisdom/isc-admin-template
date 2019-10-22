@@ -11,8 +11,8 @@
         <el-table :data="pageList" size="mini" v-loading="loading">
             <el-table-column prop="id" label="编号"></el-table-column>
             <el-table-column prop="date" label="时间"></el-table-column>
-            <el-table-column prop="event" label="事记"></el-table-column>
-            <el-table-column>
+            <el-table-column prop="event" label="事记" :show-overflow-tooltip="true"></el-table-column>
+            <el-table-column align="right">
                 <template slot-scope="scope">
                     <div>
                         <el-button size="mini" type="text" @click="onEdit(scope.$index, scope.row)">编辑</el-button>
@@ -96,7 +96,7 @@ export default {
                 error(err);
                 // TODO: service
                 // data = { records: [], total: 0 };
-                data = { records: [{ id: 1, date: '2019-10', event: 'xxx' }], total: 1 };
+                data = { records: [{ id: 1, date: '2019-10', event: 'xxxxxxxxxxxxxxxxxxxxxxxxx' }], total: 1 };
             } finally {
                 this.loading = false;
             }
