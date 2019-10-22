@@ -103,3 +103,17 @@ export async function createUpdateDocument(form) {
     });
     return res.data;
 }
+
+/**
+ * 编辑详情
+ * @param form
+ * @returns {Promise<null|any>}
+ */
+export async function updateDetail(form) {
+    const res = await service({
+        url: `${url}/createUpdate`,
+        method: 'post',
+        data: form
+    });
+    return res.data;
+}
