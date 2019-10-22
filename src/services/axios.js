@@ -1,9 +1,3 @@
-/**
- * axio，标准化的暴露 promise
- * @author 云淡然
- * @createdAt 2019年08月17日16:08:32
- */
-
 import { stringify } from '@/utils/querystring';
 import axios from 'axios';
 

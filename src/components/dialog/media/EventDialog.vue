@@ -12,12 +12,12 @@
         </template>
 
         <template v-slot:default>
-            <el-form ref="form" :model="form" :rules="rules" label-width="80px" size="mini">
-                <el-form-item label="日期" prop="role" class="is-required">
-                    <el-date-picker v-model="form.date" type="date" placeholder="选择日期"></el-date-picker>
+            <el-form ref="form" :model="form" :rules="rules" label-width="60px" size="mini">
+                <el-form-item label="时间" prop="date">
+                    <el-date-picker v-model="form.date" type="month" placeholder="选择时间"></el-date-picker>
                 </el-form-item>
-                <el-form-item label="事件" prop="event" class="is-required">
-                    <el-input v-model="form.event"></el-input>
+                <el-form-item label="事记" prop="event">
+                    <el-input type="textarea" :rows="2" v-model="form.event" maxlength="60"></el-input>
                 </el-form-item>
             </el-form>
         </template>
@@ -26,10 +26,9 @@
 
 <script>
 import AppDialog from '@/components/app/AppDialog';
-import { alert, success, error } from '@/utils/message';
-import validation from '@/validations/gateway';
-import { getOperationList } from '@/services/operation';
-import { setUserRole } from '@/services/user';
+import { success, error } from '@/utils/message';
+import validation from '@/validations/event';
+import { createUpdateEvent } from '@/services/media';
 export default {
     name: 'EventDialog',
     components: {
@@ -50,7 +49,6 @@ export default {
     data() {
         return {
             loading: false,
-            osTypeOptions: [],
             rules: validation(this)
         };
     },
@@ -64,7 +62,7 @@ export default {
             }
         },
         actionName() {
-            return (this.form.id ? '编辑' : '添加') + '事记';
+            return (this.form.id ? '编辑' : '添加') + '大事记';
         }
     },
     methods: {
@@ -89,12 +87,12 @@ export default {
             } catch (err) {
                 return;
             }
-            console.log(this.form);
+
             try {
                 this.loading = true;
-                await setUserRole(this.form.id, this.form.role);
+                await createUpdateEvent(this.form);
             } catch (err) {
-                return await alert(err);
+                return await error(err);
             } finally {
                 this.loading = false;
             }
@@ -102,15 +100,6 @@ export default {
             success(`${this.actionName}成功`);
             this.visible2 = false;
             this.$emit('success');
-        }
-    },
-    async created() {
-        let data = null;
-        try {
-            data = await getOperationList();
-            this.osTypeOptions = data.map(item => ({ label: item.name, value: item.roleKey }));
-        } catch (err) {
-            error(err);
         }
     }
 };
