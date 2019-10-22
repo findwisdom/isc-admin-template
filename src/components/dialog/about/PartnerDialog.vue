@@ -80,8 +80,13 @@ export default {
         }
     },
     methods: {
-        uploadError() {},
-        onUploadSuccess() {},
+        uploadError(err) {
+            console.log(err);
+        },
+        onUploadSuccess(data) {
+            this.form.picture = data.url;
+            success('上传成功');
+        },
         clearValidate() {
             this.$nextTick(() => {
                 const form = this.$refs.form;

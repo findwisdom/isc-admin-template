@@ -16,9 +16,7 @@
             <el-table-column prop="obtainTime" label="获得时间"></el-table-column>
             <el-table-column prop="picture" label="图片">
                 <template slot-scope="scope">
-                    <div @click="handlePicturePreview(scope.row)" class="img-hover">
-                        <img :src="scope.row.picture" :alt="scope.row.name" class="table-img" />
-                    </div>
+                    <Thumbnail :picture="scope.row.picture" />
                 </template>
             </el-table-column>
             <el-table-column prop="remark" label="备注"></el-table-column>
@@ -33,28 +31,26 @@
                 </template>
             </el-table-column>
         </el-table>
-        <el-dialog :visible.sync="dialogVisible">
-            <img width="100%" :src="viewImg" alt="" />
-        </el-dialog>
         <TableFooter :page-number.sync="pageNumber" :page-size.sync="pageSize" :page-total="pageTotal"></TableFooter>
-
         <HonourDialog @success="onDialogSuccess" :form="dialog.form" :visible.sync="dialog.visible"></HonourDialog>
     </div>
 </template>
 
 <script>
-// import { getUserList } from '@/services/user';
+import { getPatentList, deletePatent } from '@/services/about';
 import TableHeader from '@/components/table/TableHeader';
 import TableFooter from '@/components/table/TableFooter';
 import HonourDialog from '@/components/dialog/about/HonourDialog';
+import Thumbnail from '@/components/Thumbnail';
 import { fill } from '@/utils/object';
-// import { error } from '@/utils/message';
+import { error, loading } from '@/utils/message';
 
 export default {
     components: {
         TableHeader,
         TableFooter,
-        HonourDialog
+        HonourDialog,
+        Thumbnail
     },
     data() {
         return {
@@ -77,9 +73,7 @@ export default {
             dialog: {
                 visible: false,
                 form: this.generateFrom()
-            },
-            viewImg: '',
-            dialogVisible: false
+            }
         };
     },
     filters: {
@@ -107,38 +101,32 @@ export default {
             return fill(
                 {
                     id: undefined,
-                    order: undefined,
-                    name: undefined,
-                    type: undefined,
+                    order: null,
+                    name: null,
+                    type: null,
                     obtainTime: null,
-                    picture: undefined,
-                    remark: undefined
+                    picture: null,
+                    remark: null
                 },
                 item
             );
         },
 
-        handlePicturePreview(file) {
-            this.viewImg = file.picture;
-            this.dialogVisible = true;
-        },
-
         async getList() {
-            // let data = null;
+            let data = null;
             this.loading = true;
-            this.loading = false;
+            try {
+                data = await getPatentList(this.pageSize, this.pageNumber, this.keywords);
+                this.loading = false;
+            } catch (err) {
+                error(err);
+                data = { records: [], total: 0 };
+            } finally {
+                this.loading = false;
+            }
 
-            // try {
-            //     data = await getUserList(this.pageSize, this.pageNumber, this.keywords);
-            // } catch (err) {
-            //     error(err);
-            //     data = { records: [], total: 0 };
-            // } finally {
-            //     this.loading = false;
-            // }
-
-            // this.pageList = data.records;
-            // this.pageTotal = data.total;
+            this.pageList = data.records;
+            this.pageTotal = data.total;
         },
 
         onSearch() {
@@ -168,43 +156,19 @@ export default {
                 return;
             }
 
-            // const ld = loading('删除中');
+            const ld = loading('删除中');
 
-            // try {
-            //     await remove(item.id);
-            //     await this.getList();
-            // } catch (err) {
-            //     await alert(err);
-            // } finally {
-            //     ld.close();
-            // }
+            try {
+                await deletePatent(item.id);
+                await this.getList();
+            } catch (err) {
+                await alert(err);
+            } finally {
+                ld.close();
+            }
         }
     }
 };
 </script>
 
-<style scoped lang="scss">
-.table-des {
-    margin-left: 40px;
-    .table-count {
-        font-size: 22px;
-        color: $app-primary-color;
-        margin: 0 5px;
-    }
-}
-.table-img {
-    width: 50px;
-    height: 38px;
-}
-.table-item-space {
-    padding: 0 10px;
-    cursor: pointer;
-    width: 200px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-}
-.img-hover {
-    cursor: pointer;
-}
-</style>
+<style scoped lang="scss"></style>

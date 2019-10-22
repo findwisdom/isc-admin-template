@@ -123,3 +123,65 @@ export async function deleteCareer(id) {
     });
     return res.data;
 }
+
+/** 获取专利名称列表
+ *
+ * @param pageSize
+ * @param pageNumber
+ * @param name
+ * @returns {Promise<*>}
+ */
+export async function getPatentList(pageSize, pageNumber, name) {
+    const res = await axios({
+        url: '/api/operation/user/getUserList',
+        params: {
+            pageSize,
+            pageNumber,
+            name
+        }
+    });
+    return res.data;
+}
+
+/** 新增专利名称
+ *
+ * @param form
+ * @returns {Promise<*>}
+ */
+
+export async function createPatent(form) {
+    const res = await axios({
+        url: '/api/operation/repair/createRepair',
+        method: 'post',
+        data: form
+    });
+    return res.data;
+}
+
+/**
+ * 更新专利名称
+ * @param form
+ * @returns {Promise<*>}
+ */
+
+export async function updatePatent(form) {
+    const res = await axios({
+        url: '/api/operation/business/updateBusiness',
+        method: 'put',
+        data: form
+    });
+    return res.data;
+}
+
+/** 删除专利名称
+ *
+ * @param id
+ * @returns {Promise<*>}
+ */
+export async function deletePatent(id) {
+    const res = await axios({
+        url: `/api/operation/repair/deleteRepair/${id}`,
+        method: 'delete'
+    });
+    return res.data;
+}

@@ -17,7 +17,7 @@
                     <el-input v-model="form.name" placeholder="请输入名称" maxlength="40"></el-input>
                 </el-form-item>
                 <el-form-item label="排序" prop="order">
-                    <el-input-number v-model.number="form.order"></el-input-number>
+                    <el-input-number v-model="form.order"></el-input-number>
                 </el-form-item>
                 <el-form-item label="图片" prop="name" class="is-required">
                     <app-upload
@@ -29,16 +29,6 @@
                         <app-upload-img v-show="form.picture" :url="form.picture" />
                         <app-upload-img v-show="!form.picture" />
                     </app-upload>
-                </el-form-item>
-                <el-form-item label="产品类型" prop="role">
-                    <el-select v-model="form.type" placeholder="请选择产品所属">
-                        <el-option
-                            v-for="option in osTypeOptions"
-                            :key="option.value"
-                            :label="option.label"
-                            :value="option.value"
-                        ></el-option>
-                    </el-select>
                 </el-form-item>
                 <el-form-item label="获得时间" prop="email" class="is-required">
                     <el-date-picker v-model="form.obtainTime" type="date" placeholder="选择日期"></el-date-picker>
@@ -62,9 +52,8 @@ import AppDialog from '@/components/app/AppDialog';
 import AppUpload from '@/components/app/AppUpload';
 import AppUploadImg from '@/components/app/AppUploadImg';
 import { alert, success, error } from '@/utils/message';
-import validation from '@/validations/gateway';
-import { getOperationList } from '@/services/operation';
-import { setUserRole } from '@/services/user';
+import validation from '@/validations/honour';
+import { createPatent, updatePatent } from '@/services/about';
 export default {
     name: 'RoleDialog',
     components: {
@@ -106,8 +95,13 @@ export default {
         }
     },
     methods: {
-        uploadError() {},
-        onUploadSuccess() {},
+        uploadError(err) {
+            console.log(err);
+        },
+        onUploadSuccess(data) {
+            this.form.picture = data.url;
+            success('上传成功');
+        },
         clearValidate() {
             this.$nextTick(() => {
                 const form = this.$refs.form;
@@ -131,7 +125,11 @@ export default {
             }
             try {
                 this.loading = true;
-                await setUserRole(this.form.id, this.form.role);
+                if (this.form.id) {
+                    await createPatent(this.form);
+                } else {
+                    await updatePatent(this.form);
+                }
             } catch (err) {
                 return await alert(err);
             } finally {
@@ -143,14 +141,6 @@ export default {
             this.$emit('success');
         }
     },
-    async created() {
-        let data = null;
-        try {
-            data = await getOperationList();
-            this.osTypeOptions = data.map(item => ({ label: item.name, value: item.roleKey }));
-        } catch (err) {
-            error(err);
-        }
-    }
+    async created() {}
 };
 </script>

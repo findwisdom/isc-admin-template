@@ -27,9 +27,6 @@
                 </template>
             </el-table-column>
         </el-table>
-        <el-dialog :visible.sync="dialogVisible">
-            <img width="100%" :src="viewImg" alt="" />
-        </el-dialog>
         <TableFooter :page-number.sync="pageNumber" :page-size.sync="pageSize" :page-total="pageTotal"></TableFooter>
 
         <JoinDialog @success="onDialogSuccess" :form="dialog.form" :visible.sync="dialog.visible"></JoinDialog>
@@ -71,20 +68,10 @@ export default {
             dialog: {
                 visible: false,
                 form: this.generateFrom()
-            },
-            viewImg: '',
-            dialogVisible: false
+            }
         };
     },
-    filters: {
-        orderFlow(value) {
-            if (Array.isArray(value.groupList)) {
-                return value.groupList[0].name;
-            } else {
-                return '';
-            }
-        }
-    },
+    filters: {},
     watch: {
         pageNumber() {
             this.getList();
@@ -110,19 +97,12 @@ export default {
                 item
             );
         },
-
-        handlePicturePreview(file) {
-            this.viewImg = file.picture;
-            this.dialogVisible = true;
-        },
-
         async getList() {
             let data = null;
             this.loading = true;
-            this.loading = false;
-
             try {
                 data = await getCareerList(this.pageSize, this.pageNumber, this.keywords);
+                this.loading = false;
             } catch (err) {
                 error(err);
                 data = { records: [], total: 0 };
@@ -176,28 +156,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-.table-des {
-    margin-left: 40px;
-    .table-count {
-        font-size: 22px;
-        color: $app-primary-color;
-        margin: 0 5px;
-    }
-}
-.table-img {
-    width: 50px;
-    height: 38px;
-}
-.table-item-space {
-    padding: 0 10px;
-    cursor: pointer;
-    width: 200px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-}
-.img-hover {
-    cursor: pointer;
-}
-</style>
+<style scoped lang="scss"></style>

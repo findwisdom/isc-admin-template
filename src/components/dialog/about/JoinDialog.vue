@@ -89,8 +89,6 @@ export default {
         }
     },
     methods: {
-        uploadError() {},
-        onUploadSuccess() {},
         clearValidate() {
             this.$nextTick(() => {
                 const form = this.$refs.form;
