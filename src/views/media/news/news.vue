@@ -43,6 +43,7 @@ import Thumbnail from '@/components/Thumbnail';
 import { error, confirm, loading } from '@/utils/message';
 
 export default {
+    name: 'News',
     components: {
         TableHeader,
         TableFooter,

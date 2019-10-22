@@ -47,7 +47,7 @@ import { getNewsContent, createUpdateNews } from '@/services/media';
 import { error, loading } from '@/utils/message';
 
 export default {
-    name: 'TinymcePage',
+    name: 'Edit',
     components: { Tinymce, AppUpload, AppUploadList },
     data() {
         return {
@@ -87,7 +87,7 @@ export default {
                     description:
                         '面对碎片化的物联网市场，如何创造商业价值？面对B端这根难啃的骨头，如何找到“肥肉”、如何变现？',
                     order: '1',
-                    picture: 'http://zlj.80hl.net/Upload/news/2018/11/26/20181126143844kzdv.jpg',
+                    picture: 'https://www.apple.com/cn/icloud/images/screen_apps_collaborate_ipad_large_2x.jpg',
                     publishTime: '2018-11-13',
                     content: '<h1 style="text-align: center;">Welcome to the TinyMCE demo!</h1>'
                 };
@@ -121,19 +121,17 @@ export default {
         previewPicture() {
             this.visible = true;
         },
-        onSubmit(formName) {
-            this.$refs[formName].validate(valid => {
-                if (!valid) {
-                    return false;
-                }
-                if (!this.formData.content) {
-                    this.$message.error('请编辑报道内容！');
-                    return false;
-                }
-                this.submitNews();
-            });
-        },
-        async submitNews() {
+        async onSubmit(formName) {
+            try {
+                await this.$refs[formName].validate();
+            } catch (err) {
+                return;
+            }
+            if (!this.formData.content) {
+                this.$message.error('请编辑报道内容！');
+                return false;
+            }
+
             const ld = loading('提交中');
             // TODO:提交接口
             try {

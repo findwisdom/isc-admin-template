@@ -13,11 +13,14 @@
 
         <template v-slot:default>
             <el-form ref="form" :model="form" :rules="rules" label-width="60px" size="mini">
-                <el-form-item label="时间" prop="date">
-                    <el-date-picker v-model="form.date" type="month" placeholder="选择时间"></el-date-picker>
+                <el-form-item label="步骤" prop="order">
+                    <el-input-number v-model.number="form.order"></el-input-number>
                 </el-form-item>
-                <el-form-item label="事记" prop="event">
-                    <el-input type="textarea" :rows="2" v-model="form.event" maxlength="30"></el-input>
+                <el-form-item label="名称" prop="name">
+                    <el-input v-model="form.name" maxlength="10"></el-input>
+                </el-form-item>
+                <el-form-item label="内容" prop="description">
+                    <el-input type="textarea" :rows="2" v-model="form.description" maxlength="150"></el-input>
                 </el-form-item>
             </el-form>
         </template>
@@ -27,10 +30,10 @@
 <script>
 import AppDialog from '@/components/app/AppDialog';
 import { success, error } from '@/utils/message';
-import validation from '@/validations/event';
-import { createUpdateEvent } from '@/services/media';
+import validation from '@/validations/eduction';
+import { createUpdateEduction } from '@/services/integration';
 export default {
-    name: 'EventDialog',
+    name: 'EductionDialog',
     components: {
         AppDialog
     },
@@ -62,7 +65,7 @@ export default {
             }
         },
         actionName() {
-            return (this.form.id ? '编辑' : '添加') + '大事记';
+            return (this.form.id ? '编辑' : '添加') + '步骤';
         }
     },
     methods: {
@@ -90,7 +93,7 @@ export default {
 
             try {
                 this.loading = true;
-                await createUpdateEvent(this.form);
+                await createUpdateEduction(this.form);
             } catch (err) {
                 return await error(err);
             } finally {

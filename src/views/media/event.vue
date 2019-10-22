@@ -23,9 +23,7 @@
                 </template>
             </el-table-column>
         </el-table>
-        <el-dialog :visible.sync="dialogVisible">
-            <img width="100%" :src="viewImg" alt="" />
-        </el-dialog>
+
         <TableFooter :page-number.sync="pageNumber" :page-size.sync="pageSize" :page-total="pageTotal"></TableFooter>
 
         <EventDialog @success="onDialogSuccess" :form="dialog.form" :visible.sync="dialog.visible"></EventDialog>
@@ -41,6 +39,7 @@ import { fill } from '@/utils/object';
 import { error, confirm, loading } from '@/utils/message';
 
 export default {
+    name: 'Event',
     components: {
         TableHeader,
         TableFooter,
@@ -57,9 +56,7 @@ export default {
             dialog: {
                 visible: false,
                 form: this.generateFrom()
-            },
-            viewImg: '',
-            dialogVisible: false
+            }
         };
     },
     watch: {
@@ -95,7 +92,10 @@ export default {
                 error(err);
                 // TODO: service
                 // data = { records: [], total: 0 };
-                data = { records: [{ id: 1, date: '2019-10', event: 'xxxxxxxxxxxxxxxxxxxxxxxxx' }], total: 1 };
+                data = {
+                    records: [{ id: 1, date: '2019-06', event: '指令集商业智能操作系统发布会圆满成功' }],
+                    total: 1
+                };
             } finally {
                 this.loading = false;
             }
@@ -126,7 +126,6 @@ export default {
         async onTrash(item) {
             try {
                 await confirm(`确认删除选中的大事记吗？`);
-                console.log(item);
             } catch (err) {
                 return;
             }
