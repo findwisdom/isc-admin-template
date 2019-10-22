@@ -16,32 +16,17 @@
                 <el-form-item label="城市" prop="city" class="is-required">
                     <el-input v-model="form.city" placeholder="请输入城市" maxlength="40"></el-input>
                 </el-form-item>
-                <el-form-item label="公司名称" prop="name" class="is-required">
-                    <el-input v-model="form.name" placeholder="请输入公司名称" maxlength="40"></el-input>
+                <el-form-item label="岗位名称" prop="name" class="is-required">
+                    <el-input v-model="form.name" placeholder="请输入岗位名称" maxlength="40"></el-input>
                 </el-form-item>
-                <el-form-item label="公司地址" prop="address" class="is-required">
-                    <el-input v-model="form.address" placeholder="请输入公司地址" maxlength="40"></el-input>
+                <el-form-item label="岗位职责" prop="address" class="is-required">
+                    <el-input v-model="form.duty" placeholder="请输入岗位职责" maxlength="200"></el-input>
                 </el-form-item>
-                <el-form-item label="邮箱" prop="email" class="is-required">
-                    <el-input v-model="form.email" placeholder="请输入公司地址" maxlength="40"></el-input>
+                <el-form-item label="任职资格" prop="email" class="is-required">
+                    <el-input v-model="form.qualification" placeholder="请输入任职资格" maxlength="200"></el-input>
                 </el-form-item>
-                <el-form-item label="公司地址" prop="name" class="is-required">
-                    <el-input v-model="form.address" placeholder="请输入公司地址" maxlength="40"></el-input>
-                </el-form-item>
-                <el-form-item label="电话" prop="phone" class="is-required">
-                    <el-input v-model="form.phone" placeholder="请输入联系电话" maxlength="40"></el-input>
-                </el-form-item>
-                <el-form-item label="电话" prop="phone" class="is-required">
-                    <el-input v-model="form.phone" placeholder="请输入联系电话" maxlength="40"></el-input>
-                </el-form-item>
-                <el-form-item label="是否主公司" prop="phone" class="is-required">
-                    <el-switch
-                        v-model="form.mainCompany"
-                        active-color="#13ce66"
-                        inactive-color="#ff4949"
-                        active-value="100"
-                        inactive-value="0"
-                    ></el-switch>
+                <el-form-item label="发布时间" prop="email" class="is-required">
+                    <el-date-picker v-model="form.publishTime" type="date" placeholder="选择日期"></el-date-picker>
                 </el-form-item>
             </el-form>
         </template>

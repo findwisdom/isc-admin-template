@@ -101,9 +101,14 @@ export default {
         generateFrom(item) {
             return fill(
                 {
-                    id: undefined,
+                    id: null,
+                    city: null,
                     name: null,
-                    picture: null
+                    address: null,
+                    email: null,
+                    phone: null,
+                    postCode: null,
+                    mainCompany: false
                 },
                 item
             );
