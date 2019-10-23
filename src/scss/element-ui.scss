@@ -64,6 +64,7 @@ $--color-primary: $app-primary-color;
     .el-menu--inline {
         overflow: hidden;
         border-radius: 0 0 5px 5px;
+        margin-bottom: 8px;
         .el-menu-item {
             height: 30px;
             line-height: 30px;
