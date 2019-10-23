@@ -9,7 +9,7 @@ import axios from '@/services/axios';
  */
 export async function getProductList(pageSize, pageNumber, name) {
     const res = await axios({
-        url: '/api/user/getProductList',
+        url: '/api/product/getProductList',
         params: {
             pageSize,
             pageNumber,
@@ -27,7 +27,7 @@ export async function getProductList(pageSize, pageNumber, name) {
 
 export async function createProduct(form) {
     const res = await axios({
-        url: '/api/user/addProduct',
+        url: '/api/product/addProduct',
         method: 'post',
         data: form
     });
@@ -42,7 +42,7 @@ export async function createProduct(form) {
 
 export async function updateProduct(form) {
     const res = await axios({
-        url: '/api/user/updateProduct',
+        url: '/api/product/updateProduct',
         method: 'put',
         data: form
     });
@@ -56,7 +56,7 @@ export async function updateProduct(form) {
  */
 export async function deleteProduct(id) {
     const res = await axios({
-        url: `/api/user/deleteProduct`,
+        url: `/api/product/deleteProduct`,
         method: 'delete',
         params: {
             Product: id
@@ -72,7 +72,7 @@ export async function deleteProduct(id) {
 
 export async function getProductType() {
     const res = await axios({
-        url: '/api/user/getProductTypeList',
+        url: '/api/productType/getProductTypeList',
         params: {
             pageSize: 100,
             pageNumber: 1

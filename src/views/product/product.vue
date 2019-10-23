@@ -9,7 +9,7 @@
         </TableHeader>
 
         <el-table :data="pageList" size="mini" v-loading="loading">
-            <el-table-column prop="id" label="编号"></el-table-column>
+            <el-table-column prop="id" label="编号" width="50px"></el-table-column>
             <el-table-column prop="name" label="产品名称" :show-overflow-tooltip="true"></el-table-column>
             <el-table-column prop="banner" label="产品banner图" width="100px">
                 <template slot-scope="scope">
@@ -28,9 +28,7 @@
                 <template slot-scope="scope">
                     <div>
                         <el-button size="mini" type="text" @click="onEdit(scope.$index, scope.row)">编辑</el-button>
-                        <el-button size="mini" type="text" class="el-button__text-delete" @click="onTrash(scope.row)">
-                            删除
-                        </el-button>
+                        <TableDelete @handleDelete="onTrash(scope.row)"></TableDelete>
                     </div>
                 </template>
             </el-table-column>
@@ -44,21 +42,22 @@
 import { getProductList, deleteProduct } from '@/services/product';
 import TableHeader from '@/components/table/TableHeader';
 import TableFooter from '@/components/table/TableFooter';
+import TableDelete from '@/components/table/TableDelete';
 import ProductDialog from '@/components/dialog/product/ProductDialog';
 import Thumbnail from '@/components/Thumbnail';
 import { fill } from '@/utils/object';
-import { error, alert, confirm, loading } from '@/utils/message';
+import { error, alert, loading } from '@/utils/message';
 
 export default {
     components: {
         TableHeader,
         TableFooter,
         ProductDialog,
-        Thumbnail
+        Thumbnail,
+        TableDelete
     },
     data() {
         return {
-            x: '',
             keywords: null,
             loading: false,
             pageNumber: 1,
@@ -91,7 +90,7 @@ export default {
         }
     },
     created() {
-        this.getList();
+        // this.getList();
     },
     methods: {
         generateFrom(item) {
@@ -122,7 +121,7 @@ export default {
             }
 
             this.pageList = data.list;
-            this.pageTotal = 100;
+            this.pageTotal = data.totalSize;
         },
 
         onSearch() {
@@ -145,12 +144,6 @@ export default {
         },
 
         async onTrash(item) {
-            try {
-                await confirm(`确认删除选中的产品吗？`);
-            } catch (err) {
-                return;
-            }
-            console.log(item);
             const ld = loading('删除中');
 
             try {
@@ -166,28 +159,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-.table-des {
-    margin-left: 40px;
-    .table-count {
-        font-size: 22px;
-        color: $app-primary-color;
-        margin: 0 5px;
-    }
-}
-.table-img {
-    width: 50px;
-    height: 38px;
-}
-.table-item-space {
-    padding: 0 10px;
-    cursor: pointer;
-    width: 200px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-}
-.img-hover {
-    cursor: pointer;
-}
-</style>
+<style scoped lang="scss"></style>

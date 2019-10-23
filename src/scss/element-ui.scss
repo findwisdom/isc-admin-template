@@ -19,7 +19,7 @@ $--color-primary: $app-primary-color;
 
 .el-popper .popper__arrow,
 .el-popper .popper__arrow::after {
-    display: none;
+    //display: none;
 }
 .el-popper[x-placement^='bottom'] {
     margin-top: 8px;
