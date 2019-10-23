@@ -37,8 +37,7 @@ import {
     Upload,
     Message,
     Tree,
-    Collapse,
-    CollapseItem
+    Popover
 } from 'element-ui';
 
 const elementList = [
@@ -73,8 +72,7 @@ const elementList = [
     Upload,
     Message,
     Tree,
-    Collapse,
-    CollapseItem
+    Popover
 ];
 Vue.prototype.$message = Message;
 

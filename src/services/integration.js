@@ -117,3 +117,47 @@ export async function updateDetail(form) {
     });
     return res.data;
 }
+
+/**
+ * 获取问题列表数据
+ * @returns {Promise<void>}
+ */
+export async function getQuestionList() {
+    const res = await service({
+        url: url
+    });
+    return res.data;
+}
+
+/**
+ * 删除问题
+ * @param data
+ * @returns {Promise<null|any>}
+ */
+export async function removeQuestion(data) {
+    const res = await service({
+        url: `${url}`,
+        method: 'delete',
+        data
+    });
+
+    if (res.data === true) {
+        return null;
+    }
+
+    throw new Error('删除失败');
+}
+
+/**
+ * 新增编辑问题
+ * @param form
+ * @returns {Promise<null|any>}
+ */
+export async function createUpdateQuestion(form) {
+    const res = await service({
+        url: `${url}/createUpdate`,
+        method: 'post',
+        data: form
+    });
+    return res.data;
+}
