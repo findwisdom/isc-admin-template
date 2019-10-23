@@ -1,6 +1,8 @@
 <template>
-    <div class="tree-wrapper">
-        <el-button size="mini" type="primary" icon="el-icon-plus" @click="() => onAdd()">新建一级问题</el-button>
+    <div class="tree-wrapper" v-loading="loading">
+        <el-button size="mini" type="primary" icon="el-icon-plus" @click="() => onAdd({ id: 0 })">
+            新建一级问题
+        </el-button>
         <el-tree :data="TreeData" node-key="id" default-expand-all :expand-on-click-node="false">
             <span class="custom-tree-node" slot-scope="{ node, data }">
                 <span class="question">问：{{ data.question }}</span>
@@ -94,8 +96,10 @@ export default {
             this.getList();
         },
 
-        onAdd() {
+        onAdd(data) {
+            console.log(data);
             this.dialog.form = this.generateFrom();
+            Object.assign(this.dialog.form, { parentId: data.id });
             this.dialog.visible = true;
         },
 
@@ -114,7 +118,7 @@ export default {
             const ld = loading('删除中');
 
             try {
-                await removeQuestion(data.id);
+                await removeQuestion({ id: data.id, parentId: data.parentId });
                 await this.getList();
             } catch (err) {
                 await error(err);

@@ -21,7 +21,7 @@
 import AppDialog from '@/components/app/AppDialog';
 import { success, error } from '@/utils/message';
 import validation from '@/validations/question';
-import { createUpdateQuestion } from '@/services/integration';
+import { createQuestion, updateQuestion } from '@/services/integration';
 export default {
     name: 'QuestionDialog',
     components: {
@@ -56,6 +56,9 @@ export default {
         },
         actionName() {
             return (this.form.id ? '编辑' : '添加') + '问题';
+        },
+        createUpdateQuestion() {
+            return this.form.id ? updateQuestion : createQuestion;
         }
     },
     methods: {
@@ -83,7 +86,7 @@ export default {
 
             try {
                 this.loading = true;
-                await createUpdateQuestion(this.form);
+                await this.createUpdateQuestion(this.form);
             } catch (err) {
                 return await error(err);
             } finally {

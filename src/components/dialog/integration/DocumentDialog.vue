@@ -31,7 +31,7 @@
 import AppDialog from '@/components/app/AppDialog';
 import { success, error } from '@/utils/message';
 import validation from '@/validations/ducument';
-import { createUpdateDocument } from '@/services/integration';
+import { createDocument, updateDocument } from '@/services/integration';
 export default {
     name: 'DocumentDialog',
     components: {
@@ -66,6 +66,9 @@ export default {
         },
         actionName() {
             return (this.form.id ? '编辑' : '添加') + '文档';
+        },
+        createUpdateDocument() {
+            return this.form.id ? updateDocument : createDocument;
         }
     },
     methods: {
@@ -93,7 +96,7 @@ export default {
 
             try {
                 this.loading = true;
-                await createUpdateDocument(this.form);
+                await this.createUpdateDocument(this.form);
             } catch (err) {
                 return await error(err);
             } finally {

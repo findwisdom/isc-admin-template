@@ -1,6 +1,6 @@
 import service from './axios';
 // TODO: service
-const url = '/api/operation/integration';
+const url = '/api/user';
 
 /**
  * 获取步骤列表数据
@@ -11,7 +11,7 @@ const url = '/api/operation/integration';
  */
 export async function getEductionList(pageSize, pageNumber, name) {
     const res = await service({
-        url: url,
+        url: `${url}/getStepList`,
         params: {
             pageSize,
             pageNumber,
@@ -28,7 +28,7 @@ export async function getEductionList(pageSize, pageNumber, name) {
  */
 export async function removeEduction(id) {
     const res = await service({
-        url: `${url}/${id}`,
+        url: `${url}/deleteStep/${id}`,
         method: 'delete'
     });
 
@@ -40,13 +40,27 @@ export async function removeEduction(id) {
 }
 
 /**
- * 新增编辑步骤
+ * 新增步骤
  * @param form
  * @returns {Promise<null|any>}
  */
-export async function createUpdateEduction(form) {
+export async function createEduction(form) {
     const res = await service({
-        url: `${url}/createUpdate`,
+        url: `${url}/addStep`,
+        method: 'post',
+        data: form
+    });
+    return res.data;
+}
+
+/**
+ * 编辑步骤
+ * @param form
+ * @returns {Promise<null|any>}
+ */
+export async function updateEduction(form) {
+    const res = await service({
+        url: `${url}/updateStep`,
         method: 'post',
         data: form
     });
@@ -62,7 +76,7 @@ export async function createUpdateEduction(form) {
  */
 export async function getDocumentList(pageSize, pageNumber, name) {
     const res = await service({
-        url: url,
+        url: `${url}/getDocumentList`,
         params: {
             pageSize,
             pageNumber,
@@ -79,7 +93,7 @@ export async function getDocumentList(pageSize, pageNumber, name) {
  */
 export async function removeDocument(id) {
     const res = await service({
-        url: `${url}/${id}`,
+        url: `${url}/deleteDocument/${id}`,
         method: 'delete'
     });
 
@@ -91,13 +105,27 @@ export async function removeDocument(id) {
 }
 
 /**
- * 新增编辑文档
+ * 新增文档
  * @param form
  * @returns {Promise<null|any>}
  */
-export async function createUpdateDocument(form) {
+export async function createDocument(form) {
     const res = await service({
-        url: `${url}/createUpdate`,
+        url: `${url}/addDocument`,
+        method: 'post',
+        data: form
+    });
+    return res.data;
+}
+
+/**
+ * 编辑文档
+ * @param form
+ * @returns {Promise<null|any>}
+ */
+export async function updateDocument(form) {
+    const res = await service({
+        url: `${url}/updateDocument`,
         method: 'post',
         data: form
     });
@@ -124,7 +152,7 @@ export async function updateDetail(form) {
  */
 export async function getQuestionList() {
     const res = await service({
-        url: url
+        url: `${url}/getQuestionList`
     });
     return res.data;
 }
@@ -136,7 +164,7 @@ export async function getQuestionList() {
  */
 export async function removeQuestion(data) {
     const res = await service({
-        url: `${url}`,
+        url: `${url}/deleteQuestion`,
         method: 'delete',
         data
     });
@@ -149,13 +177,27 @@ export async function removeQuestion(data) {
 }
 
 /**
- * 新增编辑问题
+ * 新增问题
  * @param form
  * @returns {Promise<null|any>}
  */
-export async function createUpdateQuestion(form) {
+export async function createQuestion(form) {
     const res = await service({
-        url: `${url}/createUpdate`,
+        url: `${url}/addQuestion`,
+        method: 'post',
+        data: form
+    });
+    return res.data;
+}
+
+/**
+ * 编辑问题
+ * @param form
+ * @returns {Promise<null|any>}
+ */
+export async function updateQuestion(form) {
+    const res = await service({
+        url: `${url}/updateQuestion`,
         method: 'post',
         data: form
     });
