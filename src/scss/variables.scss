@@ -6,15 +6,16 @@
  */
 
 // 侧边颜色
-$app-aside-bg: rgb(48, 65, 86);
-$app-aside-font-color: rgb(191, 203, 217);
-$app-aside-font-active: rgb(64, 158, 255);
-$app-aside-sub-bg: #1f2d3d;
-$app-aside-sub-hover: #263445;
-$app-aside-item-hover: #001528;
+$app-aside-bg: #4f6a8a;
+$app-aside-font-color: rgba(246, 246, 246, 0.9);
+$app-aside-font-active: #ffffff;
+$app-aside-bg-active: rgb(64, 158, 255);
+$app-aside-sub-bg: #405a79;
+$app-aside-sub-hover: #4f6a8a;
+$app-aside-item-hover: #405a79;
 
 // 背景色
-$app-body-bg: #f5f9fd;
+$app-body-bg: #eef3f9;
 
 // 主要：前景色
 $app-primary-color: #4a8bfe;
@@ -47,7 +48,7 @@ $app-grey-color: #9ba1b5;
 $app-light-color: #f6f7f8;
 
 // 聚焦：背景色
-$app-hover-color: #F5F7FA;
+$app-hover-color: #f5f7fa;
 
 // 应用宽度
 $app-width: 1440px;

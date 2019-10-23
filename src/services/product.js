@@ -9,7 +9,7 @@ import axios from '@/services/axios';
  */
 export async function getProductList(pageSize, pageNumber, name) {
     const res = await axios({
-        url: '/api/operation/user/getUserList',
+        url: '/api/user/getProductList',
         params: {
             pageSize,
             pageNumber,
@@ -27,7 +27,7 @@ export async function getProductList(pageSize, pageNumber, name) {
 
 export async function createProduct(form) {
     const res = await axios({
-        url: '/api/operation/repair/createRepair',
+        url: '/api/user/addProduct',
         method: 'post',
         data: form
     });
@@ -42,7 +42,7 @@ export async function createProduct(form) {
 
 export async function updateProduct(form) {
     const res = await axios({
-        url: '/api/operation/business/updateBusiness',
+        url: '/api/user/updateProduct',
         method: 'put',
         data: form
     });
@@ -56,8 +56,11 @@ export async function updateProduct(form) {
  */
 export async function deleteProduct(id) {
     const res = await axios({
-        url: `/api/operation/repair/deleteRepair/${id}`,
-        method: 'delete'
+        url: `/api/user/deleteProduct`,
+        method: 'delete',
+        params: {
+            Product: id
+        }
     });
     return res.data;
 }
@@ -69,7 +72,11 @@ export async function deleteProduct(id) {
 
 export async function getProductType() {
     const res = await axios({
-        url: '/api/operation/user/getUserList'
+        url: '/api/user/getProductTypeList',
+        params: {
+            pageSize: 100,
+            pageNumber: 1
+        }
     });
     return res.data;
 }

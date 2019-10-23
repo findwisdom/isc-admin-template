@@ -10,30 +10,25 @@
 
         <el-table :data="pageList" size="mini" v-loading="loading">
             <el-table-column prop="id" label="编号"></el-table-column>
-            <el-table-column prop="name" label="产品名称"></el-table-column>
-            <el-table-column prop="banner" label="产品banner图">
+            <el-table-column prop="name" label="产品名称" :show-overflow-tooltip="true"></el-table-column>
+            <el-table-column prop="banner" label="产品banner图" width="100px">
                 <template slot-scope="scope">
                     <Thumbnail :picture="scope.row.banner" />
                 </template>
             </el-table-column>
-            <el-table-column prop="picture" label="封面图">
+            <el-table-column prop="picture" label="封面图" width="100px">
                 <template slot-scope="scope">
                     <Thumbnail :picture="scope.row.picture" />
                 </template>
             </el-table-column>
-            <el-table-column prop="description" label="简介"></el-table-column>
-            <el-table-column prop="productTypeId" label="所属类型"></el-table-column>
+            <el-table-column prop="description" label="简介" :show-overflow-tooltip="true"></el-table-column>
+            <el-table-column prop="productType.name" label="所属类型"></el-table-column>
             <el-table-column prop="order" label="顺序"></el-table-column>
             <el-table-column label="操作" align="center" width="100px">
                 <template slot-scope="scope">
                     <div>
                         <el-button size="mini" type="text" @click="onEdit(scope.$index, scope.row)">编辑</el-button>
-                        <el-button
-                            size="mini"
-                            type="text"
-                            class="el-button__text-delete"
-                            @click="onTrash(scope.$index, scope.row)"
-                        >
+                        <el-button size="mini" type="text" class="el-button__text-delete" @click="onTrash(scope.row)">
                             删除
                         </el-button>
                     </div>
@@ -52,7 +47,7 @@ import TableFooter from '@/components/table/TableFooter';
 import ProductDialog from '@/components/dialog/product/ProductDialog';
 import Thumbnail from '@/components/Thumbnail';
 import { fill } from '@/utils/object';
-import { error, loading } from '@/utils/message';
+import { error, alert, confirm, loading } from '@/utils/message';
 
 export default {
     components: {
@@ -104,9 +99,9 @@ export default {
                 {
                     id: undefined,
                     name: null,
-                    banner: null,
+                    banner: 'http://b-ssl.duitang.com/uploads/blog/201312/04/20131204184148_hhXUT.jpeg',
                     order: null,
-                    picture: null,
+                    picture: 'http://b-ssl.duitang.com/uploads/blog/201312/04/20131204184148_hhXUT.jpeg',
                     description: null,
                     productTypeId: null
                 },
@@ -121,13 +116,13 @@ export default {
                 this.loading = false;
             } catch (err) {
                 error(err);
-                data = { records: [], total: 0 };
+                data = { list: [], totalSize: 0 };
             } finally {
                 this.loading = false;
             }
 
-            this.pageList = data.records;
-            this.pageTotal = data.total;
+            this.pageList = data.list;
+            this.pageTotal = 100;
         },
 
         onSearch() {
@@ -152,11 +147,10 @@ export default {
         async onTrash(item) {
             try {
                 await confirm(`确认删除选中的产品吗？`);
-                console.log(item);
             } catch (err) {
                 return;
             }
-
+            console.log(item);
             const ld = loading('删除中');
 
             try {
