@@ -1,10 +1,3 @@
-/**
- * _variables
- * @author ydr.me
- * @create 2019-08-08 11:07:15
- * @update 2019-08-08 11:07:15
- */
-
 // 侧边颜色
 $app-aside-bg: rgb(48, 65, 86);
 $app-aside-font-color: rgb(191, 203, 217);
@@ -13,11 +6,16 @@ $app-aside-sub-bg: #1f2d3d;
 $app-aside-sub-hover: #263445;
 $app-aside-item-hover: #001528;
 
+/**
+ * 主题色/功能色
+ */
 // 背景色
 $app-body-bg: #f5f9fd;
 
-// 主要：前景色
-$app-primary-color: #4a8bfe;
+// 主题色/功能色
+$app-primary-color: #00b2f8;
+// 主题色/减淡
+$app-primary-light: #e4f7ff;
 // 主要：背景
 $app-primary-bg: #d6e5ff;
 
@@ -25,15 +23,56 @@ $app-primary-bg: #d6e5ff;
 $app-base-color: #686e82;
 $app-base-hover: #3b3d49;
 
-// 成功：前景色
-$app-success-color: #3ec5a2;
+// 成功
+$app-success-color: #00d38d;
+// 成功-减淡
+$app-success-light: #eafff8;
 
-// 警告：前景色
-$app-warn-color: #fe694a;
+// 提示
+$app-warn-color: #ffba00;
+// 提示-减淡
+$app-warn-light: #fffaec;
 
-// 危险：前景色
-$app-danger-color: #f76950;
+// 危险
+$app-danger-color: #fe694a;
+// 危险-减淡
+$app-danger-light: #fff0ed;
 
+/**
+ * 文字
+ */
+//  主要文本色
+$app-text-1-color: #384660;
+//  次级文本色
+$app-text-2-color: #909399;
+//  提示/无效文本色
+$app-text-3-color: #cfcfcf;
+
+/**
+ * 灰度
+ */
+// 黑灰（控制台 + 视频空窗口）
+$app-grey-1-color: #2a2a2a;
+// 深灰
+$app-grey-2-color: #909399;
+// 灰色（nomal输入框边框 + disable按钮填充/边框 ）
+$app-grey-3-color: #cfcfcf;
+// 浅灰（disable输入框边框 ）
+$app-grey-4-color: #ebecef;
+// 白灰（disable输入框填充 ）
+$app-grey-5-color: #f5f7fa;
+
+/**
+ * 导航栏
+ */
+// 底色 + 二级标题hover
+$nav-bg-color: #4f6a8a;
+// 一级标题hover + 展开二级标题
+$nav-hover-color: #405a79;
+
+
+
+// 待弃用，目前菜单蓝有用到！！！！！
 // 边框颜色
 $app-border-color: #d7d8dc;
 

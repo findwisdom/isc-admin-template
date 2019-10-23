@@ -1,11 +1,7 @@
-/**
- * element-ui
- * @author ydr.me
- * @create 2019-08-08 16:53:04
- * @update 2019-08-08 16:53:04
- */
-
 @import 'variables';
+
+/* 改变主题色变量 */
+$--color-primary: $app-primary-color;
 
 .el-button {
     &__text-delete {
