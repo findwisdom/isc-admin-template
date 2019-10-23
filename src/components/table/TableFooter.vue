@@ -74,14 +74,14 @@ export default {
     align-items: center;
 
     &__left {
-        color: $app-grey-color;
+        color: $app-text-2-color;
     }
 
     &__right {
         display: inline-flex;
         align-items: center;
         font-size: 13px;
-        color: $app-grey-color;
+        color: $app-text-2-color;
         font-weight: normal;
     }
 }

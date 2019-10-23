@@ -92,7 +92,7 @@ export default {
     }
 
     &__title {
-        color: $app-base-color;
+        color: $app-text-1-color;
         min-height: 20px;
     }
 

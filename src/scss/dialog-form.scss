@@ -9,7 +9,7 @@
 
 .dialog-form {
     &__title {
-        color: $app-base-color;
+        color: $app-text-1-color;
         line-height: 30px;
     }
 
@@ -20,7 +20,7 @@
 
     &__divide {
         border: 0;
-        border-bottom: 1px solid $app-border-color;
+        border-bottom: 1px solid $app-grey-3-color;
         margin: 15px 0;
     }
 

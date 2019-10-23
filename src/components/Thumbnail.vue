@@ -61,7 +61,7 @@ export default {
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: $app-base-color;
+        background-color: $app-grey-2-color;
         opacity: 0;
         display: flex;
         justify-content: center;

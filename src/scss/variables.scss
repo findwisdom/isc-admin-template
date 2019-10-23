@@ -19,10 +19,6 @@ $app-primary-light: #e4f7ff;
 // 主要：背景
 $app-primary-bg: #d6e5ff;
 
-// 基本：前景色
-$app-base-color: #686e82;
-$app-base-hover: #3b3d49;
-
 // 成功
 $app-success-color: #00d38d;
 // 成功-减淡
@@ -70,24 +66,16 @@ $nav-bg-color: #4f6a8a;
 // 一级标题hover + 展开二级标题
 $nav-hover-color: #405a79;
 
+// 应用宽度
+$app-width: 1440px;
+$app-aside-width: 200px;
 
 
 // 待弃用，目前菜单蓝有用到！！！！！
 // 边框颜色
 $app-border-color: #d7d8dc;
-
 // 静音：前景色
 $app-muted-color: #c0c5d3;
-
-// 灰
-$app-grey-color: #9ba1b5;
-
 // 轻色：前景色
 $app-light-color: #f6f7f8;
 
-// 聚焦：背景色
-$app-hover-color: #F5F7FA;
-
-// 应用宽度
-$app-width: 1440px;
-$app-aside-width: 200px;

@@ -96,7 +96,7 @@ export default {
     }
 
     &__park {
-        color: $app-base-color;
+        color: $app-text-1-color;
         margin-left: 20px;
         display: flex;
         align-items: center;
