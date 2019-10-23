@@ -11,7 +11,7 @@
                 ></el-input>
                 <el-button size="mini" plain type="primary">查询</el-button>
             </div>
-            <slot name="right"></slot>
+            <slot name="left"></slot>
         </div>
         <div class="table-header__right">
             <slot></slot>

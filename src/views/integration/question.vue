@@ -147,13 +147,16 @@ export default {
             max-width: 400px;
             display: inline-block;
             margin-right: 40px;
-            text-align: center;
         }
         .actions {
             width: 120px;
             display: inline-flex;
             justify-content: space-around;
-            text-align: center;
+        }
+        .actions,
+        .question {
+            vertical-align: middle;
+            margin-bottom: 10px;
         }
     }
 }
