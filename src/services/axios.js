@@ -2,6 +2,7 @@ import { stringify } from '@/utils/querystring';
 import axios from 'axios';
 
 const service = axios.create({
+    timeout: 3000,
     // baseURL: 'http://192.168.8.14:9012',
     withCredentials: true // 允许携带cookie
 });

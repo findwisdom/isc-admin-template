@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-loading="ld.getLoading">
         <el-form ref="form" :model="formData" :rules="rules" size="mini" class="from" label-width="80px">
             <el-form-item label="标题" prop="title">
                 <el-input v-model="formData.title" maxlength="20"></el-input>
@@ -26,7 +26,7 @@
                 ></AppUploadList>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="onSubmit('form')">提交</el-button>
+                <el-button type="primary" @click="onSubmit('form')" :loading="ld.submitLoading">提交</el-button>
             </el-form-item>
         </el-form>
 
@@ -43,8 +43,8 @@ import Tinymce from '@/components/Tinymce';
 import AppUpload from '@/components/app/AppUpload';
 import AppUploadList from '@/components/app/AppUploadList';
 import validation from '@/validations/news';
-import { getNewsContent, createUpdateNews } from '@/services/media';
-import { error, loading } from '@/utils/message';
+import { getNewsContent, createNews, updateNews } from '@/services/media';
+import { error } from '@/utils/message';
 
 export default {
     name: 'Edit',
@@ -52,6 +52,10 @@ export default {
     data() {
         return {
             id: this.$route.query.id,
+            ld: {
+                getLoading: false,
+                submitLoading: false
+            },
             formData: {
                 title: '',
                 description: '',
@@ -65,6 +69,11 @@ export default {
             rules: validation(this)
         };
     },
+    computed: {
+        createUpdateNews() {
+            return this.id ? updateNews : createNews;
+        }
+    },
     created() {
         if (this.id) {
             this.getContent();
@@ -73,16 +82,17 @@ export default {
     methods: {
         async getContent() {
             let data = null;
-            this.loading = true;
+            this.ld.getLoading = true;
 
             try {
-                data = await getNewsContent();
+                data = await getNewsContent(this.id);
                 this.uploadList = this.generateUploadList(data.picture);
             } catch (err) {
                 error(err);
                 // TODO: service
                 // data = {};
                 data = {
+                    id: 1,
                     title: '迈入亿级时代，物联网企业成功突围的两种商业模式',
                     description:
                         '面对碎片化的物联网市场，如何创造商业价值？面对B端这根难啃的骨头，如何找到“肥肉”、如何变现？',
@@ -93,7 +103,7 @@ export default {
                 };
                 this.uploadList = this.generateUploadList(data.picture);
             } finally {
-                this.loading = false;
+                this.ld.getLoading = false;
             }
 
             this.formData = data;
@@ -132,15 +142,15 @@ export default {
                 return false;
             }
 
-            const ld = loading('提交中');
+            this.ld.submitLoading = true;
             // TODO:提交接口
             try {
-                await createUpdateNews(this.formData);
+                await this.createUpdateNews(this.formData);
                 this.$router.push('/media/news');
             } catch (err) {
                 error(err);
             } finally {
-                ld.close();
+                this.ld.submitLoading = false;
             }
         }
     }

@@ -111,10 +111,7 @@ export async function removeNews(id) {
  */
 export async function getNewsContent(id) {
     const res = await service({
-        url: `${url}/getReportById`,
-        params: {
-            id
-        }
+        url: `${url}/getReportById/${id}`
     });
     return res.data;
 }

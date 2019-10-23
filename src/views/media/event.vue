@@ -86,6 +86,7 @@ export default {
             let data = null;
             this.loading = true;
 
+            // yyyymm
             let date = this.keywords;
             if (this.keywords) {
                 const y = this.keywords.slice(0, 4).padStart(4, '0');
