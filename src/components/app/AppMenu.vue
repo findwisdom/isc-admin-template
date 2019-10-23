@@ -71,7 +71,7 @@ export default {
         &__main {
             font-size: 16px;
             line-height: 30px;
-            color: $app-base-color;
+            color: $app-text-1-color;
         }
 
         &__sub {
@@ -116,7 +116,7 @@ export default {
 
         &__text {
             margin-left: 5px;
-            color: $app-base-color;
+            color: $app-text-1-color;
         }
     }
 }

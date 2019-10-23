@@ -1,26 +1,16 @@
 <template>
-    <app-dialog
-        :visible.sync="visible2"
-        @close="onClose"
-        @open="onOpen"
-        @sure="onSure"
-        :loading="loading"
-        width="400px"
-    >
+    <app-dialog :visible.sync="visible2" @close="onClose" @open="onOpen" @sure="onSure" :loading="loading">
         <template v-slot:title>
             {{ actionName }}
         </template>
 
         <template v-slot:default>
             <el-form ref="form" :model="form" :rules="rules" label-width="60px" size="mini">
-                <el-form-item label="名称" prop="name">
-                    <el-input v-model="form.name" maxlength="20"></el-input>
+                <el-form-item label="问题" prop="question">
+                    <el-input type="textarea" :rows="2" v-model="form.question"></el-input>
                 </el-form-item>
-                <el-form-item label="简介" prop="description">
-                    <el-input type="textarea" :rows="2" v-model="form.description" maxlength="150"></el-input>
-                </el-form-item>
-                <el-form-item label="链接" prop="link">
-                    <el-input v-model="form.link"></el-input>
+                <el-form-item label="内容" prop="answer">
+                    <el-input type="textarea" :rows="4" v-model="form.answer"></el-input>
                 </el-form-item>
             </el-form>
         </template>
@@ -30,10 +20,10 @@
 <script>
 import AppDialog from '@/components/app/AppDialog';
 import { success, error } from '@/utils/message';
-import validation from '@/validations/ducument';
-import { createDocument, updateDocument } from '@/services/integration';
+import validation from '@/validations/question';
+import { createQuestion, updateQuestion } from '@/services/integration';
 export default {
-    name: 'DocumentDialog',
+    name: 'QuestionDialog',
     components: {
         AppDialog
     },
@@ -65,10 +55,10 @@ export default {
             }
         },
         actionName() {
-            return (this.form.id ? '编辑' : '添加') + '文档';
+            return (this.form.id ? '编辑' : '添加') + '问题';
         },
-        createUpdateDocument() {
-            return this.form.id ? updateDocument : createDocument;
+        createUpdateQuestion() {
+            return this.form.id ? updateQuestion : createQuestion;
         }
     },
     methods: {
@@ -96,7 +86,7 @@ export default {
 
             try {
                 this.loading = true;
-                await this.createUpdateDocument(this.form);
+                await this.createUpdateQuestion(this.form);
             } catch (err) {
                 return await error(err);
             } finally {

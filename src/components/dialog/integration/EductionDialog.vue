@@ -31,7 +31,7 @@
 import AppDialog from '@/components/app/AppDialog';
 import { success, error } from '@/utils/message';
 import validation from '@/validations/eduction';
-import { createUpdateEduction } from '@/services/integration';
+import { createEduction, updateEduction } from '@/services/integration';
 export default {
     name: 'EductionDialog',
     components: {
@@ -66,6 +66,9 @@ export default {
         },
         actionName() {
             return (this.form.id ? '编辑' : '添加') + '步骤';
+        },
+        createUpdateEduction() {
+            return this.form.id ? updateEduction : createEduction;
         }
     },
     methods: {
@@ -93,7 +96,7 @@ export default {
 
             try {
                 this.loading = true;
-                await createUpdateEduction(this.form);
+                await this.createUpdateEduction(this.form);
             } catch (err) {
                 return await error(err);
             } finally {

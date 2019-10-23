@@ -1,6 +1,6 @@
 <template>
     <div>
-        <TableHeader :keywords.sync="keywords" placeholder="请输入事件时间搜索" @search="onSearch">
+        <TableHeader :keywords.sync="keywords" placeholder="请输入时间例:201908" @search="onSearch">
             <ul class="table-actions">
                 <li>
                     <el-button type="primary" icon="el-icon-plus" size="mini" @click="onAdd">新建</el-button>
@@ -86,8 +86,16 @@ export default {
             let data = null;
             this.loading = true;
 
+            // yyyymm
+            let date = this.keywords;
+            if (this.keywords) {
+                const y = this.keywords.slice(0, 4).padStart(4, '0');
+                const m = this.keywords.slice(4, 6).padStart(2, '0');
+                date = m === '00' ? y : y + m;
+            }
+
             try {
-                data = await getEventList(this.pageSize, this.pageNumber, this.keywords);
+                data = await getEventList(this.pageSize, this.pageNumber, date);
             } catch (err) {
                 error(err);
                 // TODO: service

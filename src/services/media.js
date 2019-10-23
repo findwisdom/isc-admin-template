@@ -1,6 +1,6 @@
 import service from './axios';
 // TODO: service
-const url = '/api/operation/media';
+const url = '/api/user';
 
 /**
  * 获取大事记列表数据
@@ -11,7 +11,7 @@ const url = '/api/operation/media';
  */
 export async function getEventList(pageSize, pageNumber, date) {
     const res = await service({
-        url: url,
+        url: `${url}/getMemorabiliaList`,
         params: {
             pageSize,
             pageNumber,
@@ -28,7 +28,7 @@ export async function getEventList(pageSize, pageNumber, date) {
  */
 export async function removeEvent(id) {
     const res = await service({
-        url: `${url}/${id}`,
+        url: `${url}/deleteMemorabilia/${id}`,
         method: 'delete'
     });
 
@@ -40,13 +40,27 @@ export async function removeEvent(id) {
 }
 
 /**
+ * 新增大事记
+ * @param form
+ * @returns {Promise<null|any>}
+ */
+export async function createEvent(form) {
+    const res = await service({
+        url: `${url}/addMemorabilia`,
+        method: 'post',
+        data: form
+    });
+    return res.data;
+}
+
+/**
  * 编辑大事记
  * @param form
  * @returns {Promise<null|any>}
  */
-export async function createUpdateEvent(form) {
+export async function updateEvent(form) {
     const res = await service({
-        url: `${url}/createUpdate`,
+        url: `${url}/updateMemorabilia`,
         method: 'post',
         data: form
     });
@@ -62,7 +76,7 @@ export async function createUpdateEvent(form) {
  */
 export async function getNewsList(pageSize, pageNumber, publishTime) {
     const res = await service({
-        url: url,
+        url: `${url}/getReportList`,
         params: {
             pageSize,
             pageNumber,
@@ -79,7 +93,7 @@ export async function getNewsList(pageSize, pageNumber, publishTime) {
  */
 export async function removeNews(id) {
     const res = await service({
-        url: `${url}/${id}`,
+        url: `${url}/deleteReport/${id}`,
         method: 'delete'
     });
 
@@ -97,22 +111,33 @@ export async function removeNews(id) {
  */
 export async function getNewsContent(id) {
     const res = await service({
-        url: url,
-        params: {
-            id
-        }
+        url: `${url}/getReportById/${id}`
     });
     return res.data;
 }
 
 /**
- * 提交媒体报道
+ * 新增媒体报道
  * @param form
  * @returns {Promise<void>}
  */
-export async function createUpdateNews(form) {
+export async function createNews(form) {
     const res = await service({
-        url: `${url}/createUpdate`,
+        url: `${url}/addReport`,
+        method: 'post',
+        data: form
+    });
+    return res.data;
+}
+
+/**
+ * 编辑媒体报道
+ * @param form
+ * @returns {Promise<void>}
+ */
+export async function updateNews(form) {
+    const res = await service({
+        url: `${url}/updateReport`,
         method: 'post',
         data: form
     });

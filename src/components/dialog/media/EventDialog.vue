@@ -17,7 +17,7 @@
                     <el-date-picker v-model="form.date" type="month" placeholder="选择时间"></el-date-picker>
                 </el-form-item>
                 <el-form-item label="事记" prop="event">
-                    <el-input type="textarea" :rows="2" v-model="form.event" maxlength="30"></el-input>
+                    <el-input autosize type="textarea" :rows="2" v-model="form.event" maxlength="30"></el-input>
                 </el-form-item>
             </el-form>
         </template>
@@ -28,7 +28,7 @@
 import AppDialog from '@/components/app/AppDialog';
 import { success, error } from '@/utils/message';
 import validation from '@/validations/event';
-import { createUpdateEvent } from '@/services/media';
+import { createEvent, updateEvent } from '@/services/media';
 export default {
     name: 'EventDialog',
     components: {
@@ -63,6 +63,9 @@ export default {
         },
         actionName() {
             return (this.form.id ? '编辑' : '添加') + '大事记';
+        },
+        createUpdateEvent() {
+            return this.form.id ? updateEvent : createEvent;
         }
     },
     methods: {
@@ -90,7 +93,7 @@ export default {
 
             try {
                 this.loading = true;
-                await createUpdateEvent(this.form);
+                await this.createUpdateEvent(this.form);
             } catch (err) {
                 return await error(err);
             } finally {
