@@ -151,7 +151,6 @@ export default {
             }
             try {
                 this.loading = true;
-                console.log(this.form);
                 if (this.form.id) {
                     await updateProduct(this.form);
                 } else {

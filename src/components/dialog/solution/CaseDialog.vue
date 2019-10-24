@@ -19,6 +19,16 @@
                 <el-form-item label="案例排序" prop="order">
                     <el-input-number v-model="form.order"></el-input-number>
                 </el-form-item>
+                <el-form-item label="所属解决方案" prop="solution.name" class="is-required">
+                    <el-select v-model="form.solutionId" placeholder="请选择所属解决方案">
+                        <el-option
+                            v-for="option in osTypeOptions"
+                            :key="option.value"
+                            :label="option.label"
+                            :value="option.value"
+                        ></el-option>
+                    </el-select>
+                </el-form-item>
                 <el-form-item label="案例图片" prop="picture" class="is-required">
                     <app-upload
                         :action="uploadUrl"
@@ -39,16 +49,6 @@
                         maxlength="300"
                     ></el-input>
                 </el-form-item>
-                <el-form-item label="所属解决方案" prop="solutionId" class="is-required">
-                    <el-select v-model="form.solutionId" placeholder="请选择所属解决方案">
-                        <el-option
-                            v-for="option in osTypeOptions"
-                            :key="option.value"
-                            :label="option.label"
-                            :value="option.value"
-                        ></el-option>
-                    </el-select>
-                </el-form-item>
             </el-form>
         </template>
     </app-dialog>
@@ -61,7 +61,7 @@ import AppUploadImg from '@/components/app/AppUploadImg';
 import validation from '@/validations/case';
 import { alert, success, error } from '@/utils/message';
 import { uploadUrl } from '@/services/upload';
-import { createCase, getSolutionList } from '@/services/solution';
+import { createCase, updateCase, getSolutionList } from '@/services/solution';
 export default {
     name: 'CaseDialog',
     components: {
@@ -133,7 +133,11 @@ export default {
             }
             try {
                 this.loading = true;
-                await createCase(this.form.id, this.form.role);
+                if (this.form.id) {
+                    await updateCase(this.form);
+                } else {
+                    await createCase(this.form);
+                }
             } catch (err) {
                 return await alert(err);
             } finally {
@@ -149,7 +153,9 @@ export default {
         let data = null;
         try {
             data = await getSolutionList();
-            this.osTypeOptions = data.map(item => ({ label: item.name, value: item.id }));
+            if (data.list && data.list instanceof Array) {
+                this.osTypeOptions = data.list.map(item => ({ label: item.name, value: item.id }));
+            }
         } catch (err) {
             error(err);
         }

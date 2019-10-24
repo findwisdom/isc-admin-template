@@ -17,8 +17,8 @@
                 </template>
             </el-table-column>
             <el-table-column prop="description" label="案例介绍" :show-overflow-tooltip="true"></el-table-column>
-            <el-table-column prop="solutionId" label="所属解决方案"></el-table-column>
-            <el-table-column prop="time" label="更新时间"></el-table-column>
+            <el-table-column prop="solution.name" label="所属解决方案"></el-table-column>
+            <el-table-column prop="order" label="顺序"></el-table-column>
             <el-table-column label="操作" align="center" width="100px">
                 <template slot-scope="scope">
                     <div>

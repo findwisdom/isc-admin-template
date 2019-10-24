@@ -38,7 +38,12 @@
                     ></el-input>
                 </el-form-item>
                 <el-form-item label="发布时间" prop="publishTime" class="is-required">
-                    <el-date-picker v-model="form.publishTime" type="date" placeholder="选择日期"></el-date-picker>
+                    <el-date-picker
+                        v-model="form.publishTime"
+                        value-format="YYYY-MM-dd"
+                        type="date"
+                        placeholder="选择日期"
+                    ></el-date-picker>
                 </el-form-item>
             </el-form>
         </template>
@@ -71,7 +76,6 @@ export default {
         return {
             loading: false,
             osTypeOptions: [],
-            uploadUrl: '',
             rules: validation(this)
         };
     },
@@ -85,7 +89,7 @@ export default {
             }
         },
         actionName() {
-            return (this.form.id ? '编辑' : '添加') + '伙伴';
+            return (this.form.id ? '编辑' : '添加') + '岗位';
         }
     },
     methods: {
@@ -113,9 +117,9 @@ export default {
             try {
                 this.loading = true;
                 if (this.form.id) {
-                    await createCareer(this.form);
-                } else {
                     await updateCareer(this.form);
+                } else {
+                    await createCareer(this.form);
                 }
             } catch (err) {
                 return await alert(err);

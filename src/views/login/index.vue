@@ -12,6 +12,7 @@
                     placeholder="请输入用户名"
                     name="username"
                     type="text"
+                    suffix-icon="el-icon-s-custom"
                     tabindex="1"
                     auto-complete="on"
                 ></el-input>
@@ -20,6 +21,7 @@
                 <span class="svg-container"></span>
                 <el-input
                     ref="password"
+                    suffix-icon="el-icon-s-tools"
                     v-model="loginForm.password"
                     placeholder="请输入密码"
                     name="password"
@@ -42,13 +44,14 @@
 </template>
 
 <script>
+import { alert } from '@/utils/message';
 export default {
     name: 'index',
     data() {
         return {
             loginForm: {
-                username: 'admin',
-                password: '111111'
+                username: '',
+                password: ''
             },
             loading: false,
             redirect: undefined
@@ -56,12 +59,17 @@ export default {
     },
     methods: {
         handleLogin() {
-            this.$refs.loginForm.validate(valid => {
+            this.$refs.loginForm.validate(async valid => {
                 if (valid) {
-                    console.log(this.loginForm);
-                    this.$router.push({ path: '/order/backlog/role' });
+                    try {
+                        this.loading = true;
+                        this.$router.push({ path: '/' });
+                    } catch (err) {
+                        return await alert(err);
+                    } finally {
+                        this.loading = false;
+                    }
                 } else {
-                    console.log('error submit!!');
                     return false;
                 }
             });

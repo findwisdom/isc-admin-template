@@ -20,9 +20,7 @@
                 <template slot-scope="scope">
                     <div>
                         <el-button size="mini" type="text" @click="onEdit(scope.$index, scope.row)">编辑</el-button>
-                        <el-button size="mini" type="text" class="el-button__text-delete" @click="onTrash(scope.row)">
-                            删除
-                        </el-button>
+                        <TableDelete @handleDelete="onTrash(scope.row)"></TableDelete>
                     </div>
                 </template>
             </el-table-column>
@@ -37,6 +35,7 @@
 import { getCareerList, deleteCareer } from '@/services/about';
 import TableHeader from '@/components/table/TableHeader';
 import TableFooter from '@/components/table/TableFooter';
+import TableDelete from '@/components/table/TableDelete';
 import JoinDialog from '@/components/dialog/about/JoinDialog';
 import { fill } from '@/utils/object';
 import { error, loading } from '@/utils/message';
@@ -45,7 +44,8 @@ export default {
     components: {
         TableHeader,
         TableFooter,
-        JoinDialog
+        JoinDialog,
+        TableDelete
     },
     data() {
         return {
@@ -105,13 +105,13 @@ export default {
                 this.loading = false;
             } catch (err) {
                 error(err);
-                data = { records: [], total: 0 };
+                data = { list: [], totalSize: 0 };
             } finally {
                 this.loading = false;
             }
 
-            this.pageList = data.records;
-            this.pageTotal = data.total;
+            this.pageList = data.list;
+            this.pageTotal = data.totalSize;
         },
 
         onSearch() {
@@ -134,13 +134,6 @@ export default {
         },
 
         async onTrash(item) {
-            try {
-                await confirm(`确认删除选中的角色吗？`);
-                console.log(item);
-            } catch (err) {
-                return;
-            }
-
             const ld = loading('删除中');
 
             try {

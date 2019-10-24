@@ -11,19 +11,17 @@
         <el-table :data="pageList" size="mini" v-loading="loading">
             <el-table-column prop="id" label="编号"></el-table-column>
             <el-table-column prop="name" label="伙伴名称"></el-table-column>
-            <el-table-column prop="order" label="排序"></el-table-column>
             <el-table-column prop="picture" label="图片">
                 <template slot-scope="scope">
                     <Thumbnail :picture="scope.row.picture" />
                 </template>
             </el-table-column>
+            <el-table-column prop="order" label="排序"></el-table-column>
             <el-table-column label="操作" align="center" width="100px">
                 <template slot-scope="scope">
                     <div>
                         <el-button size="mini" type="text" @click="onEdit(scope.$index, scope.row)">编辑</el-button>
-                        <el-button size="mini" type="text" class="el-button__text-delete" @click="onTrash(scope.row)">
-                            删除
-                        </el-button>
+                        <TableDelete @handleDelete="onTrash(scope.row)"></TableDelete>
                     </div>
                 </template>
             </el-table-column>
@@ -38,6 +36,7 @@
 import { getPartnerList, deletePartner } from '@/services/about';
 import TableHeader from '@/components/table/TableHeader';
 import TableFooter from '@/components/table/TableFooter';
+import TableDelete from '@/components/table/TableDelete';
 import PartnerDialog from '@/components/dialog/about/PartnerDialog';
 import Thumbnail from '@/components/Thumbnail';
 import { fill } from '@/utils/object';
@@ -48,7 +47,8 @@ export default {
         TableHeader,
         TableFooter,
         PartnerDialog,
-        Thumbnail
+        Thumbnail,
+        TableDelete
     },
     data() {
         return {
@@ -71,15 +71,7 @@ export default {
             }
         };
     },
-    filters: {
-        orderFlow(value) {
-            if (Array.isArray(value.groupList)) {
-                return value.groupList[0].name;
-            } else {
-                return '';
-            }
-        }
-    },
+    filters: {},
     watch: {
         pageNumber() {
             this.getList();
@@ -98,7 +90,7 @@ export default {
                     id: undefined,
                     name: null,
                     order: null,
-                    picture: null
+                    picture: 'http://b-ssl.duitang.com/uploads/blog/201312/04/20131204184148_hhXUT.jpeg'
                 },
                 item
             );
@@ -111,13 +103,13 @@ export default {
                 this.loading = false;
             } catch (err) {
                 error(err);
-                data = { records: [], total: 0 };
+                data = { list: [], totalSize: 0 };
             } finally {
                 this.loading = false;
             }
 
-            this.pageList = data.records;
-            this.pageTotal = data.total;
+            this.pageList = data.list;
+            this.pageTotal = data.totalSize;
         },
 
         onSearch() {
@@ -140,12 +132,6 @@ export default {
         },
 
         async onTrash(item) {
-            try {
-                await confirm(`确认删除选中的合作伙伴吗？`);
-            } catch (err) {
-                return;
-            }
-
             const ld = loading('删除中');
 
             try {

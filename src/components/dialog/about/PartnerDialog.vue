@@ -16,6 +16,9 @@
                 <el-form-item label="伙伴名称" prop="name" class="is-required">
                     <el-input v-model="form.name" placeholder="请输入伙伴名称" maxlength="40"></el-input>
                 </el-form-item>
+                <el-form-item label="顺序" prop="order">
+                    <el-input-number v-model="form.order"></el-input-number>
+                </el-form-item>
                 <el-form-item label="图片" prop="name" class="is-required">
                     <app-upload
                         :action="uploadUrl"
@@ -111,9 +114,9 @@ export default {
             try {
                 this.loading = true;
                 if (this.form.id) {
-                    await createPartner(this.form);
-                } else {
                     await updatePartner(this.form);
+                } else {
+                    await createPartner(this.form);
                 }
             } catch (err) {
                 return await alert(err);

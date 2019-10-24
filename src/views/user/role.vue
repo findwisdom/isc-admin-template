@@ -16,6 +16,7 @@
                 <template slot-scope="scope">
                     <div>
                         <el-button size="mini" type="text" @click="onEdit(scope.$index, scope.row)">编辑</el-button>
+                        <TableDelete v-if="!scope.row.admin" @handleDelete="onTrash(scope.row)"></TableDelete>
                     </div>
                 </template>
             </el-table-column>
@@ -35,6 +36,7 @@
 import { getUserList, deleteUser } from '@/services/user';
 import TableHeader from '@/components/table/TableHeader';
 import TableFooter from '@/components/table/TableFooter';
+import TableDelete from '@/components/table/TableDelete';
 import RoleDialog from '@/components/dialog/user/RoleDialog';
 import { fill } from '@/utils/object';
 import { error, loading } from '@/utils/message';
@@ -43,6 +45,7 @@ export default {
     components: {
         TableHeader,
         TableFooter,
+        TableDelete,
         RoleDialog
     },
     data() {
@@ -85,7 +88,8 @@ export default {
                     id: undefined,
                     name: null,
                     password: null,
-                    email: null
+                    email: null,
+                    admin: false
                 },
                 item
             );
@@ -99,13 +103,13 @@ export default {
                 data = await getUserList(this.pageSize, this.pageNumber, this.keywords);
             } catch (err) {
                 error(err);
-                data = { records: [], total: 0 };
+                data = { list: [], totalSize: 0 };
             } finally {
                 this.loading = false;
             }
 
-            this.pageList = data.records;
-            this.pageTotal = data.total;
+            this.pageList = data.list;
+            this.pageTotal = data.totalSize;
         },
 
         onSearch() {
@@ -128,12 +132,6 @@ export default {
         },
 
         async onTrash(index, item) {
-            try {
-                await confirm(`确认删除选中的角色吗？`);
-            } catch (err) {
-                return;
-            }
-
             const ld = loading('删除中');
 
             try {

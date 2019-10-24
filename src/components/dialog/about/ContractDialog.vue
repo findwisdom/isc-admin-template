@@ -110,9 +110,9 @@ export default {
             try {
                 this.loading = true;
                 if (this.form.id) {
-                    await createCompany(this.form);
-                } else {
                     await updateCompany(this.form);
+                } else {
+                    await createCompany(this.form);
                 }
             } catch (err) {
                 return await alert(err);

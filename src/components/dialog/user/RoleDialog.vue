@@ -17,7 +17,7 @@
                     <el-input v-model="form.name"></el-input>
                 </el-form-item>
                 <el-form-item label="密码" prop="email" class="is-required">
-                    <el-input type="password" v-model="form.password"></el-input>
+                    <el-input type="password" v-model="form.password" :disabled="form.admin"></el-input>
                 </el-form-item>
                 <el-form-item label="邮箱" prop="email" class="is-required">
                     <el-input v-model="form.email"></el-input>
@@ -91,13 +91,12 @@ export default {
             } catch (err) {
                 return;
             }
-            console.log(this.form);
             try {
                 this.loading = true;
                 if (this.form.id) {
-                    await createUser(this.form);
-                } else {
                     await updateUser(this.form);
+                } else {
+                    await createUser(this.form);
                 }
             } catch (err) {
                 return await alert(err);

@@ -9,7 +9,7 @@ import axios from '@/services/axios';
  */
 export async function getPartnerList(pageSize, pageNumber, name) {
     const res = await axios({
-        url: '/api/operation/user/getUserList',
+        url: '/api/partner/getPartnerList',
         params: {
             pageSize,
             pageNumber,
@@ -27,7 +27,7 @@ export async function getPartnerList(pageSize, pageNumber, name) {
 
 export async function createPartner(form) {
     const res = await axios({
-        url: '/api/operation/repair/createRepair',
+        url: '/api/partner/addPartner',
         method: 'post',
         data: form
     });
@@ -42,7 +42,7 @@ export async function createPartner(form) {
 
 export async function updatePartner(form) {
     const res = await axios({
-        url: '/api/operation/business/updateBusiness',
+        url: '/api/partner/updatePartner',
         method: 'put',
         data: form
     });
@@ -56,8 +56,11 @@ export async function updatePartner(form) {
  */
 export async function deletePartner(id) {
     const res = await axios({
-        url: `/api/operation/repair/deleteRepair/${id}`,
-        method: 'delete'
+        url: `/api/partner/deletePartner`,
+        method: 'delete',
+        params: {
+            partner: id
+        }
     });
     return res.data;
 }
@@ -71,7 +74,7 @@ export async function deletePartner(id) {
  */
 export async function getCareerList(pageSize, pageNumber, name) {
     const res = await axios({
-        url: '/api/operation/user/getUserList',
+        url: '/api/career/getCareerList',
         params: {
             pageSize,
             pageNumber,
@@ -89,7 +92,7 @@ export async function getCareerList(pageSize, pageNumber, name) {
 
 export async function createCareer(form) {
     const res = await axios({
-        url: '/api/operation/repair/createRepair',
+        url: '/api/career/addCareer',
         method: 'post',
         data: form
     });
@@ -104,7 +107,7 @@ export async function createCareer(form) {
 
 export async function updateCareer(form) {
     const res = await axios({
-        url: '/api/operation/business/updateBusiness',
+        url: '/api/career/updateCareer',
         method: 'put',
         data: form
     });
@@ -118,8 +121,11 @@ export async function updateCareer(form) {
  */
 export async function deleteCareer(id) {
     const res = await axios({
-        url: `/api/operation/repair/deleteRepair/${id}`,
-        method: 'delete'
+        url: `/api/career/deleteCareer`,
+        method: 'delete',
+        params: {
+            id
+        }
     });
     return res.data;
 }
@@ -131,13 +137,14 @@ export async function deleteCareer(id) {
  * @param name
  * @returns {Promise<*>}
  */
-export async function getPatentList(pageSize, pageNumber, name) {
+export async function getPatentList(pageSize, pageNumber, name, type) {
     const res = await axios({
-        url: '/api/operation/user/getUserList',
+        url: '/api/patent/getPatentByName',
         params: {
             pageSize,
             pageNumber,
-            name
+            name,
+            type
         }
     });
     return res.data;
@@ -151,7 +158,7 @@ export async function getPatentList(pageSize, pageNumber, name) {
 
 export async function createPatent(form) {
     const res = await axios({
-        url: '/api/operation/repair/createRepair',
+        url: '/api/career/addCareer',
         method: 'post',
         data: form
     });
@@ -166,7 +173,7 @@ export async function createPatent(form) {
 
 export async function updatePatent(form) {
     const res = await axios({
-        url: '/api/operation/business/updateBusiness',
+        url: '/api/career/updateCareer',
         method: 'put',
         data: form
     });
@@ -180,8 +187,11 @@ export async function updatePatent(form) {
  */
 export async function deletePatent(id) {
     const res = await axios({
-        url: `/api/operation/repair/deleteRepair/${id}`,
-        method: 'delete'
+        url: `/api/career/deleteCareer`,
+        method: 'delete',
+        params: {
+            career: id
+        }
     });
     return res.data;
 }
@@ -195,7 +205,7 @@ export async function deletePatent(id) {
  */
 export async function getCompanyList(pageSize, pageNumber, name) {
     const res = await axios({
-        url: '/api/operation/user/getUserList',
+        url: '/api/company/getCompanyList',
         params: {
             pageSize,
             pageNumber,
@@ -205,7 +215,7 @@ export async function getCompanyList(pageSize, pageNumber, name) {
     return res.data;
 }
 
-/** 新增专利名称
+/** 添加公司
  *
  * @param form
  * @returns {Promise<*>}
@@ -213,7 +223,7 @@ export async function getCompanyList(pageSize, pageNumber, name) {
 
 export async function createCompany(form) {
     const res = await axios({
-        url: '/api/operation/repair/createRepair',
+        url: '/api/company/addCompany',
         method: 'post',
         data: form
     });
@@ -221,14 +231,14 @@ export async function createCompany(form) {
 }
 
 /**
- * 更新专利名称
+ * 更新公司
  * @param form
  * @returns {Promise<*>}
  */
 
 export async function updateCompany(form) {
     const res = await axios({
-        url: '/api/operation/business/updateBusiness',
+        url: '/api/company/updateCompany',
         method: 'put',
         data: form
     });
@@ -242,8 +252,11 @@ export async function updateCompany(form) {
  */
 export async function deleteCompany(id) {
     const res = await axios({
-        url: `/api/operation/repair/deleteRepair/${id}`,
-        method: 'delete'
+        url: `/api/company/deleteCompany`,
+        method: 'delete',
+        params: {
+            company: id
+        }
     });
     return res.data;
 }

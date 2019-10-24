@@ -59,7 +59,7 @@ export async function deleteProduct(id) {
         url: `/api/product/deleteProduct`,
         method: 'delete',
         params: {
-            Product: id
+            product: id
         }
     });
     return res.data;

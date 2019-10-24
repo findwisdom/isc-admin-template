@@ -20,9 +20,7 @@
                 <template slot-scope="scope">
                     <div>
                         <el-button size="mini" type="text" @click="onEdit(scope.$index, scope.row)">编辑</el-button>
-                        <el-button size="mini" type="text" class="el-button__text-delete" @click="onTrash(scope.row)">
-                            删除
-                        </el-button>
+                        <TableDelete @handleDelete="onTrash(scope.row)"></TableDelete>
                     </div>
                 </template>
             </el-table-column>
@@ -40,6 +38,7 @@
 import { getCompanyList, deleteCompany } from '@/services/about';
 import TableHeader from '@/components/table/TableHeader';
 import TableFooter from '@/components/table/TableFooter';
+import TableDelete from '@/components/table/TableDelete';
 import ContractDialog from '@/components/dialog/about/ContractDialog';
 import { fill } from '@/utils/object';
 import { error, loading } from '@/utils/message';
@@ -48,7 +47,8 @@ export default {
     components: {
         TableHeader,
         TableFooter,
-        ContractDialog
+        ContractDialog,
+        TableDelete
     },
     data() {
         return {
@@ -77,15 +77,7 @@ export default {
             dialogVisible: false
         };
     },
-    filters: {
-        orderFlow(value) {
-            if (Array.isArray(value.groupList)) {
-                return value.groupList[0].name;
-            } else {
-                return '';
-            }
-        }
-    },
+    filters: {},
     watch: {
         pageNumber() {
             this.getList();
@@ -127,13 +119,13 @@ export default {
                 this.loading = false;
             } catch (err) {
                 error(err);
-                data = { records: [], total: 0 };
+                data = { list: [], totalSize: 0 };
             } finally {
                 this.loading = false;
             }
 
-            this.pageList = data.records;
-            this.pageTotal = data.total;
+            this.pageList = data.list;
+            this.pageTotal = data.totalSize;
         },
 
         onSearch() {
@@ -156,13 +148,6 @@ export default {
         },
 
         async onTrash(item) {
-            try {
-                await confirm(`确认删除选中的角色吗？`);
-                console.log(item);
-            } catch (err) {
-                return;
-            }
-
             const ld = loading('删除中');
 
             try {
@@ -178,28 +163,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-.table-des {
-    margin-left: 40px;
-    .table-count {
-        font-size: 22px;
-        color: $app-primary-color;
-        margin: 0 5px;
-    }
-}
-.table-img {
-    width: 50px;
-    height: 38px;
-}
-.table-item-space {
-    padding: 0 10px;
-    cursor: pointer;
-    width: 200px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-}
-.img-hover {
-    cursor: pointer;
-}
-</style>
+<style scoped lang="scss"></style>
