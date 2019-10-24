@@ -64,7 +64,7 @@ export default {
     background: #fff;
 
     &__group {
-        border-bottom: 1px solid $app-border-color;
+        border-bottom: 1px solid $app-aside-border-color;
     }
 
     &__item {
@@ -77,7 +77,7 @@ export default {
         &__sub {
             font-size: 12px;
             line-height: 20px;
-            color: $app-muted-color;
+            color: $app-aside-muted-color;
         }
 
         a {
@@ -86,7 +86,7 @@ export default {
             padding: 8px 16px;
 
             &:hover {
-                background: $app-light-color;
+                background: $app-aside-light-color;
             }
         }
 

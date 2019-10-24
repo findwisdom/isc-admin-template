@@ -49,7 +49,7 @@ export default {
     }
 
     &__main {
-        margin: 16px 16px 16px 16px;
+        margin: 0 16px 16px 16px;
         box-shadow: 0 2px 4px 0 rgba(214, 229, 255, 1);
         background: #fff;
     }
