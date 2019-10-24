@@ -43,7 +43,7 @@ import TableFooter from '@/components/table/TableFooter';
 import HonourDialog from '@/components/dialog/about/HonourDialog';
 import Thumbnail from '@/components/Thumbnail';
 import { fill } from '@/utils/object';
-import { error, loading } from '@/utils/message';
+import { error, loading, alertel } from '@/utils/message';
 
 export default {
     components: {
@@ -149,20 +149,13 @@ export default {
         },
 
         async onTrash(item) {
-            try {
-                await confirm(`确认删除选中的角色吗？`);
-                console.log(item);
-            } catch (err) {
-                return;
-            }
-
             const ld = loading('删除中');
 
             try {
                 await deletePatent(item.id);
                 await this.getList();
             } catch (err) {
-                await alert(err);
+                await alertel(err);
             } finally {
                 ld.close();
             }

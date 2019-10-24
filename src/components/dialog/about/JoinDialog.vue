@@ -14,10 +14,10 @@
         <template v-slot:default>
             <el-form ref="form" :model="form" :rules="rules" label-width="120px" size="mini">
                 <el-form-item label="城市" prop="city" class="is-required">
-                    <el-input v-model="form.city" placeholder="请输入城市" maxlength="40"></el-input>
+                    <el-input v-model="form.city" placeholder="请输入城市"></el-input>
                 </el-form-item>
                 <el-form-item label="岗位名称" prop="name" class="is-required">
-                    <el-input v-model="form.name" placeholder="请输入岗位名称" maxlength="40"></el-input>
+                    <el-input v-model="form.name" placeholder="请输入岗位名称"></el-input>
                 </el-form-item>
                 <el-form-item label="岗位职责" prop="duty" class="is-required">
                     <el-input
@@ -40,7 +40,7 @@
                 <el-form-item label="发布时间" prop="publishTime" class="is-required">
                     <el-date-picker
                         v-model="form.publishTime"
-                        value-format="YYYY-MM-dd"
+                        value-format="yyyy-MM-dd"
                         type="date"
                         placeholder="选择日期"
                     ></el-date-picker>
@@ -52,7 +52,7 @@
 
 <script>
 import AppDialog from '@/components/app/AppDialog';
-import { alert, success } from '@/utils/message';
+import { alertel, success } from '@/utils/message';
 import validation from '@/validations/join';
 import { createCareer, updateCareer } from '@/services/about';
 export default {
@@ -122,7 +122,7 @@ export default {
                     await createCareer(this.form);
                 }
             } catch (err) {
-                return await alert(err);
+                return await alertel(err);
             } finally {
                 this.loading = false;
             }

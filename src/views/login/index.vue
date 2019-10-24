@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { alert } from '@/utils/message';
+import { alertel } from '@/utils/message';
 export default {
     name: 'index',
     data() {
@@ -65,7 +65,7 @@ export default {
                         this.loading = true;
                         this.$router.push({ path: '/' });
                     } catch (err) {
-                        return await alert(err);
+                        return await alertel(err);
                     } finally {
                         this.loading = false;
                     }

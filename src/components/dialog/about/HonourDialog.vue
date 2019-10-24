@@ -51,7 +51,7 @@
 import AppDialog from '@/components/app/AppDialog';
 import AppUpload from '@/components/app/AppUpload';
 import AppUploadImg from '@/components/app/AppUploadImg';
-import { alert, success } from '@/utils/message';
+import { alertel, success } from '@/utils/message';
 import validation from '@/validations/honour';
 import { createPatent, updatePatent } from '@/services/about';
 export default {
@@ -131,7 +131,7 @@ export default {
                     await updatePatent(this.form);
                 }
             } catch (err) {
-                return await alert(err);
+                return await alertel(err);
             } finally {
                 this.loading = false;
             }

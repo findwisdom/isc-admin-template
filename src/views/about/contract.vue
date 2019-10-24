@@ -1,6 +1,6 @@
 <template>
     <div>
-        <TableHeader :keywords.sync="keywords" placeholder="请输入名称进行搜索" @search="onSearch">
+        <TableHeader :keywords.sync="keywords" placeholder="请输入名称进行搜索" @search="onSearch" :search="search">
             <ul class="table-actions">
                 <li>
                     <el-button type="primary" icon="el-icon-plus" size="mini" @click="onAdd">新建</el-button>
@@ -9,18 +9,18 @@
         </TableHeader>
 
         <el-table :data="pageList" size="mini" v-loading="loading">
-            <el-table-column prop="id" label="编号"></el-table-column>
+            <el-table-column prop="id" label="编号" width="50px"></el-table-column>
             <el-table-column prop="city" label="城市"></el-table-column>
-            <el-table-column prop="name" label="公司名称"></el-table-column>
-            <el-table-column prop="address" label="公司地址"></el-table-column>
-            <el-table-column prop="email" label="邮箱"></el-table-column>
-            <el-table-column prop="phone" label="电话"></el-table-column>
+            <el-table-column prop="name" label="公司名称" :show-overflow-tooltip="true"></el-table-column>
+            <el-table-column prop="address" label="公司地址" :show-overflow-tooltip="true"></el-table-column>
+            <el-table-column prop="email" label="邮箱" :show-overflow-tooltip="true"></el-table-column>
+            <el-table-column prop="phone" label="电话" :show-overflow-tooltip="true"></el-table-column>
             <el-table-column prop="postCode" label="邮编"></el-table-column>
             <el-table-column label="操作" align="center" width="100px">
                 <template slot-scope="scope">
                     <div>
                         <el-button size="mini" type="text" @click="onEdit(scope.$index, scope.row)">编辑</el-button>
-                        <TableDelete @handleDelete="onTrash(scope.row)"></TableDelete>
+                        <TableDelete class="table-operations-gap" @handleDelete="onTrash(scope.row)"></TableDelete>
                     </div>
                 </template>
             </el-table-column>
@@ -41,7 +41,7 @@ import TableFooter from '@/components/table/TableFooter';
 import TableDelete from '@/components/table/TableDelete';
 import ContractDialog from '@/components/dialog/about/ContractDialog';
 import { fill } from '@/utils/object';
-import { error, loading } from '@/utils/message';
+import { error, loading, alertel } from '@/utils/message';
 
 export default {
     components: {
@@ -52,6 +52,7 @@ export default {
     },
     data() {
         return {
+            search: false,
             keywords: null,
             loading: false,
             pageNumber: 1,
@@ -100,7 +101,7 @@ export default {
                     email: null,
                     phone: null,
                     postCode: null,
-                    mainCompany: false
+                    mainCompany: null
                 },
                 item
             );
@@ -154,7 +155,7 @@ export default {
                 await deleteCompany(item.id);
                 await this.getList();
             } catch (err) {
-                await alert(err);
+                await alertel(err);
             } finally {
                 ld.close();
             }

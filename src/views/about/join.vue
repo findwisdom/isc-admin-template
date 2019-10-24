@@ -12,15 +12,15 @@
             <el-table-column prop="id" label="编号"></el-table-column>
             <el-table-column prop="name" label="岗位名称"></el-table-column>
             <el-table-column prop="city" label="城市"></el-table-column>
-            <el-table-column prop="duty" label="岗位职责"></el-table-column>
-            <el-table-column prop="qualification" label="任职资格"></el-table-column>
+            <el-table-column prop="duty" label="岗位职责" :show-overflow-tooltip="true"></el-table-column>
+            <el-table-column prop="qualification" label="任职资格" :show-overflow-tooltip="true"></el-table-column>
             <el-table-column prop="publishTime" label="发布时间"></el-table-column>
             <el-table-column prop="viewCount" label="浏览次数"></el-table-column>
             <el-table-column>
                 <template slot-scope="scope">
                     <div>
                         <el-button size="mini" type="text" @click="onEdit(scope.$index, scope.row)">编辑</el-button>
-                        <TableDelete @handleDelete="onTrash(scope.row)"></TableDelete>
+                        <TableDelete class="table-operations-gap" @handleDelete="onTrash(scope.row)"></TableDelete>
                     </div>
                 </template>
             </el-table-column>
@@ -32,13 +32,13 @@
 </template>
 
 <script>
-import { getCareerList, deleteCareer } from '@/services/about';
+import { getCareerList, getCareerByName, deleteCareer } from '@/services/about';
 import TableHeader from '@/components/table/TableHeader';
 import TableFooter from '@/components/table/TableFooter';
 import TableDelete from '@/components/table/TableDelete';
 import JoinDialog from '@/components/dialog/about/JoinDialog';
 import { fill } from '@/utils/object';
-import { error, loading } from '@/utils/message';
+import { error, alertel, loading } from '@/utils/message';
 
 export default {
     components: {
@@ -72,6 +72,11 @@ export default {
         };
     },
     filters: {},
+    computed: {
+        getCareer() {
+            return this.keywords ? getCareerByName : getCareerList;
+        }
+    },
     watch: {
         pageNumber() {
             this.getList();
@@ -101,7 +106,7 @@ export default {
             let data = null;
             this.loading = true;
             try {
-                data = await getCareerList(this.pageSize, this.pageNumber, this.keywords);
+                data = data = await this.getCareer(this.pageSize, this.pageNumber, this.keywords);
                 this.loading = false;
             } catch (err) {
                 error(err);
@@ -140,7 +145,7 @@ export default {
                 await deleteCareer(item.id);
                 await this.getList();
             } catch (err) {
-                await alert(err);
+                await alertel(err);
             } finally {
                 ld.close();
             }

@@ -46,7 +46,7 @@ import TableDelete from '@/components/table/TableDelete';
 import ProductDialog from '@/components/dialog/product/ProductDialog';
 import Thumbnail from '@/components/Thumbnail';
 import { fill } from '@/utils/object';
-import { error, alert, loading } from '@/utils/message';
+import { error, alertel, loading } from '@/utils/message';
 
 export default {
     components: {
@@ -150,7 +150,7 @@ export default {
                 await deleteProduct(item.id);
                 await this.getList();
             } catch (err) {
-                await alert(err);
+                await alertel(err);
             } finally {
                 ld.close();
             }

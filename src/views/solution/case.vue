@@ -1,6 +1,6 @@
 <template>
     <div>
-        <TableHeader :keywords.sync="keywords" placeholder="请输入案例名称进行搜索" @search="onSearch">
+        <TableHeader :keywords.sync="keywords" placeholder="请输入案例名称进行搜索" @search="onSearch" :search="search">
             <ul class="table-actions">
                 <li>
                     <el-button type="primary" icon="el-icon-plus" size="mini" @click="onAdd">新建</el-button>
@@ -41,7 +41,7 @@ import TableDelete from '@/components/table/TableDelete';
 import CaseDialog from '@/components/dialog/solution/CaseDialog';
 import Thumbnail from '@/components/Thumbnail';
 import { fill } from '@/utils/object';
-import { error, loading } from '@/utils/message';
+import { error, loading, alertel } from '@/utils/message';
 
 export default {
     components: {
@@ -53,6 +53,7 @@ export default {
     },
     data() {
         return {
+            search: false,
             keywords: null,
             loading: false,
             pageNumber: 1,
@@ -145,7 +146,7 @@ export default {
                 await deleteCase(item.id);
                 await this.getList();
             } catch (err) {
-                await alert(err);
+                await alertel(err);
             } finally {
                 ld.close();
             }

@@ -29,7 +29,7 @@
 
 <script>
 import AppDialog from '@/components/app/AppDialog';
-import { alert, success } from '@/utils/message';
+import { alertel, success } from '@/utils/message';
 import validation from '@/validations/gateway';
 import { createUser, updateUser } from '@/services/user';
 export default {
@@ -99,7 +99,7 @@ export default {
                     await createUser(this.form);
                 }
             } catch (err) {
-                return await alert(err);
+                return await alertel(err);
             } finally {
                 this.loading = false;
             }

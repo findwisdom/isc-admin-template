@@ -51,7 +51,7 @@ export const warning = message => {
  * @param [options]
  * @returns {Promise<MessageBoxData>}
  */
-export const alert = (message, options) => {
+export const alertel = (message, options) => {
     message = stringify(message);
     // 专业的错误信息不暴露给用户
     if (message.toString().includes('系统异常')) {

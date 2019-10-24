@@ -14,7 +14,7 @@
         <template v-slot:default>
             <el-form ref="form" :model="form" :rules="rules" label-width="120px" size="mini">
                 <el-form-item label="伙伴名称" prop="name" class="is-required">
-                    <el-input v-model="form.name" placeholder="请输入伙伴名称" maxlength="40"></el-input>
+                    <el-input v-model="form.name" placeholder="请输入伙伴名称"></el-input>
                 </el-form-item>
                 <el-form-item label="顺序" prop="order">
                     <el-input-number v-model="form.order"></el-input-number>
@@ -39,7 +39,7 @@
 import AppDialog from '@/components/app/AppDialog';
 import AppUpload from '@/components/app/AppUpload';
 import AppUploadImg from '@/components/app/AppUploadImg';
-import { alert, success } from '@/utils/message';
+import { alertel, success } from '@/utils/message';
 import validation from '@/validations/partner';
 import { createPartner, updatePartner } from '@/services/about';
 export default {
@@ -119,7 +119,7 @@ export default {
                     await createPartner(this.form);
                 }
             } catch (err) {
-                return await alert(err);
+                return await alertel(err);
             } finally {
                 this.loading = false;
             }

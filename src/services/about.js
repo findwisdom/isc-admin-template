@@ -84,6 +84,18 @@ export async function getCareerList(pageSize, pageNumber, name) {
     return res.data;
 }
 
+export async function getCareerByName(pageSize, pageNumber, name) {
+    const res = await axios({
+        url: '/api/career/getCareerByName',
+        params: {
+            pageSize,
+            pageNumber,
+            name
+        }
+    });
+    return res.data;
+}
+
 /** 新增岗位
  *
  * @param form
@@ -124,7 +136,7 @@ export async function deleteCareer(id) {
         url: `/api/career/deleteCareer`,
         method: 'delete',
         params: {
-            id
+            career: id
         }
     });
     return res.data;

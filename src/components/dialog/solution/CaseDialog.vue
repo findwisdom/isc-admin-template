@@ -59,7 +59,7 @@ import AppDialog from '@/components/app/AppDialog';
 import AppUpload from '@/components/app/AppUpload';
 import AppUploadImg from '@/components/app/AppUploadImg';
 import validation from '@/validations/case';
-import { alert, success, error } from '@/utils/message';
+import { alertel, success, error } from '@/utils/message';
 import { uploadUrl } from '@/services/upload';
 import { createCase, updateCase, getSolutionList } from '@/services/solution';
 export default {
@@ -139,7 +139,7 @@ export default {
                     await createCase(this.form);
                 }
             } catch (err) {
-                return await alert(err);
+                return await alertel(err);
             } finally {
                 this.loading = false;
             }

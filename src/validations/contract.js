@@ -17,6 +17,7 @@ export default () => {
         phone: [
             { validator: required(), message: '电话必填' },
             { validator: phone(), message: '请输入正确联系电话格式' }
-        ]
+        ],
+        postCode: [{ max: 8, message: '不超过8个汉字' }]
     };
 };
