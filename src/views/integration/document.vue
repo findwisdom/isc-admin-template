@@ -30,13 +30,14 @@
 </template>
 
 <script>
-import { getDocumentList, removeDocument } from '@/services/integration';
+import { getDocumentListAll, getDocumentListByName, removeDocument } from '@/services/integration';
 import TableHeader from '@/components/table/TableHeader';
 import TableFooter from '@/components/table/TableFooter';
 import TableDelete from '@/components/table/TableDelete';
 import DocumentDialog from '@/components/dialog/integration/DocumentDialog';
 import { fill } from '@/utils/object';
-import { error, confirm, loading } from '@/utils/message';
+import { error, loading } from '@/utils/message';
+import { success } from '../../utils/message';
 
 export default {
     name: 'Document',
@@ -59,6 +60,11 @@ export default {
                 form: this.generateFrom()
             }
         };
+    },
+    computed: {
+        getDocumentList() {
+            return this.keywords ? getDocumentListByName : getDocumentListAll;
+        }
     },
     watch: {
         pageNumber() {
@@ -89,29 +95,16 @@ export default {
             this.loading = true;
 
             try {
-                data = await getDocumentList(this.pageSize, this.pageNumber, this.keywords);
+                data = await this.getDocumentList(this.pageSize, this.pageNumber, this.keywords);
             } catch (err) {
                 error(err);
-                // TODO: service
-                // data = { records: [], total: 0 };
-                data = {
-                    records: [
-                        {
-                            id: 1,
-                            order: 1,
-                            name: '学习文档',
-                            description: '如果没有登录指令集-集成商平台账号，请参考账号注册教程。',
-                            link: 'http://www.isyscore.com/'
-                        }
-                    ],
-                    total: 1
-                };
+                data = { list: [], totalSize: 0 };
             } finally {
                 this.loading = false;
             }
 
-            this.pageList = data.records;
-            this.pageTotal = data.total;
+            this.pageList = data.list;
+            this.pageTotal = data.totalSize;
         },
 
         onSearch() {
@@ -134,16 +127,11 @@ export default {
         },
 
         async onTrash(item) {
-            try {
-                await confirm(`确认删除选中的文档吗？`);
-            } catch (err) {
-                return;
-            }
-
             const ld = loading('删除中');
 
             try {
                 await removeDocument(item.id);
+                success('删除成功！');
                 await this.getList();
             } catch (err) {
                 await error(err);

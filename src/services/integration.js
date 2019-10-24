@@ -1,17 +1,37 @@
 import service from './axios';
-// TODO: service
-const url = '/api/user';
+
+const url1 = '/api/integrator';
+const url2 = '/api/step';
+const url3 = '/api/document';
+const url4 = '/api/question';
 
 /**
- * 获取步骤列表数据
+ * 获取all步骤列表数据
+ * @param pageSize
+ * @param pageNumber
+ * @returns {Promise<void>}
+ */
+export async function getEductionListAll(pageSize, pageNumber) {
+    const res = await service({
+        url: `${url2}/getStepList`,
+        params: {
+            pageSize,
+            pageNumber
+        }
+    });
+    return res.data;
+}
+
+/**
+ * 获取filter步骤列表数据
  * @param pageSize
  * @param pageNumber
  * @param name
  * @returns {Promise<void>}
  */
-export async function getEductionList(pageSize, pageNumber, name) {
+export async function getEductionListByName(pageSize, pageNumber, name) {
     const res = await service({
-        url: `${url}/getStepList`,
+        url: `${url2}/getStepByName`,
         params: {
             pageSize,
             pageNumber,
@@ -23,20 +43,19 @@ export async function getEductionList(pageSize, pageNumber, name) {
 
 /**
  * 删除步骤
- * @param id
+ * @param step
  * @returns {Promise<null|any>}
  */
-export async function removeEduction(id) {
+export async function removeEduction(step) {
     const res = await service({
-        url: `${url}/deleteStep/${id}`,
-        method: 'delete'
+        url: `${url2}/deleteStep`,
+        method: 'delete',
+        params: {
+            step
+        }
     });
 
-    if (res.data === true) {
-        return null;
-    }
-
-    throw new Error('删除失败');
+    return res.data;
 }
 
 /**
@@ -46,7 +65,7 @@ export async function removeEduction(id) {
  */
 export async function createEduction(form) {
     const res = await service({
-        url: `${url}/addStep`,
+        url: `${url2}/addStep`,
         method: 'post',
         data: form
     });
@@ -60,23 +79,40 @@ export async function createEduction(form) {
  */
 export async function updateEduction(form) {
     const res = await service({
-        url: `${url}/updateStep`,
-        method: 'post',
+        url: `${url2}/updateStep`,
+        method: 'put',
         data: form
     });
     return res.data;
 }
 
 /**
- * 获取文档列表数据
+ * 获取all文档列表数据
+ * @param pageSize
+ * @param pageNumber
+ * @returns {Promise<void>}
+ */
+export async function getDocumentListAll(pageSize, pageNumber) {
+    const res = await service({
+        url: `${url3}/getDocumentList`,
+        params: {
+            pageSize,
+            pageNumber
+        }
+    });
+    return res.data;
+}
+
+/**
+ * 获取filter文档列表数据
  * @param pageSize
  * @param pageNumber
  * @param name
  * @returns {Promise<void>}
  */
-export async function getDocumentList(pageSize, pageNumber, name) {
+export async function getDocumentListByName(pageSize, pageNumber, name) {
     const res = await service({
-        url: `${url}/getDocumentList`,
+        url: `${url3}/getDocumentList`,
         params: {
             pageSize,
             pageNumber,
@@ -88,20 +124,19 @@ export async function getDocumentList(pageSize, pageNumber, name) {
 
 /**
  * 删除文档
- * @param id
+ * @param documentId
  * @returns {Promise<null|any>}
  */
-export async function removeDocument(id) {
+export async function removeDocument(documentId) {
     const res = await service({
-        url: `${url}/deleteDocument/${id}`,
-        method: 'delete'
+        url: `${url3}/deleteDocument`,
+        method: 'delete',
+        params: {
+            documentId
+        }
     });
 
-    if (res.data === true) {
-        return null;
-    }
-
-    throw new Error('删除失败');
+    return res.data;
 }
 
 /**
@@ -111,7 +146,7 @@ export async function removeDocument(id) {
  */
 export async function createDocument(form) {
     const res = await service({
-        url: `${url}/addDocument`,
+        url: `${url3}/addDocument`,
         method: 'post',
         data: form
     });
@@ -125,9 +160,20 @@ export async function createDocument(form) {
  */
 export async function updateDocument(form) {
     const res = await service({
-        url: `${url}/updateDocument`,
-        method: 'post',
+        url: `${url3}/updateDocument`,
+        method: 'put',
         data: form
+    });
+    return res.data;
+}
+
+/**
+ * 获取详情
+ * @returns {Promise<void>}
+ */
+export async function getDetail() {
+    const res = await service({
+        url: `${url1}/getIntegrator`
     });
     return res.data;
 }
@@ -139,8 +185,8 @@ export async function updateDocument(form) {
  */
 export async function updateDetail(form) {
     const res = await service({
-        url: `${url}/createUpdate`,
-        method: 'post',
+        url: `${url1}/updateIntegrator`,
+        method: 'put',
         data: form
     });
     return res.data;
@@ -152,7 +198,7 @@ export async function updateDetail(form) {
  */
 export async function getQuestionList() {
     const res = await service({
-        url: `${url}/getQuestionList`
+        url: `${url4}/getQuestionList`
     });
     return res.data;
 }
@@ -164,7 +210,7 @@ export async function getQuestionList() {
  */
 export async function removeQuestion(data) {
     const res = await service({
-        url: `${url}/deleteQuestion`,
+        url: `${url4}/deleteQuestion`,
         method: 'delete',
         data
     });
@@ -183,7 +229,7 @@ export async function removeQuestion(data) {
  */
 export async function createQuestion(form) {
     const res = await service({
-        url: `${url}/addQuestion`,
+        url: `${url4}/addQuestion`,
         method: 'post',
         data: form
     });
@@ -197,7 +243,7 @@ export async function createQuestion(form) {
  */
 export async function updateQuestion(form) {
     const res = await service({
-        url: `${url}/updateQuestion`,
+        url: `${url4}/updateQuestion`,
         method: 'post',
         data: form
     });
