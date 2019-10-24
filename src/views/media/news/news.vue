@@ -34,12 +34,12 @@
 </template>
 
 <script>
-import { getNewsList, removeNews } from '@/services/media';
+import { getNewsListAll, getNewsListByTitle, removeNews } from '@/services/media';
 import TableHeader from '@/components/table/TableHeader';
 import TableFooter from '@/components/table/TableFooter';
 import TableDelete from '@/components/table/TableDelete';
 import Thumbnail from '@/components/Thumbnail';
-import { error, loading } from '@/utils/message';
+import { success, error, loading } from '@/utils/message';
 
 export default {
     name: 'News',
@@ -59,6 +59,11 @@ export default {
             pageList: []
         };
     },
+    computed: {
+        getNewsList() {
+            return this.keywords ? getNewsListByTitle : getNewsListAll;
+        }
+    },
     watch: {
         pageNumber() {
             this.getList();
@@ -76,31 +81,16 @@ export default {
             this.loading = true;
 
             try {
-                data = await getNewsList(this.pageSize, this.pageNumber, this.keywords);
+                data = await this.getNewsList(this.pageSize, this.pageNumber, this.keywords);
             } catch (err) {
                 error(err);
-                // TODO: service
-                // data = { records: [], total: 0 };
-                data = {
-                    records: [
-                        {
-                            id: 1,
-                            title: '迈入亿级时代，物联网企业成功突围的两种商业模式',
-                            publishTime: '2018-11-13',
-                            description:
-                                '面对碎片化的物联网市场，如何创造商业价值？面对B端这根难啃的骨头，如何找到“肥肉”、如何变现？',
-                            picture: 'https://www.apple.com/cn/icloud/images/screen_apps_collaborate_ipad_large_2x.jpg',
-                            order: 2
-                        }
-                    ],
-                    total: 1
-                };
+                data = { list: [], totalSize: 0 };
             } finally {
                 this.loading = false;
             }
 
-            this.pageList = data.records;
-            this.pageTotal = data.total;
+            this.pageList = data.list;
+            this.pageTotal = data.totalSize;
         },
 
         onSearch() {
@@ -121,6 +111,7 @@ export default {
 
             try {
                 await removeNews(item.id);
+                success('删除成功！');
                 await this.getList();
             } catch (err) {
                 await error(err);

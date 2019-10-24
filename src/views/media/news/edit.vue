@@ -45,6 +45,7 @@ import AppUploadList from '@/components/app/AppUploadList';
 import validation from '@/validations/news';
 import { getNewsContent, createNews, updateNews } from '@/services/media';
 import { error } from '@/utils/message';
+import { success } from '../../../utils/message';
 
 export default {
     name: 'Edit',
@@ -89,18 +90,7 @@ export default {
                 this.uploadList = this.generateUploadList(data.picture);
             } catch (err) {
                 error(err);
-                // TODO: service
-                // data = {};
-                data = {
-                    id: 1,
-                    title: '迈入亿级时代，物联网企业成功突围的两种商业模式',
-                    description:
-                        '面对碎片化的物联网市场，如何创造商业价值？面对B端这根难啃的骨头，如何找到“肥肉”、如何变现？',
-                    order: '1',
-                    picture: 'https://www.apple.com/cn/icloud/images/screen_apps_collaborate_ipad_large_2x.jpg',
-                    publishTime: '2018-11-13',
-                    content: '<h1 style="text-align: center;">Welcome to the TinyMCE demo!</h1>'
-                };
+                data = {};
                 this.uploadList = this.generateUploadList(data.picture);
             } finally {
                 this.ld.getLoading = false;
@@ -141,11 +131,13 @@ export default {
                 this.$message.error('请编辑报道内容！');
                 return false;
             }
+            // TODO:暂无图片上传...
+            this.formData.picture = 'https://www.apple.com/cn/icloud/images/screen_apps_collaborate_ipad_large_2x.jpg';
 
             this.ld.submitLoading = true;
-            // TODO:提交接口
             try {
                 await this.createUpdateNews(this.formData);
+                success('编辑成功！');
                 this.$router.push('/media/news');
             } catch (err) {
                 error(err);

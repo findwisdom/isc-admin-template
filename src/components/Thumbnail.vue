@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="table-thumbnail" @click="onPreview()" :style="{ width, height }">
-            <img :src="picture" :alt="alt" class="table-thumbnail-img" />
+            <img :src="picture ? picture : img.imageFail" :alt="alt" class="table-thumbnail-img" />
             <span class="table-thumbnail-actions">
                 <svg-icon name="icon-enlarge"></svg-icon>
             </span>
@@ -13,11 +13,16 @@
 </template>
 
 <script>
+import imageFail from '@/assets/icons/image-fail.png';
+
 export default {
     name: 'Thumbnail',
     data() {
         return {
-            visible: false
+            visible: false,
+            img: {
+                imageFail
+            }
         };
     },
     props: {

@@ -37,7 +37,6 @@ service.interceptors.response.use(
         const { code, message } = res.data;
 
         if (code && message) {
-            console.log(message);
             throw new Error(message);
         }
 

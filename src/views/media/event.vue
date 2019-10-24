@@ -29,13 +29,13 @@
 </template>
 
 <script>
-import { getEventList, removeEvent } from '@/services/media';
+import { getEventListAll, getEventListByDate, removeEvent } from '@/services/media';
 import TableHeader from '@/components/table/TableHeader';
 import TableFooter from '@/components/table/TableFooter';
 import TableDelete from '@/components/table/TableDelete';
 import EventDialog from '@/components/dialog/media/EventDialog';
 import { fill } from '@/utils/object';
-import { error, loading } from '@/utils/message';
+import { success, error, loading } from '@/utils/message';
 
 export default {
     name: 'Event',
@@ -58,6 +58,11 @@ export default {
                 form: this.generateFrom()
             }
         };
+    },
+    computed: {
+        getEventList() {
+            return this.keywords ? getEventListByDate : getEventListAll;
+        }
     },
     watch: {
         pageNumber() {
@@ -87,7 +92,7 @@ export default {
             this.loading = true;
 
             // yyyyMM
-            let date = this.keywords;
+            let date = this.keywords.split('-').join('');
             if (this.keywords) {
                 const y = this.keywords.slice(0, 4).padStart(4, '0');
                 const m = this.keywords.slice(4, 6).padStart(2, '0');
@@ -95,7 +100,7 @@ export default {
             }
 
             try {
-                data = await getEventList(this.pageSize, this.pageNumber, date);
+                data = await this.getEventList(this.pageSize, this.pageNumber, date);
             } catch (err) {
                 error(err);
                 data = { list: [], totalSize: 0 };
@@ -131,6 +136,7 @@ export default {
 
             try {
                 await removeEvent(item.id);
+                success('删除成功！');
                 await this.getList();
             } catch (err) {
                 await error(err);

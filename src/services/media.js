@@ -1,17 +1,35 @@
 import service from './axios';
-// TODO: service
-const url = '/api/memorabilia';
+
+const url1 = '/api/memorabilia';
+const url2 = '/api/report';
 
 /**
- * 获取大事记列表数据
+ * 获取all大事记列表数据
+ * @param pageSize
+ * @param pageNumber
+ * @returns {Promise<void>}
+ */
+export async function getEventListAll(pageSize, pageNumber) {
+    const res = await service({
+        url: `${url1}/getMemorabiliaList`,
+        params: {
+            pageSize,
+            pageNumber
+        }
+    });
+    return res.data;
+}
+
+/**
+ * 获取筛选大事记列表数据
  * @param pageSize
  * @param pageNumber
  * @param date
  * @returns {Promise<void>}
  */
-export async function getEventList(pageSize, pageNumber, date) {
+export async function getEventListByDate(pageSize, pageNumber, date) {
     const res = await service({
-        url: `${url}/getMemorabiliaList`,
+        url: `${url1}/getMemorabiliaByDate`,
         params: {
             pageSize,
             pageNumber,
@@ -28,18 +46,14 @@ export async function getEventList(pageSize, pageNumber, date) {
  */
 export async function removeEvent(memorabilia) {
     const res = await service({
-        url: `${url}/deleteMemorabilia`,
+        url: `${url1}/deleteMemorabilia`,
         method: 'delete',
         params: {
             memorabilia
         }
     });
 
-    if (res.data === true) {
-        return null;
-    }
-
-    throw new Error('删除失败');
+    return res.data;
 }
 
 /**
@@ -49,7 +63,7 @@ export async function removeEvent(memorabilia) {
  */
 export async function createEvent(form) {
     const res = await service({
-        url: `${url}/addMemorabilia`,
+        url: `${url1}/addMemorabilia`,
         method: 'post',
         data: form
     });
@@ -63,27 +77,44 @@ export async function createEvent(form) {
  */
 export async function updateEvent(form) {
     const res = await service({
-        url: `${url}/updateMemorabilia`,
-        method: 'post',
+        url: `${url1}/updateMemorabilia`,
+        method: 'put',
         data: form
     });
     return res.data;
 }
 
 /**
- * 获取新闻列表列表数据
+ * 获取all新闻列表列表数据
  * @param pageSize
  * @param pageNumber
- * @param publishTime
  * @returns {Promise<void>}
  */
-export async function getNewsList(pageSize, pageNumber, publishTime) {
+export async function getNewsListAll(pageSize, pageNumber) {
     const res = await service({
-        url: `${url}/getReportList`,
+        url: `${url2}/getReportList`,
+        params: {
+            pageSize,
+            pageNumber
+        }
+    });
+    return res.data;
+}
+
+/**
+ * 获取筛选新闻列表列表数据
+ * @param pageSize
+ * @param pageNumber
+ * @param title
+ * @returns {Promise<void>}
+ */
+export async function getNewsListByTitle(pageSize, pageNumber, title) {
+    const res = await service({
+        url: `${url2}/getReportByTitle`,
         params: {
             pageSize,
             pageNumber,
-            publishTime
+            title
         }
     });
     return res.data;
@@ -91,30 +122,32 @@ export async function getNewsList(pageSize, pageNumber, publishTime) {
 
 /**
  * 删除新闻报道
- * @param id
+ * @param report
  * @returns {Promise<null|any>}
  */
-export async function removeNews(id) {
+export async function removeNews(report) {
     const res = await service({
-        url: `${url}/deleteReport/${id}`,
-        method: 'delete'
+        url: `${url2}/deleteReport`,
+        method: 'delete',
+        params: {
+            report
+        }
     });
 
-    if (res.data === true) {
-        return null;
-    }
-
-    throw new Error('删除失败');
+    return res.data;
 }
 
 /**
  * 获取新闻详情数据
- * @param id
+ * @param report
  * @returns {Promise<void>}
  */
-export async function getNewsContent(id) {
+export async function getNewsContent(report) {
     const res = await service({
-        url: `${url}/getReportById/${id}`
+        url: `${url2}/getReportById`,
+        params: {
+            report
+        }
     });
     return res.data;
 }
@@ -126,7 +159,7 @@ export async function getNewsContent(id) {
  */
 export async function createNews(form) {
     const res = await service({
-        url: `${url}/addReport`,
+        url: `${url2}/addReport`,
         method: 'post',
         data: form
     });
@@ -140,8 +173,8 @@ export async function createNews(form) {
  */
 export async function updateNews(form) {
     const res = await service({
-        url: `${url}/updateReport`,
-        method: 'post',
+        url: `${url2}/updateReport`,
+        method: 'put',
         data: form
     });
     return res.data;
