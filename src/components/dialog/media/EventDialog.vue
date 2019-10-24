@@ -14,7 +14,12 @@
         <template v-slot:default>
             <el-form ref="form" :model="form" :rules="rules" label-width="60px" size="mini">
                 <el-form-item label="时间" prop="date">
-                    <el-date-picker v-model="form.date" type="month" placeholder="选择时间"></el-date-picker>
+                    <el-date-picker
+                        v-model="form.date"
+                        type="date"
+                        placeholder="选择时间"
+                        value-format="yyyy-MM-dd"
+                    ></el-date-picker>
                 </el-form-item>
                 <el-form-item label="事记" prop="event">
                     <el-input autosize type="textarea" :rows="2" v-model="form.event" maxlength="30"></el-input>

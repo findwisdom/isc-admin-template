@@ -12,6 +12,7 @@ import '@/scss/common.scss';
 import '@/scss/element-ui.scss';
 import '@/scss/dialog-form.scss';
 import '@/scss/table-actions.scss';
+import '@/scss/table-operations.scss';
 import '@/services/axios';
 
 Vue.use(elements);

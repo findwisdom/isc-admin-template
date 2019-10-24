@@ -4,12 +4,11 @@ import axios from 'axios';
 const service = axios.create({
     timeout: 3000,
     // baseURL: 'http://192.168.8.14:9012',
-    withCredentials: true // 允许携带cookie
+    withCredentials: true
 });
 
 service.interceptors.request.use(
     config => {
-        // config.headers['JSESSIONID'] = 'node01642vtc885dzq3ym0lobanezl1.node0';
         const isGetMethod = config.method.toUpperCase() === 'GET';
 
         if (!isGetMethod) {

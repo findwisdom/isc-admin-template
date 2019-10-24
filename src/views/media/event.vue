@@ -16,9 +16,7 @@
                 <template slot-scope="scope">
                     <div>
                         <el-button size="mini" type="text" @click="onEdit(scope.$index, scope.row)">编辑</el-button>
-                        <el-button size="mini" type="text" class="el-button__text-delete" @click="onTrash(scope.row)">
-                            删除
-                        </el-button>
+                        <TableDelete class="table-operations-gap" @handleDelete="onTrash(scope.row)"></TableDelete>
                     </div>
                 </template>
             </el-table-column>
@@ -34,15 +32,17 @@
 import { getEventList, removeEvent } from '@/services/media';
 import TableHeader from '@/components/table/TableHeader';
 import TableFooter from '@/components/table/TableFooter';
+import TableDelete from '@/components/table/TableDelete';
 import EventDialog from '@/components/dialog/media/EventDialog';
 import { fill } from '@/utils/object';
-import { error, confirm, loading } from '@/utils/message';
+import { error, loading } from '@/utils/message';
 
 export default {
     name: 'Event',
     components: {
         TableHeader,
         TableFooter,
+        TableDelete,
         EventDialog
     },
     data() {
@@ -86,7 +86,7 @@ export default {
             let data = null;
             this.loading = true;
 
-            // yyyymm
+            // yyyyMM
             let date = this.keywords;
             if (this.keywords) {
                 const y = this.keywords.slice(0, 4).padStart(4, '0');
@@ -98,18 +98,13 @@ export default {
                 data = await getEventList(this.pageSize, this.pageNumber, date);
             } catch (err) {
                 error(err);
-                // TODO: service
-                // data = { records: [], total: 0 };
-                data = {
-                    records: [{ id: 1, date: '2019-06', event: '指令集商业智能操作系统发布会圆满成功' }],
-                    total: 1
-                };
+                data = { list: [], totalSize: 0 };
             } finally {
                 this.loading = false;
             }
 
-            this.pageList = data.records;
-            this.pageTotal = data.total;
+            this.pageList = data.list;
+            this.pageTotal = data.totalSize;
         },
 
         onSearch() {
@@ -132,12 +127,6 @@ export default {
         },
 
         async onTrash(item) {
-            try {
-                await confirm(`确认删除选中的大事记吗？`);
-            } catch (err) {
-                return;
-            }
-
             const ld = loading('删除中');
 
             try {

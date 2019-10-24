@@ -23,9 +23,7 @@
                 <template slot-scope="scope">
                     <div>
                         <el-button size="mini" type="text" @click="onEdit(scope.row)">编辑</el-button>
-                        <el-button size="mini" type="text" class="el-button__text-delete" @click="onTrash(scope.row)">
-                            删除
-                        </el-button>
+                        <TableDelete class="table-operations-gap" @handleDelete="onTrash(scope.row)"></TableDelete>
                     </div>
                 </template>
             </el-table-column>
@@ -39,14 +37,16 @@
 import { getNewsList, removeNews } from '@/services/media';
 import TableHeader from '@/components/table/TableHeader';
 import TableFooter from '@/components/table/TableFooter';
+import TableDelete from '@/components/table/TableDelete';
 import Thumbnail from '@/components/Thumbnail';
-import { error, confirm, loading } from '@/utils/message';
+import { error, loading } from '@/utils/message';
 
 export default {
     name: 'News',
     components: {
         TableHeader,
         TableFooter,
+        TableDelete,
         Thumbnail
     },
     data() {
@@ -117,12 +117,6 @@ export default {
         },
 
         async onTrash(item) {
-            try {
-                await confirm(`确认删除选中的媒体报道吗？`);
-            } catch (err) {
-                return;
-            }
-
             const ld = loading('删除中');
 
             try {

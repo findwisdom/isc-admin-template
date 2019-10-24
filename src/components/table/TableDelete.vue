@@ -1,18 +1,16 @@
 <template>
-    <el-popover placement="top" width="220" trigger="click" v-model="deleteVisible">
-        <span class="table-delete-font">
-            <span class="table-delete-font__icon">
-                <i class="el-icon-warning"></i>
-            </span>
-            确定要进行删除操作吗？
-        </span>
-        <div style="text-align: right; margin: 0">
-            <el-button size="mini" type="text" plain @click="deleteVisible = false">取消</el-button>
-            <el-button size="mini" type="danger" plain @click="handleDelete">
-                删除
+    <el-popover placement="top-start" offset="-10" width="220" trigger="click" v-model="visible">
+        <svg-icon class="icon" name="icon-wring"></svg-icon>
+        <span class="content">确定要进行删除操作吗？</span>
+
+        <div class="actions">
+            <el-button size="mini" type="primary" plain @click="visible = false">取消</el-button>
+            <el-button size="mini" type="primary" @click="handleDelete">
+                确定
             </el-button>
         </div>
-        <el-button size="mini" type="text" class="el-button__text-delete table-delete-button" slot="reference">
+
+        <el-button size="mini" type="text" class="el-button__text-delete" slot="reference">
             删除
         </el-button>
     </el-popover>
@@ -23,12 +21,12 @@ export default {
     name: 'TableOperation',
     data() {
         return {
-            deleteVisible: false
+            visible: false
         };
     },
     methods: {
         handleDelete() {
-            this.deleteVisible = false;
+            this.visible = false;
             this.$emit('handleDelete');
         }
     }
@@ -36,18 +34,16 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.table-delete-button {
-    padding-left: 8px;
-    border-left: 1px solid rgba(207, 207, 207, 1);
-    margin-left: 8px;
+.icon,
+.content {
+    vertical-align: middle;
 }
-.table-delete-font {
-    &__icon {
-        color: rgba(255, 186, 0, 1);
-    }
-    font-size: 12px;
-    padding: 4px 8px;
-    display: inline-block;
-    margin-bottom: 10px;
+.content {
+    margin-left: 6px;
+}
+.actions {
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
 }
 </style>
