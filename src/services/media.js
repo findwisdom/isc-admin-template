@@ -1,6 +1,6 @@
 import service from './axios';
 // TODO: service
-const url = '/api/user';
+const url = '/api/memorabilia';
 
 /**
  * 获取大事记列表数据
@@ -26,10 +26,13 @@ export async function getEventList(pageSize, pageNumber, date) {
  * @param id
  * @returns {Promise<null|any>}
  */
-export async function removeEvent(id) {
+export async function removeEvent(memorabilia) {
     const res = await service({
-        url: `${url}/deleteMemorabilia/${id}`,
-        method: 'delete'
+        url: `${url}/deleteMemorabilia`,
+        method: 'delete',
+        params: {
+            memorabilia
+        }
     });
 
     if (res.data === true) {

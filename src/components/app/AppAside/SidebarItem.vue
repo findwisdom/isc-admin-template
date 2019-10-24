@@ -89,7 +89,6 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-@import '../scss/variables';
 .app-aside {
     background-color: $app-aside-bg !important;
     &__icon {

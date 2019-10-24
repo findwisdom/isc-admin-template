@@ -25,7 +25,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import SidebarItem from '@/components/SidebarItem';
+import SidebarItem from './SidebarItem';
 
 export default {
     name: 'AppAside',

@@ -4,7 +4,6 @@
 
         <div class="table-footer__right">
             <el-pagination
-                background
                 @current-change="handleCurrentChange"
                 @size-change="handleSizeChange"
                 :current-page="pageNumber2"

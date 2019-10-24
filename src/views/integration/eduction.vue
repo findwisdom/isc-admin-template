@@ -17,9 +17,7 @@
                 <template slot-scope="scope">
                     <div>
                         <el-button size="mini" type="text" @click="onEdit(scope.$index, scope.row)">编辑</el-button>
-                        <el-button size="mini" type="text" class="el-button__text-delete" @click="onTrash(scope.row)">
-                            删除
-                        </el-button>
+                        <TableDelete class="table-operations-gap" @handleDelete="onTrash(scope.row)"></TableDelete>
                     </div>
                 </template>
             </el-table-column>
@@ -35,6 +33,7 @@
 import { getEductionList, removeEduction } from '@/services/integration';
 import TableHeader from '@/components/table/TableHeader';
 import TableFooter from '@/components/table/TableFooter';
+import TableDelete from '@/components/table/TableDelete';
 import EductionDialog from '@/components/dialog/integration/EductionDialog';
 import { fill } from '@/utils/object';
 import { error, confirm, loading } from '@/utils/message';
@@ -44,6 +43,7 @@ export default {
     components: {
         TableHeader,
         TableFooter,
+        TableDelete,
         EductionDialog
     },
     data() {
