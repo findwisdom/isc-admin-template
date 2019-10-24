@@ -9,23 +9,21 @@
         </TableHeader>
 
         <el-table :data="pageList" size="mini" v-loading="loading">
-            <el-table-column prop="id" label="编号"></el-table-column>
-            <el-table-column prop="name" label="案例名称"></el-table-column>
+            <el-table-column prop="id" label="编号" width="50px"></el-table-column>
+            <el-table-column prop="name" label="案例名称" :show-overflow-tooltip="true"></el-table-column>
             <el-table-column prop="picture" label="案例图片">
                 <template slot-scope="scope">
                     <Thumbnail :picture="scope.row.picture" />
                 </template>
             </el-table-column>
-            <el-table-column prop="description" label="案例介绍"></el-table-column>
+            <el-table-column prop="description" label="案例介绍" :show-overflow-tooltip="true"></el-table-column>
             <el-table-column prop="solutionId" label="所属解决方案"></el-table-column>
             <el-table-column prop="time" label="更新时间"></el-table-column>
             <el-table-column label="操作" align="center" width="100px">
                 <template slot-scope="scope">
                     <div>
                         <el-button size="mini" type="text" @click="onEdit(scope.$index, scope.row)">编辑</el-button>
-                        <el-button size="mini" type="text" class="el-button__text-delete" @click="onTrash(scope.row)">
-                            删除
-                        </el-button>
+                        <TableDelete @handleDelete="onTrash(scope.row)"></TableDelete>
                     </div>
                 </template>
             </el-table-column>
@@ -39,6 +37,7 @@
 import { getCaseList, deleteCase } from '@/services/solution';
 import TableHeader from '@/components/table/TableHeader';
 import TableFooter from '@/components/table/TableFooter';
+import TableDelete from '@/components/table/TableDelete';
 import CaseDialog from '@/components/dialog/solution/CaseDialog';
 import Thumbnail from '@/components/Thumbnail';
 import { fill } from '@/utils/object';
@@ -49,7 +48,8 @@ export default {
         TableHeader,
         TableFooter,
         CaseDialog,
-        Thumbnail
+        Thumbnail,
+        TableDelete
     },
     data() {
         return {
@@ -139,13 +139,6 @@ export default {
         },
 
         async onTrash(item) {
-            try {
-                await confirm(`确认删除选中的案例吗？`);
-                console.log(item);
-            } catch (err) {
-                return;
-            }
-
             const ld = loading('删除中');
 
             try {

@@ -55,7 +55,7 @@ $--color-primary: $app-primary-color;
         }
     }
     .is-active {
-        background-color: $app-aside-bg-active !important;
+        background-color: $app-primary-color !important;
     }
     .el-menu-item {
         font-size: 15px;
