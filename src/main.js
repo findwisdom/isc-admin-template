@@ -7,7 +7,7 @@ import router from '@/router/index';
 import store from '@/store/index';
 import SvgIcon from '@/components/SvgIcon';
 import 'normalize.css';
-import 'element-ui/lib/theme-chalk/index.css';
+// import 'element-ui/lib/theme-chalk/index.css';
 import '@/scss/common.scss';
 import '@/scss/element-ui.scss';
 import '@/scss/dialog-form.scss';
