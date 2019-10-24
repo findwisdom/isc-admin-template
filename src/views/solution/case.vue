@@ -94,7 +94,7 @@ export default {
                     id: undefined,
                     name: null,
                     order: null,
-                    picture: null,
+                    picture: 'http://b-ssl.duitang.com/uploads/blog/201312/04/20131204184148_hhXUT.jpeg',
                     description: null,
                     solutionId: null
                 },
@@ -110,13 +110,13 @@ export default {
                 this.loading = false;
             } catch (err) {
                 error(err);
-                data = { records: [], total: 0 };
+                data = { list: [], totalSize: 0 };
             } finally {
                 this.loading = false;
             }
 
-            this.pageList = data.records;
-            this.pageTotal = data.total;
+            this.pageList = data.list;
+            this.pageTotal = data.totalSize;
         },
 
         onSearch() {

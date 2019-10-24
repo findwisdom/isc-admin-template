@@ -19,6 +19,16 @@
                 <el-form-item label="顺序" prop="order">
                     <el-input-number v-model="form.order"></el-input-number>
                 </el-form-item>
+                <el-form-item label="产品所属" prop="productTypeId" class="is-required">
+                    <el-select v-model="form.productTypeId" placeholder="请选择产品所属">
+                        <el-option
+                            v-for="option in osTypeOptions"
+                            :key="option.value"
+                            :label="option.label"
+                            :value="option.value"
+                        ></el-option>
+                    </el-select>
+                </el-form-item>
                 <el-form-item label="产品banner图" prop="banner" class="is-required">
                     <app-upload
                         :action="uploadUrl"
@@ -49,16 +59,6 @@
                         :rows="4"
                         maxlength="300"
                     ></el-input>
-                </el-form-item>
-                <el-form-item label="产品所属" prop="productTypeId" class="is-required">
-                    <el-select v-model="form.productTypeId" placeholder="请选择产品所属">
-                        <el-option
-                            v-for="option in osTypeOptions"
-                            :key="option.value"
-                            :label="option.label"
-                            :value="option.value"
-                        ></el-option>
-                    </el-select>
                 </el-form-item>
             </el-form>
         </template>
@@ -151,10 +151,11 @@ export default {
             }
             try {
                 this.loading = true;
+                console.log(this.form);
                 if (this.form.id) {
-                    await createProduct(this.form);
-                } else {
                     await updateProduct(this.form);
+                } else {
+                    await createProduct(this.form);
                 }
             } catch (err) {
                 return await alert(err);
@@ -171,7 +172,9 @@ export default {
         let data = null;
         try {
             data = await getProductType();
-            this.osTypeOptions = data.map(item => ({ label: item.name, value: item.id }));
+            if (data.list && data.list instanceof Array) {
+                this.osTypeOptions = data.list.map(item => ({ label: item.name, value: item.id }));
+            }
         } catch (err) {
             error(err);
         }

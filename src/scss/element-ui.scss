@@ -21,12 +21,68 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 .el-scrollbar__wrap {
     overflow-x: hidden;
 }
+
+.el-popper .popper__arrow,
+.el-popper .popper__arrow::after {
+    //display: none;
+}
+.el-popper[x-placement^='bottom'] {
+    margin-top: 8px;
+}
+.el-icon-arrow-down:before {
+    content: '\e790';
+}
 .el-menu {
     background-color: $app-aside-sub-bg;
     border-right: solid 1px $app-aside-sub-bg;
+    border-radius: 5px;
+    .menu-wrapper {
+        overflow: hidden;
+        margin: 0 8px 16px;
+        border-radius: 5px;
+        .is-opened {
+            //border-radius: 0 0 5px 5px;
+            background-color: $app-aside-item-hover !important;
+            overflow: hidden;
+            .el-submenu__title {
+                margin-bottom: 8px;
+            }
+        }
+    }
+    .nest-menu {
+        margin: 0 8px;
+        .el-menu-item {
+            font-size: 14px;
+            padding-left: 5px !important;
+        }
+        .el-menu-item:hover {
+            background-color: $app-aside-sub-hover;
+        }
+    }
+    .is-active {
+        background-color: $app-aside-bg-active !important;
+    }
+    .el-menu-item {
+        font-size: 15px;
+        padding-left: 13px !important;
+    }
+    .el-menu--inline {
+        overflow: hidden;
+        border-radius: 0 0 5px 5px;
+        margin-bottom: 8px;
+        .el-menu-item {
+            height: 30px;
+            line-height: 30px;
+        }
+        .menu-wrapper {
+            margin-bottom: 8px;
+        }
+    }
     .el-submenu__title {
-        height: 50px;
-        line-height: 50px;
+        font-size: 15px;
+        padding-left: 13px !important;
+        height: 44px;
+        line-height: 44px;
         color: $app-aside-font-color;
     }
     .el-submenu__title i {
@@ -34,10 +90,14 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
     }
     .el-submenu__title:focus,
     .el-submenu__title:hover {
-        background-color: $app-aside-sub-hover;
+        background-color: $app-aside-item-hover;
         //color: #00b2f8;
     }
     .el-submenu__title:focus {
         color: #fff;
+    }
+    .el-submenu__icon-arrow {
+        padding-top: 2px;
+        right: 10px;
     }
 }

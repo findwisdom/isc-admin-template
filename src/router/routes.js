@@ -43,13 +43,13 @@ export default [
                 path: 'events',
                 name: 'media-events',
                 component: () => import('@/views/media/event.vue'),
-                meta: { title: '公司大事记', icon: 'nav-computer' }
+                meta: { title: '公司大事记', icon: 'nav-point' }
             },
             {
                 path: 'news',
                 name: 'media-news',
                 component: () => import('@/views/media/news/news.vue'),
-                meta: { title: '媒体报道', icon: 'nav-appliances' }
+                meta: { title: '媒体报道', icon: 'nav-point' }
             },
             {
                 path: 'news/edit',
@@ -84,25 +84,25 @@ export default [
                 path: 'detail',
                 name: 'integration-detail',
                 component: () => import('@/views/integration/detail.vue'),
-                meta: { title: '详细信息', icon: 'nav-detail' }
+                meta: { title: '详细信息', icon: 'nav-point' }
             },
             {
                 path: 'eduction',
                 name: 'integration-eduction',
                 component: () => import('@/views/integration/eduction.vue'),
-                meta: { title: '入门', icon: 'nav-eduction' }
+                meta: { title: '入门', icon: 'nav-point' }
             },
             {
                 path: 'document',
                 name: 'integration-document',
                 component: () => import('@/views/integration/document.vue'),
-                meta: { title: '文档', icon: 'nav-book' }
+                meta: { title: '文档', icon: 'nav-point' }
             },
             {
                 path: 'question',
                 name: 'integration-question',
                 component: () => import('@/views/integration/question.vue'),
-                meta: { title: '常见问题', icon: 'nav-question' }
+                meta: { title: '常见问题', icon: 'nav-point' }
             }
         ]
     },
@@ -116,25 +116,25 @@ export default [
                 path: 'partner',
                 name: 'about-partner',
                 component: () => import('@/views/about/partner.vue'),
-                meta: { title: '合作伙伴', icon: 'nav-partner' }
+                meta: { title: '合作伙伴', icon: 'nav-point' }
             },
             {
                 path: 'contact',
                 name: 'about-contact',
                 component: () => import('@/views/about/contract.vue'),
-                meta: { title: '联系我们', icon: 'nav-contract' }
+                meta: { title: '联系我们', icon: 'nav-point' }
             },
             {
                 path: 'join',
                 name: 'about-join',
                 component: () => import('@/views/about/join.vue'),
-                meta: { title: '加入我们', icon: 'nav-join' }
+                meta: { title: '加入我们', icon: 'nav-point' }
             },
             {
                 path: 'honour',
                 name: 'about-honour',
                 component: () => import('@/views/about/honour.vue'),
-                meta: { title: '专利荣誉', icon: 'nav-honour' }
+                meta: { title: '专利荣誉', icon: 'nav-point' }
             }
         ]
     },

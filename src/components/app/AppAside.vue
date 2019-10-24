@@ -2,7 +2,12 @@
     <div style="height: 100vh;overflow: hidden">
         <el-scrollbar style="height: 100%">
             <div class="system-header">
-                <div class="system-header__brand"></div>
+                <div class="system-header__brand">
+                    <span class="system-header__logo">
+                        <svg-icon name="logo" style="height: 44px;width: 35px"></svg-icon>
+                    </span>
+                    <span class="system-header__logo-font">官网管理</span>
+                </div>
             </div>
             <el-menu
                 router
@@ -49,23 +54,30 @@ export default {
 <style scoped lang="scss">
 .system-header {
     position: relative;
-    height: 63px;
-    line-height: 63px;
     color: $app-aside-font-color;
     text-align: center;
+    margin-bottom: 14px;
     &__brand {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        margin-left: -67px;
-        margin-top: -18px;
-        width: 134px;
-        height: 36px;
-        text-align: center;
-        line-height: 44px;
-        font-size: 20px;
-        background: url('../../assets/logo1.png') center no-repeat;
+        margin-top: 10px;
+        text-align: left;
+        margin-left: 20px;
         background-size: contain;
+        vertical-align: middle;
+    }
+    &__logo {
+        font-size: 46px;
+        display: inline-block;
+        padding-right: 16px;
+        vertical-align: middle;
+    }
+    &__logo-font {
+        font-weight: bold;
+        margin-top: -10px;
+        vertical-align: middle;
+        font-size: 16px;
+        display: inline-block;
+        border-left: 2px solid #ffffff;
+        padding-left: 16px;
     }
 }
 .app-aside {

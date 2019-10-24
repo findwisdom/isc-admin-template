@@ -1,16 +1,24 @@
+/**
+ * _variables
+ * @author ydr.me
+ * @create 2019-08-08 11:07:15
+ * @update 2019-08-08 11:07:15
+ */
+
 // 侧边颜色
-$app-aside-bg: rgb(48, 65, 86);
-$app-aside-font-color: rgb(191, 203, 217);
-$app-aside-font-active: rgb(64, 158, 255);
-$app-aside-sub-bg: #1f2d3d;
-$app-aside-sub-hover: #263445;
-$app-aside-item-hover: #001528;
+$app-aside-bg: #4f6a8a;
+$app-aside-font-color: rgba(246, 246, 246, 0.9);
+$app-aside-font-active: #ffffff;
+$app-aside-bg-active: rgb(64, 158, 255);
+$app-aside-sub-bg: #405a79;
+$app-aside-sub-hover: #4f6a8a;
+$app-aside-item-hover: #405a79;
 
 /**
  * 主题色/功能色
  */
 // 背景色
-$app-body-bg: #f5f9fd;
+$app-body-bg: #eef3f9;
 
 // 主题色/功能色
 $app-primary-color: #00b2f8;
@@ -70,7 +78,6 @@ $nav-hover-color: #405a79;
 $app-width: 1440px;
 $app-aside-width: 200px;
 
-
 // 待弃用，目前菜单蓝有用到！！！！！
 // 边框颜色
 $app-border-color: #d7d8dc;
@@ -79,3 +86,9 @@ $app-muted-color: #c0c5d3;
 // 轻色：前景色
 $app-light-color: #f6f7f8;
 
+// 聚焦：背景色
+$app-hover-color: #f5f7fa;
+
+// 应用宽度
+$app-width: 1440px;
+$app-aside-width: 200px;

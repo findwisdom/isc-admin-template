@@ -9,7 +9,7 @@ import axios from '@/services/axios';
  */
 export async function getCaseList(pageSize, pageNumber, name) {
     const res = await axios({
-        url: '/api/operation/user/getUserList',
+        url: '/api/cases/getCasesList',
         params: {
             pageSize,
             pageNumber,
@@ -27,7 +27,7 @@ export async function getCaseList(pageSize, pageNumber, name) {
 
 export async function createCase(form) {
     const res = await axios({
-        url: '/api/operation/repair/createRepair',
+        url: '/api/cases/addCases',
         method: 'post',
         data: form
     });
@@ -42,7 +42,7 @@ export async function createCase(form) {
 
 export async function updateCase(form) {
     const res = await axios({
-        url: '/api/operation/business/updateBusiness',
+        url: '/api/cases/updateCases',
         method: 'put',
         data: form
     });
@@ -56,8 +56,11 @@ export async function updateCase(form) {
  */
 export async function deleteCase(id) {
     const res = await axios({
-        url: `/api/operation/repair/deleteRepair/${id}`,
-        method: 'delete'
+        url: `/api/cases/deleteCases`,
+        method: 'delete',
+        params: {
+            cases: id
+        }
     });
     return res.data;
 }
@@ -69,7 +72,11 @@ export async function deleteCase(id) {
 
 export async function getSolutionList() {
     const res = await axios({
-        url: '/api/operation/user/getUserList'
+        url: '/api/solution/getSolutionList',
+        params: {
+            pageSize: 100,
+            pageNumber: 1
+        }
     });
     return res.data;
 }
