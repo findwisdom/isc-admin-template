@@ -1,6 +1,6 @@
 <template>
     <div>
-        <TableHeader :keywords.sync="keywords" placeholder="请输入步骤名称搜索" @search="onSearch">
+        <TableHeader :keywords.sync="keywords" placeholder="请输入文档名称搜索" @search="onSearch">
             <ul class="table-actions">
                 <li>
                     <el-button type="primary" icon="el-icon-plus" size="mini" @click="onAdd">新建</el-button>

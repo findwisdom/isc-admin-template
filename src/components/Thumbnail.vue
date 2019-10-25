@@ -1,11 +1,13 @@
 <template>
     <div>
-        <div class="table-thumbnail" @click="onPreview()" :style="{ width, height }">
-            <img :src="picture ? picture : img.imageFail" :alt="alt" class="table-thumbnail-img" />
-            <span class="table-thumbnail-actions">
+        <div class="table-thumbnail" :style="{ width, height }">
+            <img :src="url" :alt="alt" class="table-thumbnail-img" />
+
+            <span :class="['table-thumbnail-actions', loadFail ? 'load-fail' : '']" @click="onPreview()">
                 <svg-icon name="icon-enlarge"></svg-icon>
             </span>
         </div>
+
         <el-dialog :visible.sync="visible">
             <img width="100%" :src="picture" :alt="alt" />
         </el-dialog>
@@ -14,11 +16,14 @@
 
 <script>
 import imageFail from '@/assets/icons/image-fail.png';
+import imageLodading from '@/assets/icons/image-lodading.png';
 
 export default {
     name: 'Thumbnail',
     data() {
         return {
+            url: imageLodading,
+            loadFail: true,
             visible: false,
             img: {
                 imageFail
@@ -40,12 +45,26 @@ export default {
         },
         height: {
             type: String,
-            default: '38px'
+            default: '50px'
         }
+    },
+    created() {
+        this.loadImage();
     },
     methods: {
         onPreview() {
             this.visible = true;
+        },
+        loadImage() {
+            const img = new Image();
+            img.onload = () => {
+                this.url = this.picture;
+                this.loadFail = false;
+            };
+            img.onerror = () => {
+                this.url = this.img.imageFail;
+            };
+            img.src = this.picture;
         }
     }
 };
@@ -74,6 +93,9 @@ export default {
         &:hover {
             opacity: 0.7;
         }
+    }
+    &-actions.load-fail {
+        display: none;
     }
 }
 </style>
