@@ -3,7 +3,7 @@ import lang from 'element-ui/lib/locale/lang/zh-CN';
 import locale from 'element-ui/lib/locale';
 import elements from '@/utils/elements';
 import App from '@/App.vue';
-import router from '@/router/index';
+import router from '@/router/routes';
 import store from '@/store/index';
 import SvgIcon from '@/components/SvgIcon';
 import 'normalize.css';
@@ -14,6 +14,7 @@ import '@/scss/dialog-form.scss';
 import '@/scss/table-actions.scss';
 import '@/scss/table-operations.scss';
 import '@/services/axios';
+import '@/permission.js'; // permission control
 
 Vue.use(elements);
 Vue.component('svg-icon', SvgIcon);

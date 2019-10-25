@@ -8,7 +8,7 @@
 'use strict';
 
 export default {
-    isAdmin(state) {
-        return state.accountRole === 'admin';
+    roles(state) {
+        return state.roles;
     }
 };

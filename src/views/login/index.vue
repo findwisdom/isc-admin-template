@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { alertel, success } from '@/utils/message';
+import { success, error } from '@/utils/message';
 import { login } from '@/services/user';
 export default {
     name: 'index',
@@ -69,18 +69,19 @@ export default {
                 if (valid) {
                     try {
                         this.loading = true;
-                        let data = await login(this.username, this.password);
+                        let data = await login(this.loginForm.username, this.loginForm.password);
                         let userInfo = {
                             login: true,
                             admin: data.admin,
                             name: data.name,
-                            email: data.email
+                            email: data.email,
+                            roles: data.admin ? ['admin'] : ['user']
                         };
                         window.sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
                         success('登录成功');
                         this.$router.push({ path: '/' });
                     } catch (err) {
-                        return await alertel(err);
+                        error(err);
                     } finally {
                         this.loading = false;
                     }

@@ -6,9 +6,11 @@
  */
 
 'use strict';
-
+import Vue from 'vue';
+import Router from 'vue-router';
 import Layout from '@/components/layout';
-export default [
+Vue.use(Router);
+export const constantRoutes = [
     {
         path: '/login',
         component: () => import('@/views/login/index.vue'),
@@ -139,22 +141,45 @@ export default [
         ]
     },
     {
-        path: '/user',
-        component: Layout,
-        redirect: '/user/role',
-        meta: { title: '用户管理', icon: 'nav-user' },
-        children: [
-            {
-                path: 'role',
-                name: 'user-role',
-                component: () => import('@/views/user/role.vue'),
-                meta: { title: '角色管理', icon: 'nav-user' }
-            }
-        ]
-    },
-    {
         path: '*',
         hidden: true,
         redirect: '/about'
     }
 ];
+
+export const asyncRoutes = [
+    {
+        path: '/user',
+        component: Layout,
+        redirect: '/user/role',
+        meta: { title: '用户管理', icon: 'nav-user', roles: ['admin'] },
+        children: [
+            {
+                path: 'role',
+                name: 'user-role',
+                component: () => import('@/views/user/role.vue'),
+                meta: {
+                    title: '角色管理',
+                    icon: 'nav-user'
+                }
+            }
+        ]
+    }
+];
+
+const createRouter = () =>
+    new Router({
+        mode: 'history', // require service support
+        scrollBehavior: () => ({ y: 0 }),
+        routes: constantRoutes
+    });
+
+const router = createRouter();
+
+// Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
+export function resetRouter() {
+    const newRouter = createRouter();
+    router.matcher = newRouter.matcher; // reset router
+}
+
+export default router;

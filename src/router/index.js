@@ -7,25 +7,48 @@
 
 'use strict';
 
-import Vue from 'vue';
-import Router from 'vue-router';
-import routes from './routes';
-// import store from '@store';
+import { asyncRoutes } from '@/router/routes';
 
-Vue.use(Router);
+/**
+ * Use meta.role to determine if the current user has permission
+ * @param roles
+ * @param route
+ */
+function hasPermission(roles, route) {
+    if (route.meta && route.meta.roles) {
+        return roles.some(role => route.meta.roles.includes(role));
+    } else {
+        return true;
+    }
+}
 
-const router = new Router({
-    mode: 'history',
-    routes
-});
+/**
+ * Filter asynchronous routing tables by recursion
+ * @param routes asyncRoutes
+ * @param roles
+ */
+export function filterAsyncRoutes(routes, roles) {
+    const res = [];
 
-// const isAdmin = store.getters.isAdmin;
-//
-// router.beforeEach((to, from, next) => {
-//     if ((to.name === 'user-role' || to.name === 'backstage-type') && !isAdmin) {
-//         return next({ path: '/order/backlog' });
-//     }
-//     return next();
-// });
+    routes.forEach(route => {
+        const tmp = { ...route };
+        if (hasPermission(roles, tmp)) {
+            if (tmp.children) {
+                tmp.children = filterAsyncRoutes(tmp.children, roles);
+            }
+            res.push(tmp);
+        }
+    });
 
-export default router;
+    return res;
+}
+
+export function generateRoutes(roles) {
+    let accessedRoutes;
+    if (roles.includes('admin')) {
+        accessedRoutes = asyncRoutes;
+    } else {
+        accessedRoutes = filterAsyncRoutes(asyncRoutes, roles);
+    }
+    return accessedRoutes;
+}

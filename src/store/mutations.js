@@ -10,19 +10,7 @@
 // import state from './state';
 
 export default {
-    setProject(state, { projectId, projectName }) {
-        if (projectId) {
-            state.projectId = projectId;
-            state.projectName = projectName;
-        } else {
-            state.projectId = null;
-            state.projectName = null;
-        }
-    },
-    setUserLogin(state, userLogin) {
-        state.userLogin = userLogin;
-    },
-    setAccountRole(state, accountRole) {
-        state.accountRole = accountRole;
+    setRoles(state, roles) {
+        state.roles = roles;
     }
 };
