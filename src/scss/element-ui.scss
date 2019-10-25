@@ -101,3 +101,37 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
         right: 10px;
     }
 }
+
+.el-message {
+    &__content {
+        color: $app-text-1-color !important;
+    }
+    &--error {
+        border-color: $app-danger-color;
+        background-color:$app-danger-light;
+        .el-icon-error {
+            color: $app-danger-color;
+        }
+    }
+    &--success {
+        border-color: $app-success-color;
+        background-color:$app-success-light;
+        .el-icon-success {
+            color: $app-success-color;
+        }
+    }
+    &--warning {
+        border-color: $app-warn-color;
+        background-color:$app-warn-light;
+        .el-icon-warning {
+            color: $app-warn-color;
+        }
+    }
+    &--info {
+        border-color: $app-primary-color;
+        background-color:$app-primary-light;
+        .el-icon-info {
+            color: $app-primary-color;
+        }
+    }
+}
