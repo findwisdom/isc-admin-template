@@ -12,7 +12,7 @@
         </template>
 
         <template v-slot:default>
-            <el-form ref="form" :model="form" :rules="rules" label-width="60px" size="mini">
+            <el-form ref="form" :model="form" :rules="rules" label-position="top" size="mini">
                 <el-form-item label="时间" prop="date">
                     <el-date-picker
                         v-model="form.date"

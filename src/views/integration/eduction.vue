@@ -30,13 +30,13 @@
 </template>
 
 <script>
-import { getEductionList, removeEduction } from '@/services/integration';
+import { getEductionListAll, getEductionListByName, removeEduction } from '@/services/integration';
 import TableHeader from '@/components/table/TableHeader';
 import TableFooter from '@/components/table/TableFooter';
 import TableDelete from '@/components/table/TableDelete';
 import EductionDialog from '@/components/dialog/integration/EductionDialog';
 import { fill } from '@/utils/object';
-import { error, confirm, loading } from '@/utils/message';
+import { success, error, loading } from '@/utils/message';
 
 export default {
     name: 'Eduction',
@@ -59,6 +59,11 @@ export default {
                 form: this.generateFrom()
             }
         };
+    },
+    computed: {
+        getEductionList() {
+            return this.keywords ? getEductionListByName : getEductionListAll;
+        }
     },
     watch: {
         pageNumber() {
@@ -89,28 +94,16 @@ export default {
             this.loading = true;
 
             try {
-                data = await getEductionList(this.pageSize, this.pageNumber, this.keywords);
+                data = await this.getEductionList(this.pageSize, this.pageNumber, this.keywords);
             } catch (err) {
                 error(err);
-                // TODO: service
-                // data = { records: [], total: 0 };
-                data = {
-                    records: [
-                        {
-                            id: 1,
-                            order: 1,
-                            name: '登录注册',
-                            description: '登录指令集-集成商平台，如果没有账号，请参考账号注册教程。'
-                        }
-                    ],
-                    total: 1
-                };
+                data = { list: [], totalSize: 0 };
             } finally {
                 this.loading = false;
             }
 
-            this.pageList = data.records;
-            this.pageTotal = data.total;
+            this.pageList = data.list;
+            this.pageTotal = data.totalSize;
         },
 
         onSearch() {
@@ -133,16 +126,11 @@ export default {
         },
 
         async onTrash(item) {
-            try {
-                await confirm(`确认删除选中的步骤吗？`);
-            } catch (err) {
-                return;
-            }
-
             const ld = loading('删除中');
 
             try {
                 await removeEduction(item.id);
+                success('删除成功！');
                 await this.getList();
             } catch (err) {
                 await error(err);

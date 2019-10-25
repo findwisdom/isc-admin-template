@@ -12,7 +12,7 @@
         </template>
 
         <template v-slot:default>
-            <el-form ref="form" :model="form" :rules="rules" label-width="60px" size="mini">
+            <el-form ref="form" :model="form" :rules="rules" label-position="top" size="mini">
                 <el-form-item label="名称" prop="name">
                     <el-input v-model="form.name" maxlength="20"></el-input>
                 </el-form-item>

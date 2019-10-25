@@ -3,9 +3,9 @@
         <el-button size="mini" type="primary" icon="el-icon-plus" @click="() => onAdd({ id: 0 })">
             新建一级问题
         </el-button>
-        <el-tree :data="TreeData" node-key="id" default-expand-all :expand-on-click-node="false">
+        <el-tree :data="TreeData" node-key="id" default-expand-all :expand-on-click-node="false" :props="defaultProps">
             <span class="custom-tree-node" slot-scope="{ node, data }">
-                <span class="question">问：{{ data.question }}</span>
+                <span class="question">问：{{ data.content }}</span>
                 <span class="actions">
                     <el-button
                         type="primary"
@@ -44,7 +44,6 @@ import { getQuestionList, removeQuestion } from '@/services/integration';
 import QuestionDialog from '@/components/dialog/integration/QuestionDialog';
 import { fill } from '@/utils/object';
 import { error, confirm, loading } from '@/utils/message';
-import { testData } from './testData';
 
 export default {
     name: 'Question',
@@ -55,7 +54,10 @@ export default {
                 visible: false,
                 form: this.generateFrom()
             },
-            TreeData: []
+            TreeData: [],
+            defaultProps: {
+                children: 'subQuestionList'
+            }
         };
     },
     created() {
@@ -70,9 +72,7 @@ export default {
                 data = await getQuestionList();
             } catch (err) {
                 error(err);
-                // TODO: service
-                // data = { records: [], total: 0 };
-                data = testData;
+                data = {};
             } finally {
                 this.loading = false;
             }
@@ -85,8 +85,10 @@ export default {
                 {
                     id: undefined,
                     parentId: null,
-                    question: null,
-                    answer: null
+                    content: null,
+                    answer: null,
+                    parentQuestion: null,
+                    subQuestionList: null
                 },
                 item
             );
@@ -118,7 +120,7 @@ export default {
             const ld = loading('删除中');
 
             try {
-                await removeQuestion({ id: data.id, parentId: data.parentId });
+                await removeQuestion(data.id);
                 await this.getList();
             } catch (err) {
                 await error(err);
@@ -138,7 +140,7 @@ export default {
         height: auto;
     }
     .custom-tree-node {
-        width: 700px;
+        width: 70%;
         overflow: hidden;
         padding: 10px;
         .answer,
@@ -148,7 +150,7 @@ export default {
             overflow: hidden;
         }
         .question {
-            max-width: 400px;
+            max-width: calc(100% - 120px);
             display: inline-block;
             margin-right: 40px;
         }

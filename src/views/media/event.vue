@@ -47,7 +47,7 @@ export default {
     },
     data() {
         return {
-            keywords: null,
+            keywords: '',
             loading: false,
             pageNumber: 1,
             pageSize: 10,
