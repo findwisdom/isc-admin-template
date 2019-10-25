@@ -21,8 +21,8 @@
 </template>
 
 <script>
-import { loginOut, redirect } from '@/services/login';
-import { error, confirm } from '@/utils/message';
+import { loginOut } from '@/services/login';
+import { confirm } from '@/utils/message';
 export default {
     name: 'AppMenu',
     props: {

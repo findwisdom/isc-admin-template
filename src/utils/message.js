@@ -15,12 +15,26 @@ const stringify = message => {
 };
 
 /**
+ * 提示消息
+ * @param message
+ * @returns {ElMessageComponent}
+ */
+export const info = message => {
+    return Message({
+        message: stringify(message)
+    });
+};
+
+/**
  * 成功消息
  * @param message
  * @returns {ElMessageComponent}
  */
 export const success = message => {
-    return Message.success(stringify(message));
+    return Message({
+        type: 'success',
+        message: stringify(message)
+    });
 };
 
 /**
@@ -33,7 +47,10 @@ export const error = message => {
     if (message.toString().includes('系统异常')) {
         message = '系统异常';
     }
-    return Message.error(stringify(message));
+    return Message({
+        type: 'error',
+        message: stringify(message)
+    });
 };
 
 /**
@@ -42,7 +59,10 @@ export const error = message => {
  * @returns {ElMessageComponent}
  */
 export const warning = message => {
-    return Message.error(stringify(message));
+    return Message({
+        type: 'warning',
+        message: stringify(message)
+    });
 };
 
 /**
