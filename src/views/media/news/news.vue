@@ -85,16 +85,6 @@ export default {
             } catch (err) {
                 error(err);
                 data = { list: [], totalSize: 0 };
-                data = {
-                    list: [
-                        {
-                            id: 1,
-                            title: 'xx',
-                            picture: 'https://www.apple.com/cn/icloud/images/screen_apps_collaborate_ipad_large_2x.jpg'
-                        }
-                    ],
-                    totalSize: 1
-                };
             } finally {
                 this.loading = false;
             }

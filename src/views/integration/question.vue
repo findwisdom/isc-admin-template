@@ -3,9 +3,9 @@
         <el-button size="mini" type="primary" icon="el-icon-plus" @click="() => onAdd({ id: 0 })">
             新建一级问题
         </el-button>
-        <el-tree :data="TreeData" node-key="id" default-expand-all :expand-on-click-node="false">
+        <el-tree :data="TreeData" node-key="id" default-expand-all :expand-on-click-node="false" :props="defaultProps">
             <span class="custom-tree-node" slot-scope="{ node, data }">
-                <span class="question">问：{{ data.question }}</span>
+                <span class="question">问：{{ data.content }}</span>
                 <span class="actions">
                     <el-button
                         type="primary"
@@ -55,7 +55,10 @@ export default {
                 visible: false,
                 form: this.generateFrom()
             },
-            TreeData: []
+            TreeData: [],
+            defaultProps: {
+                children: 'subQuestionList'
+            }
         };
     },
     created() {
@@ -85,8 +88,10 @@ export default {
                 {
                     id: undefined,
                     parentId: null,
-                    question: null,
-                    answer: null
+                    content: null,
+                    answer: null,
+                    parentQuestion: null,
+                    subQuestionList: null
                 },
                 item
             );
@@ -118,7 +123,7 @@ export default {
             const ld = loading('删除中');
 
             try {
-                await removeQuestion({ id: data.id, parentId: data.parentId });
+                await removeQuestion(data.id);
                 await this.getList();
             } catch (err) {
                 await error(err);

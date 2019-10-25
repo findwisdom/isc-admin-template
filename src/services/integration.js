@@ -112,7 +112,7 @@ export async function getDocumentListAll(pageSize, pageNumber) {
  */
 export async function getDocumentListByName(pageSize, pageNumber, name) {
     const res = await service({
-        url: `${url3}/getDocumentList`,
+        url: `${url3}/getDocumentByName`,
         params: {
             pageSize,
             pageNumber,
@@ -205,21 +205,19 @@ export async function getQuestionList() {
 
 /**
  * 删除问题
- * @param data
+ * @param questionId
  * @returns {Promise<null|any>}
  */
-export async function removeQuestion(data) {
+export async function removeQuestion(questionId) {
     const res = await service({
         url: `${url4}/deleteQuestion`,
         method: 'delete',
-        data
+        params: {
+            questionId
+        }
     });
 
-    if (res.data === true) {
-        return null;
-    }
-
-    throw new Error('删除失败');
+    return res.data;
 }
 
 /**
@@ -244,7 +242,7 @@ export async function createQuestion(form) {
 export async function updateQuestion(form) {
     const res = await service({
         url: `${url4}/updateQuestion`,
-        method: 'post',
+        method: 'put',
         data: form
     });
     return res.data;
