@@ -42,6 +42,7 @@ export default {
         left: 0;
         width: $app-aside-width;
         box-shadow: 0 2px 4px 0 rgba(214, 229, 255, 1);
+        z-index: 1000;
     }
 
     &__breadcrumb {

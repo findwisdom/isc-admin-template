@@ -86,18 +86,22 @@ export default {
 .dialog {
     /deep/ .el-dialog {
         &__body {
-            padding-top: 10px;
-            padding-bottom: 10px;
+            padding: 0 24px;
+            /deep/ .el-form-item--mini .el-form-item__label {
+                padding-bottom: 8px;
+            }
         }
     }
 
     &__title {
         color: $app-text-1-color;
         min-height: 20px;
+        padding: 4px 4px 20px;
     }
 
     &__footer {
-        text-align: center;
+        text-align: right;
+        padding-right: 4px;
     }
 }
 </style>

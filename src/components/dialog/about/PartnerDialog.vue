@@ -1,18 +1,11 @@
 <template>
-    <app-dialog
-        :visible.sync="visible2"
-        @close="onClose"
-        @open="onOpen"
-        @sure="onSure"
-        :loading="loading"
-        width="800px"
-    >
+    <app-dialog :visible.sync="visible2" @close="onClose" @open="onOpen" @sure="onSure" :loading="loading">
         <template v-slot:title>
             {{ actionName }}
         </template>
 
         <template v-slot:default>
-            <el-form ref="form" :model="form" :rules="rules" label-width="120px" size="mini">
+            <el-form ref="form" :model="form" :rules="rules" label-position="top" size="mini">
                 <el-form-item label="伙伴名称" prop="name" class="is-required">
                     <el-input v-model="form.name" placeholder="请输入伙伴名称"></el-input>
                 </el-form-item>

@@ -44,7 +44,6 @@ import { getQuestionList, removeQuestion } from '@/services/integration';
 import QuestionDialog from '@/components/dialog/integration/QuestionDialog';
 import { fill } from '@/utils/object';
 import { error, confirm, loading } from '@/utils/message';
-import { testData } from './testData';
 
 export default {
     name: 'Question',
@@ -73,9 +72,7 @@ export default {
                 data = await getQuestionList();
             } catch (err) {
                 error(err);
-                // TODO: service
-                // data = { records: [], total: 0 };
-                data = testData;
+                data = {};
             } finally {
                 this.loading = false;
             }
@@ -143,7 +140,7 @@ export default {
         height: auto;
     }
     .custom-tree-node {
-        width: 700px;
+        width: 70%;
         overflow: hidden;
         padding: 10px;
         .answer,
@@ -153,7 +150,7 @@ export default {
             overflow: hidden;
         }
         .question {
-            max-width: 400px;
+            max-width: calc(100% - 120px);
             display: inline-block;
             margin-right: 40px;
         }

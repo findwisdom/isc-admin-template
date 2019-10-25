@@ -1,18 +1,11 @@
 <template>
-    <app-dialog
-        :visible.sync="visible2"
-        @close="onClose"
-        @open="onOpen"
-        @sure="onSure"
-        :loading="loading"
-        width="800px"
-    >
+    <app-dialog :visible.sync="visible2" @close="onClose" @open="onOpen" @sure="onSure" :loading="loading">
         <template v-slot:title>
             {{ actionName }}
         </template>
 
         <template v-slot:default>
-            <el-form ref="form" :model="form" :rules="rules" label-width="120px" size="mini">
+            <el-form ref="form" :model="form" :rules="rules" label-position="top" size="mini">
                 <el-form-item label="城市" prop="city" class="is-required">
                     <el-input v-model="form.city" placeholder="请输入城市"></el-input>
                 </el-form-item>
