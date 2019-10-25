@@ -3,6 +3,7 @@
         <el-button size="mini" type="primary" icon="el-icon-plus" @click="() => onAdd({ id: 0 })">
             新建一级问题
         </el-button>
+
         <el-tree :data="TreeData" node-key="id" default-expand-all :expand-on-click-node="false" :props="defaultProps">
             <span class="custom-tree-node" slot-scope="{ node, data }">
                 <span class="question">问：{{ data.content }}</span>
@@ -14,6 +15,7 @@
                         circle
                         @click="() => onAdd(data)"
                     ></el-button>
+
                     <el-button
                         type="primary"
                         size="mini"
@@ -21,6 +23,7 @@
                         circle
                         @click="() => onEdit(data)"
                     ></el-button>
+
                     <el-button
                         type="danger"
                         size="mini"
@@ -29,9 +32,8 @@
                         @click="() => onTrash(data)"
                     ></el-button>
                 </span>
-                <el-popover placement="top-end" width="400" trigger="hover" :content="`答：${data.answer}`">
-                    <p class="answer" slot="reference">答：{{ data.answer }}</p>
-                </el-popover>
+
+                <p class="answer" slot="reference" ref="answer">答：{{ data.answer }}</p>
             </span>
         </el-tree>
 
@@ -99,8 +101,8 @@ export default {
         },
 
         onAdd(data) {
-            console.log(data);
             this.dialog.form = this.generateFrom();
+            // 新增下一级，parentId是当前级id
             Object.assign(this.dialog.form, { parentId: data.id });
             this.dialog.visible = true;
         },
@@ -140,7 +142,7 @@ export default {
         height: auto;
     }
     .custom-tree-node {
-        width: 70%;
+        max-width: 80%;
         overflow: hidden;
         padding: 10px;
         .answer,
@@ -148,9 +150,10 @@ export default {
             text-overflow: ellipsis;
             white-space: nowrap;
             overflow: hidden;
+            outline: none;
         }
         .question {
-            max-width: calc(100% - 120px);
+            max-width: calc(100% - 160px);
             display: inline-block;
             margin-right: 40px;
         }

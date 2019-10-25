@@ -139,14 +139,14 @@ export async function removeNews(report) {
 
 /**
  * 获取新闻详情数据
- * @param report
+ * @param reportId
  * @returns {Promise<void>}
  */
-export async function getNewsContent(report) {
+export async function getNewsContent(reportId) {
     const res = await service({
         url: `${url2}/getReportById`,
         params: {
-            report
+            reportId
         }
     });
     return res.data;

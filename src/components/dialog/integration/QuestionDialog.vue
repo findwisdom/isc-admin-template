@@ -5,11 +5,11 @@
         </template>
 
         <template v-slot:default>
-            <el-form ref="form" :model="form" :rules="rules" label-width="60px" size="mini">
+            <el-form ref="form" :model="form" :rules="rules" label-position="top" size="mini">
                 <el-form-item label="问题" prop="content">
                     <el-input type="textarea" :rows="2" v-model="form.content" maxlength="50"></el-input>
                 </el-form-item>
-                <el-form-item label="内容" prop="answer">
+                <el-form-item label="回答" prop="answer">
                     <el-input type="textarea" :rows="4" v-model="form.answer" maxlength="200"></el-input>
                 </el-form-item>
             </el-form>

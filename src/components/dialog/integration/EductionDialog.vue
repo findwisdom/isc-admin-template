@@ -20,7 +20,7 @@
                     <el-input v-model="form.name" maxlength="10"></el-input>
                 </el-form-item>
                 <el-form-item label="内容" prop="description">
-                    <el-input type="textarea" :rows="2" v-model="form.description" maxlength="150"></el-input>
+                    <el-input type="textarea" :rows="2" v-model="form.description" maxlength="50"></el-input>
                 </el-form-item>
             </el-form>
         </template>
