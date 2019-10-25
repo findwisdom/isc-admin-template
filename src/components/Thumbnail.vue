@@ -51,6 +51,11 @@ export default {
     created() {
         this.loadImage();
     },
+    watch: {
+        picture() {
+            this.loadImage();
+        }
+    },
     methods: {
         onPreview() {
             this.visible = true;
