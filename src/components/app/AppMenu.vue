@@ -43,15 +43,7 @@ export default {
         onSignOut() {
             confirm('确定要退出当前登录吗', {
                 callback: async () => {
-                    try {
-                        localStorage.removeItem('userInfo');
-                        redirect();
-                        await loginOut();
-                    } catch (err) {
-                        localStorage.removeItem('userInfo');
-                        redirect();
-                        error(err);
-                    }
+                    await loginOut();
                 }
             });
         }

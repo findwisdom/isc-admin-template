@@ -9,9 +9,9 @@
                     @keypress.enter.native="onBlur($event)"
                     @blur="onSearch()"
                 ></el-input>
-                <el-button size="mini" plain type="primary">查询</el-button>
+                <slot name="left"></slot>
+                <el-button size="mini" plain type="primary" @click="onSearch">查询</el-button>
             </div>
-            <slot name="left"></slot>
         </div>
         <div class="table-header__right">
             <slot></slot>

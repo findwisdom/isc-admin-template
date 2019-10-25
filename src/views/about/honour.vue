@@ -1,6 +1,23 @@
 <template>
     <div>
-        <TableHeader :keywords.sync="keywords" placeholder="请输入标题进行搜索" @search="onSearch">
+        <TableHeader :keywords.sync="keywords" placeholder="请输入名称进行搜索" searchWidth="350px" @search="onSearch">
+            <template slot="left">
+                <el-select
+                    v-model="searchType"
+                    @change="onSearch"
+                    class="button-margin-left search-option-width"
+                    size="mini"
+                    clearable
+                    placeholder="请选择类型"
+                >
+                    <el-option
+                        v-for="item in options"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                    ></el-option>
+                </el-select>
+            </template>
             <ul class="table-actions">
                 <li>
                     <el-button type="primary" icon="el-icon-plus" size="mini" @click="onAdd">新建</el-button>
@@ -19,14 +36,12 @@
                     <Thumbnail :picture="scope.row.picture" />
                 </template>
             </el-table-column>
-            <el-table-column prop="remark" label="备注"></el-table-column>
+            <el-table-column prop="remark" label="备注" :show-overflow-tooltip="true"></el-table-column>
             <el-table-column label="操作" align="center" width="100px">
                 <template slot-scope="scope">
                     <div>
                         <el-button size="mini" type="text" @click="onEdit(scope.$index, scope.row)">编辑</el-button>
-                        <el-button size="mini" type="text" class="el-button__text-delete" @click="onTrash(scope.row)">
-                            删除
-                        </el-button>
+                        <TableDelete class="table-operations-gap" @handleDelete="onTrash(scope.row)"></TableDelete>
                     </div>
                 </template>
             </el-table-column>
@@ -37,24 +52,29 @@
 </template>
 
 <script>
-import { getPatentList, deletePatent } from '@/services/about';
+import { getPatentList, deletePatent, getPatentByName } from '@/services/about';
 import TableHeader from '@/components/table/TableHeader';
 import TableFooter from '@/components/table/TableFooter';
+import TableDelete from '@/components/table/TableDelete';
 import HonourDialog from '@/components/dialog/about/HonourDialog';
 import Thumbnail from '@/components/Thumbnail';
 import { fill } from '@/utils/object';
 import { error, loading, alertel } from '@/utils/message';
+import { honourTypeOptions } from '@/enums/honour-type';
 
 export default {
     components: {
         TableHeader,
         TableFooter,
         HonourDialog,
-        Thumbnail
+        Thumbnail,
+        TableDelete
     },
     data() {
         return {
+            options: honourTypeOptions,
             keywords: null,
+            searchType: null,
             loading: false,
             pageNumber: 1,
             pageSize: 10,
@@ -96,6 +116,11 @@ export default {
     created() {
         this.getList();
     },
+    computed: {
+        getPatent() {
+            return this.keywords || this.searchType ? getPatentByName : getPatentList;
+        }
+    },
     methods: {
         generateFrom(item) {
             return fill(
@@ -105,7 +130,7 @@ export default {
                     name: null,
                     type: null,
                     obtainTime: null,
-                    picture: null,
+                    picture: 'http://b-ssl.duitang.com/uploads/blog/201312/04/20131204184148_hhXUT.jpeg',
                     remark: null
                 },
                 item
@@ -116,17 +141,17 @@ export default {
             let data = null;
             this.loading = true;
             try {
-                data = await getPatentList(this.pageSize, this.pageNumber, this.keywords);
+                data = await this.getPatent(this.pageSize, this.pageNumber, this.keywords, this.searchType);
                 this.loading = false;
             } catch (err) {
                 error(err);
-                data = { records: [], total: 0 };
+                data = { list: [], totalSize: 0 };
             } finally {
                 this.loading = false;
             }
 
-            this.pageList = data.records;
-            this.pageTotal = data.total;
+            this.pageList = data.list;
+            this.pageTotal = data.totalSize;
         },
 
         onSearch() {
@@ -164,4 +189,8 @@ export default {
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.search-option-width {
+    width: 250px;
+}
+</style>

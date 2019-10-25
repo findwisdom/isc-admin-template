@@ -9,7 +9,7 @@
                 <el-input
                     ref="username"
                     v-model="loginForm.username"
-                    placeholder="请输入用户名"
+                    placeholder="请输入邮箱"
                     name="username"
                     type="text"
                     suffix-icon="el-icon-s-custom"
@@ -24,12 +24,11 @@
                     suffix-icon="el-icon-s-tools"
                     v-model="loginForm.password"
                     placeholder="请输入密码"
-                    name="password"
+                    type="password"
                     tabindex="2"
                     auto-complete="on"
                     @keyup.enter.native="handleLogin"
                 ></el-input>
-                <span class="show-pwd" @click="showPwd"></span>
             </el-form-item>
             <el-button
                 :loading="loading"
@@ -44,7 +43,8 @@
 </template>
 
 <script>
-import { alertel } from '@/utils/message';
+import { alertel, success } from '@/utils/message';
+import { login } from '@/services/user';
 export default {
     name: 'index',
     data() {
@@ -57,12 +57,27 @@ export default {
             redirect: undefined
         };
     },
+    async created() {
+        let userInfo = window.sessionStorage.getItem('userInfo');
+        if (userInfo) {
+            this.$router.push({ path: '/' });
+        }
+    },
     methods: {
         handleLogin() {
             this.$refs.loginForm.validate(async valid => {
                 if (valid) {
                     try {
                         this.loading = true;
+                        let data = await login(this.username, this.password);
+                        let userInfo = {
+                            login: true,
+                            admin: data.admin,
+                            name: data.name,
+                            email: data.email
+                        };
+                        window.sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
+                        success('登录成功');
                         this.$router.push({ path: '/' });
                     } catch (err) {
                         return await alertel(err);

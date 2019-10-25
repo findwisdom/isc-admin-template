@@ -30,8 +30,23 @@
                         <app-upload-img v-show="!form.picture" />
                     </app-upload>
                 </el-form-item>
+                <el-form-item label="类型" prop="productTypeId" class="is-required">
+                    <el-select v-model="form.type" placeholder="请选择产品所属">
+                        <el-option
+                            v-for="option in osTypeOptions"
+                            :key="option.value"
+                            :label="option.label"
+                            :value="option.value"
+                        ></el-option>
+                    </el-select>
+                </el-form-item>
                 <el-form-item label="获得时间" prop="email" class="is-required">
-                    <el-date-picker v-model="form.obtainTime" type="date" placeholder="选择日期"></el-date-picker>
+                    <el-date-picker
+                        v-model="form.obtainTime"
+                        type="date"
+                        value-format="yyyy-MM-dd"
+                        placeholder="选择日期"
+                    ></el-date-picker>
                 </el-form-item>
                 <el-form-item label="备注" prop="remark" class="is-required">
                     <el-input
@@ -53,6 +68,7 @@ import AppUpload from '@/components/app/AppUpload';
 import AppUploadImg from '@/components/app/AppUploadImg';
 import { alertel, success } from '@/utils/message';
 import validation from '@/validations/honour';
+import { honourTypeOptions } from '@/enums/honour-type';
 import { createPatent, updatePatent } from '@/services/about';
 export default {
     name: 'RoleDialog',
@@ -76,7 +92,7 @@ export default {
     data() {
         return {
             loading: false,
-            osTypeOptions: [],
+            osTypeOptions: honourTypeOptions,
             uploadUrl: '',
             rules: validation(this)
         };
@@ -126,9 +142,9 @@ export default {
             try {
                 this.loading = true;
                 if (this.form.id) {
-                    await createPatent(this.form);
-                } else {
                     await updatePatent(this.form);
+                } else {
+                    await createPatent(this.form);
                 }
             } catch (err) {
                 return await alertel(err);

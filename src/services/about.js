@@ -151,6 +151,19 @@ export async function deleteCareer(id) {
  */
 export async function getPatentList(pageSize, pageNumber, name, type) {
     const res = await axios({
+        url: '/api/patent/getPatentList',
+        params: {
+            pageSize,
+            pageNumber,
+            name,
+            type
+        }
+    });
+    return res.data;
+}
+
+export async function getPatentByName(pageSize, pageNumber, name, type) {
+    const res = await axios({
         url: '/api/patent/getPatentByName',
         params: {
             pageSize,
@@ -170,7 +183,7 @@ export async function getPatentList(pageSize, pageNumber, name, type) {
 
 export async function createPatent(form) {
     const res = await axios({
-        url: '/api/career/addCareer',
+        url: '/api/patent/addPatent',
         method: 'post',
         data: form
     });
@@ -185,7 +198,7 @@ export async function createPatent(form) {
 
 export async function updatePatent(form) {
     const res = await axios({
-        url: '/api/career/updateCareer',
+        url: '/api/patent/updatePatent',
         method: 'put',
         data: form
     });
@@ -199,10 +212,10 @@ export async function updatePatent(form) {
  */
 export async function deletePatent(id) {
     const res = await axios({
-        url: `/api/career/deleteCareer`,
+        url: `/api/patent/deletePatent`,
         method: 'delete',
         params: {
-            career: id
+            patentId: id
         }
     });
     return res.data;

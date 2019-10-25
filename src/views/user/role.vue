@@ -1,6 +1,6 @@
 <template>
     <div>
-        <TableHeader :keywords.sync="keywords" placeholder="请输入用户名进行搜索" @search="onSearch">
+        <TableHeader :keywords.sync="keywords" placeholder="请输入用户名进行搜索" @search="onSearch" :search="search">
             <ul class="table-actions">
                 <li>
                     <el-button type="primary" icon="el-icon-plus" size="mini" @click="onAdd">新建用户</el-button>
@@ -10,13 +10,17 @@
 
         <el-table :data="pageList" size="mini" v-loading="loading">
             <el-table-column prop="id" label="编号"></el-table-column>
-            <el-table-column prop="name" label="用户名"></el-table-column>
+            <el-table-column prop="name" label="姓名"></el-table-column>
             <el-table-column prop="email" label="邮箱"></el-table-column>
             <el-table-column label="操作" align="center" width="100px">
                 <template slot-scope="scope">
                     <div>
                         <el-button size="mini" type="text" @click="onEdit(scope.$index, scope.row)">编辑</el-button>
-                        <TableDelete v-if="!scope.row.admin" @handleDelete="onTrash(scope.row)"></TableDelete>
+                        <TableDelete
+                            v-if="!scope.row.admin"
+                            class="table-operations-gap"
+                            @handleDelete="onTrash(scope.row)"
+                        ></TableDelete>
                     </div>
                 </template>
             </el-table-column>
@@ -50,6 +54,7 @@ export default {
     },
     data() {
         return {
+            search: false,
             keywords: null,
             loading: false,
             pageNumber: 1,
@@ -127,7 +132,7 @@ export default {
         },
 
         onEdit(index, item) {
-            this.dialog.roleForm = this.generateRoleFrom({ ...item, role: item.groupList[0].roleKey });
+            this.dialog.roleForm = this.generateRoleFrom(item);
             this.dialog.roleVisible = true;
         },
 

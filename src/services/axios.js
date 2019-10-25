@@ -1,4 +1,5 @@
 import { stringify } from '@/utils/querystring';
+import { loginOut } from '@/services/login';
 import axios from 'axios';
 
 const service = axios.create({
@@ -35,6 +36,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
     res => {
         const { code, message } = res.data;
+        console.log(res);
 
         if (code && message) {
             throw new Error(message);
@@ -43,6 +45,9 @@ service.interceptors.response.use(
         return res;
     },
     err => {
+        if (err.response.status === 401) {
+            loginOut();
+        }
         const message = (err.response && err.response.data && err.response.data.message) || err.message;
         throw new Error(message);
     }

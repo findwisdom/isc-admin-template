@@ -14,9 +14,8 @@ export async function login(form) {
 }
 
 export async function loginOut() {
-    const res = await axios({
-        url: '/api/operation/user/exit',
-        method: 'post'
-    });
-    return res.data;
+    window.location.href = '/login';
+    // console.log(Vue);
+    // Vue.$router.push({ path: '/login' });
+    window.sessionStorage.removeItem('userInfo');
 }

@@ -7,7 +7,12 @@
 <script>
 export default {
     name: 'App',
-    async created() {}
+    async created() {
+        let userInfo = window.sessionStorage.getItem('userInfo');
+        if (!userInfo) {
+            this.$router.push({ path: 'login' });
+        }
+    }
 };
 </script>
 

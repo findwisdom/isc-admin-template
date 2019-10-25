@@ -57,13 +57,9 @@ export default {
             }, 567);
         },
         getUserName() {
-            let userInfo = window.localStorage.getItem('userInfo');
-            let role = window.sessionStorage.getItem('groupList');
+            let userInfo = window.sessionStorage.getItem('userInfo');
             if (userInfo) {
                 this.userName = JSON.parse(userInfo).name;
-            }
-            if (role) {
-                this.role = JSON.parse(role)[0].name;
             }
         }
     },

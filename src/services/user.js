@@ -63,3 +63,19 @@ export async function deleteUser(id) {
     });
     return res.data;
 }
+
+export async function login(email, password) {
+    const res = await axios({
+        url: '/api/system/login',
+        params: {
+            email,
+            password
+        }
+    });
+    return res.data;
+}
+
+export async function loginOut() {
+    Vue.$router.push({ path: '/login' });
+    window.sessionStorage.removeItem('userInfo');
+}

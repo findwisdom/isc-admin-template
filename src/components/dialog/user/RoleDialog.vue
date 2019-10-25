@@ -13,14 +13,14 @@
 
         <template v-slot:default>
             <el-form ref="form" :model="form" :rules="rules" label-width="80px" size="mini">
-                <el-form-item label="用户名" prop="name" class="is-required">
-                    <el-input v-model="form.name"></el-input>
+                <el-form-item label="邮箱" prop="email" class="is-required">
+                    <el-input v-model="form.email" :disabled="form.admin"></el-input>
                 </el-form-item>
                 <el-form-item label="密码" prop="email" class="is-required">
                     <el-input type="password" v-model="form.password" :disabled="form.admin"></el-input>
                 </el-form-item>
-                <el-form-item label="邮箱" prop="email" class="is-required">
-                    <el-input v-model="form.email"></el-input>
+                <el-form-item label="姓名" prop="name" class="is-required">
+                    <el-input v-model="form.name" :disabled="form.admin"></el-input>
                 </el-form-item>
             </el-form>
         </template>
