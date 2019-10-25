@@ -152,6 +152,7 @@ export const asyncRoutes = [
         path: '/user',
         component: Layout,
         redirect: '/user/role',
+        name: 'user',
         meta: { title: '用户管理', icon: 'nav-user', roles: ['admin'] },
         children: [
             {
@@ -160,7 +161,8 @@ export const asyncRoutes = [
                 component: () => import('@/views/user/role.vue'),
                 meta: {
                     title: '角色管理',
-                    icon: 'nav-user'
+                    icon: 'nav-user',
+                    roles: ['admin']
                 }
             }
         ]

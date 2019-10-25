@@ -12,7 +12,7 @@
                 <el-form-item label="案例排序" prop="order">
                     <el-input-number v-model="form.order"></el-input-number>
                 </el-form-item>
-                <el-form-item label="所属解决方案" prop="solution.name" class="is-required">
+                <el-form-item label="所属解决方案" prop="solutionId" class="is-required">
                     <el-select v-model="form.solutionId" placeholder="请选择所属解决方案">
                         <el-option
                             v-for="option in osTypeOptions"
@@ -100,6 +100,7 @@ export default {
             console.log(err);
         },
         onUploadSuccess(data) {
+            console.log(data);
             this.form.picture = data.url;
             success('上传成功');
         },

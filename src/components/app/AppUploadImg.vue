@@ -4,18 +4,18 @@
             <svg-icon name="icon-add"></svg-icon>
         </span>
         <img v-show="url" :src="url" alt="img" class="wrap__img" />
-        <template v-if="detail">
-            <div class="wrap__float">
-                <span class="wrap__icon-list">
-                    <span class="wrap__icon-item" @click="handlePicturePreview">
-                        <svg-icon name="icon-view"></svg-icon>
-                    </span>
-                </span>
-            </div>
-            <el-dialog :visible.sync="dialogVisible">
-                <img width="100%" :src="url" alt="" />
-            </el-dialog>
-        </template>
+        <!--        <template v-show="detail">-->
+        <!--            <div class="wrap__float">-->
+        <!--                <span class="wrap__icon-list">-->
+        <!--                    <span class="wrap__icon-item" @click="handlePicturePreview">-->
+        <!--                        <svg-icon name="icon-view"></svg-icon>-->
+        <!--                    </span>-->
+        <!--                </span>-->
+        <!--            </div>-->
+        <!--            <el-dialog :visible.sync="dialogVisible">-->
+        <!--                <img width="100%" :src="url" alt="" />-->
+        <!--            </el-dialog>-->
+        <!--        </template>-->
     </div>
 </template>
 

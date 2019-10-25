@@ -1,1 +1,1 @@
-export const uploadUrl = 'www.xx.com';
+export const uploadUrl = '/api/system/uploadPicture';

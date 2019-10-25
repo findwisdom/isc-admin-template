@@ -1,4 +1,4 @@
-import router, { resetRouter } from './router/routes';
+import router from './router/routes';
 import NProgress from 'nprogress'; // progress bar
 import 'nprogress/nprogress.css'; // progress bar style
 import { generateRoutes } from '@/router/index';
@@ -28,6 +28,7 @@ router.beforeEach((to, from, next) => {
         } else {
             // determine whether the user has obtained his permission roles through getInfo
             const hasRoles = store.getters.roles && store.getters.roles.length > 0;
+
             if (hasRoles) {
                 next();
             } else {
@@ -35,15 +36,8 @@ router.beforeEach((to, from, next) => {
                 const accessRoutes = generateRoutes(roles);
                 console.log(accessRoutes);
                 // dynamically add accessible routes
-                router.options.routes = [...router.options.routes, ...accessRoutes];
-                // console.log(router.options.routes);
                 router.addRoutes(accessRoutes);
-                console.log(router.options.routes);
-                resetRouter();
-                // console.log(router.options.routes);
-                // console.log(router.addRoutes);
-                // console.log('role', store.getters.roles);
-                // console.log(to);
+
                 // hack method to ensure that addRoutes is complete
                 // set the replace: true, so the navigation will not leave a history record
                 next({ ...to, replace: true });
