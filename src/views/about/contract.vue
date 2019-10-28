@@ -58,18 +58,7 @@ export default {
             pageNumber: 1,
             pageSize: 10,
             pageTotal: 0,
-            pageList: [
-                {
-                    id: 'xx',
-                    city: '上海',
-                    name: '云内核',
-                    address: '静安寺',
-                    email: '8262312@qq.com',
-                    phone: '13034562134',
-                    postCode: '400055',
-                    mainCompany: true
-                }
-            ],
+            pageList: [],
             dialog: {
                 visible: false,
                 form: this.generateFrom()

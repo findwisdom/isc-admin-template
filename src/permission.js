@@ -31,7 +31,6 @@ router.beforeEach(async (to, from, next) => {
 
             if (hasRoles) {
                 next();
-                console.log(to);
             } else {
                 await store.commit('setRoles', roles);
                 let accessRoutes = [
@@ -43,7 +42,7 @@ router.beforeEach(async (to, from, next) => {
                     }
                 ];
                 // dynamically add accessible routes
-                // resetRouter();
+                resetRouter();
                 router.addRoutes(accessRoutes);
                 router.options.routes.push(...accessRoutes);
                 console.log(to);
