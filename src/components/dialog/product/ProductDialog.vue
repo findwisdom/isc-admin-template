@@ -62,7 +62,7 @@
 import AppDialog from '@/components/app/AppDialog';
 import AppUpload from '@/components/app/AppUpload';
 import AppUploadImg from '@/components/app/AppUploadImg';
-import { alertel, success, error } from '@/utils/message';
+import { error, success } from '@/utils/message';
 import validation from '@/validations/product';
 import { uploadUrl } from '@/services/upload';
 import { createProduct, updateProduct, getProductType } from '@/services/product';
@@ -150,7 +150,7 @@ export default {
                     await createProduct(this.form);
                 }
             } catch (err) {
-                return await alertel(err);
+                return await error(err);
             } finally {
                 this.loading = false;
             }

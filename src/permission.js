@@ -34,11 +34,9 @@ router.beforeEach((to, from, next) => {
             } else {
                 store.commit('setRoles', roles);
                 let accessRoutes = generateRoutes(roles);
-                console.log(accessRoutes);
                 // dynamically add accessible routes
                 router.addRoutes(accessRoutes);
                 router.options.routes.push(...accessRoutes);
-                console.log(router.options.routes);
                 // hack method to ensure that addRoutes is complete
                 // set the replace: true, so the navigation will not leave a history record
                 next({ ...to, replace: true });

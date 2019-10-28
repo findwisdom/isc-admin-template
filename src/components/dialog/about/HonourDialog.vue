@@ -59,7 +59,7 @@
 import AppDialog from '@/components/app/AppDialog';
 import AppUpload from '@/components/app/AppUpload';
 import AppUploadImg from '@/components/app/AppUploadImg';
-import { alertel, success } from '@/utils/message';
+import { error, success } from '@/utils/message';
 import validation from '@/validations/honour';
 import { honourTypeOptions } from '@/enums/honour-type';
 import { createPatent, updatePatent } from '@/services/about';
@@ -140,7 +140,7 @@ export default {
                     await createPatent(this.form);
                 }
             } catch (err) {
-                return await alertel(err);
+                return await error(err);
             } finally {
                 this.loading = false;
             }
