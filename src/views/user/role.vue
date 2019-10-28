@@ -136,7 +136,7 @@ export default {
             this.dialog.roleVisible = true;
         },
 
-        async onTrash(index, item) {
+        async onTrash(item) {
             const ld = loading('删除中');
 
             try {

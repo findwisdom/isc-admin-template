@@ -1,4 +1,4 @@
-import router from './router/routes';
+import router, { resetRouter } from './router/routes';
 import NProgress from 'nprogress'; // progress bar
 import 'nprogress/nprogress.css'; // progress bar style
 import { generateRoutes } from '@/router/index';
@@ -9,7 +9,7 @@ NProgress.configure({ showSpinner: false }); // NProgress Configuration
 
 const whiteList = ['/login']; // no redirect whitelist
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
     // start progress bar
     NProgress.start();
 
@@ -31,12 +31,22 @@ router.beforeEach((to, from, next) => {
 
             if (hasRoles) {
                 next();
+                console.log(to);
             } else {
-                store.commit('setRoles', roles);
-                let accessRoutes = generateRoutes(roles);
+                await store.commit('setRoles', roles);
+                let accessRoutes = [
+                    ...generateRoutes(roles),
+                    {
+                        path: '*',
+                        hidden: true,
+                        redirect: '/404'
+                    }
+                ];
                 // dynamically add accessible routes
+                // resetRouter();
                 router.addRoutes(accessRoutes);
                 router.options.routes.push(...accessRoutes);
+                console.log(to);
                 // hack method to ensure that addRoutes is complete
                 // set the replace: true, so the navigation will not leave a history record
                 next({ ...to, replace: true });

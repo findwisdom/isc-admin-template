@@ -59,7 +59,7 @@ export async function deleteCase(id) {
         url: `/api/cases/deleteCases`,
         method: 'delete',
         params: {
-            cases: id
+            casesId: id
         }
     });
     return res.data;

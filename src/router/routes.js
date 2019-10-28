@@ -139,11 +139,6 @@ export const constantRoutes = [
                 meta: { title: '专利荣誉', icon: 'nav-point' }
             }
         ]
-    },
-    {
-        path: '*',
-        hidden: true,
-        redirect: '/about'
     }
 ];
 
@@ -172,7 +167,7 @@ export const asyncRoutes = [
 const createRouter = () =>
     new Router({
         mode: 'history', // require service support
-        scrollBehavior: () => ({ y: 0 }),
+        // scrollBehavior: () => ({ y: 0 }),
         routes: constantRoutes
     });
 

@@ -60,7 +60,7 @@ export async function deleteUser(id) {
         url: `/api/user/deleteUser`,
         method: 'delete',
         params: {
-            user: id
+            id: id
         }
     });
     return res.data;
