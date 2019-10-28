@@ -55,7 +55,7 @@ export const constantRoutes = [
             },
             {
                 path: 'news/edit',
-                name: 'media-news',
+                name: 'media-edit',
                 hidden: true,
                 component: () => import('@/views/media/news/edit.vue'),
                 meta: { title: '编辑媒体报道' }
