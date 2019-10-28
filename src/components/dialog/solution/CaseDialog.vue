@@ -9,7 +9,7 @@
                 <el-form-item label="案例名称" prop="name" class="is-required">
                     <el-input v-model="form.name" placeholder="请输入案例名称" maxlength="40"></el-input>
                 </el-form-item>
-                <el-form-item label="案例排序" prop="order">
+                <el-form-item label="案例排序" prop="order" class="is-required">
                     <el-input-number v-model="form.order"></el-input-number>
                 </el-form-item>
                 <el-form-item label="所属解决方案" prop="solutionId" class="is-required">
@@ -52,7 +52,7 @@ import AppDialog from '@/components/app/AppDialog';
 import AppUpload from '@/components/app/AppUpload';
 import AppUploadImg from '@/components/app/AppUploadImg';
 import validation from '@/validations/case';
-import { error, success, error } from '@/utils/message';
+import { error, success } from '@/utils/message';
 import { uploadUrl } from '@/services/upload';
 import { createCase, updateCase, getSolutionList } from '@/services/solution';
 export default {

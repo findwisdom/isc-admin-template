@@ -1,6 +1,6 @@
 'use strict';
 
-import { required, email, phone } from '../utils/validators';
+import { required, email, phone, postal } from '../utils/validators';
 
 export default () => {
     return {
@@ -18,6 +18,7 @@ export default () => {
             { validator: required(), message: '电话必填' },
             { validator: phone(), message: '请输入正确联系电话格式' }
         ],
-        postCode: [{ max: 8, message: '不超过8个汉字' }]
+        // postal
+        postCode: [{ validator: postal(), message: '请输入正确邮编格式' }]
     };
 };

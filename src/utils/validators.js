@@ -156,6 +156,22 @@ export const url = () => {
     };
 };
 
+export const postal = () => {
+    return (rule, value, next) => {
+        const validate = rule.enable ? rule.enable() : true;
+
+        if (!value || !validate) {
+            return next();
+        }
+
+        if (/^[1-9][0-9]{5}$/.test(value)) {
+            return next();
+        }
+
+        next(new Error());
+    };
+};
+
 export const phone = () => {
     return (rule, value, next) => {
         const validate = rule.enable ? rule.enable() : true;
@@ -164,7 +180,7 @@ export const phone = () => {
             return next();
         }
 
-        if (/^[1][3,4,5,7,8][0-9]{9}$/.test(value)) {
+        if (/^[1][3,4,5,7,8][0-9]{9}$/.test(value) || /^(\(\d{3,4}\)|\d{3,4}-|\s)?\d{7,14}$/.test(value)) {
             return next();
         }
 

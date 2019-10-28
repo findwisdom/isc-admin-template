@@ -21,7 +21,7 @@
                 <el-form-item label="电话" prop="phone" class="is-required">
                     <el-input v-model="form.phone" placeholder="请输入联系电话"></el-input>
                 </el-form-item>
-                <el-form-item label="邮编" prop="phone" class="is-required">
+                <el-form-item label="邮编" prop="postCode">
                     <el-input v-model="form.postCode" placeholder="请输入邮编"></el-input>
                 </el-form-item>
                 <el-form-item label="是否主公司">

@@ -9,7 +9,7 @@
                 <el-form-item label="名称" prop="name" class="is-required">
                     <el-input v-model="form.name" placeholder="请输入名称" maxlength="40"></el-input>
                 </el-form-item>
-                <el-form-item label="排序" prop="order">
+                <el-form-item label="排序" prop="order" class="is-required">
                     <el-input-number v-model="form.order"></el-input-number>
                 </el-form-item>
                 <el-form-item label="图片" prop="name" class="is-required">
@@ -61,6 +61,7 @@ import AppUpload from '@/components/app/AppUpload';
 import AppUploadImg from '@/components/app/AppUploadImg';
 import { error, success } from '@/utils/message';
 import validation from '@/validations/honour';
+import { uploadUrl } from '@/services/upload';
 import { honourTypeOptions } from '@/enums/honour-type';
 import { createPatent, updatePatent } from '@/services/about';
 export default {
@@ -86,7 +87,7 @@ export default {
         return {
             loading: false,
             osTypeOptions: honourTypeOptions,
-            uploadUrl: '',
+            uploadUrl,
             rules: validation(this)
         };
     },
@@ -100,7 +101,7 @@ export default {
             }
         },
         actionName() {
-            return (this.form.id ? '编辑' : '添加') + '伙伴';
+            return (this.form.id ? '编辑' : '添加') + '专利荣誉';
         }
     },
     methods: {

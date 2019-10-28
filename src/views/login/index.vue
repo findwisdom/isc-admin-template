@@ -81,7 +81,7 @@ export default {
                         success('登录成功');
                         this.$router.push({ path: '/' });
                     } catch (err) {
-                        error(err);
+                        return await error(err);
                     } finally {
                         this.loading = false;
                     }

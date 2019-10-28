@@ -7,12 +7,15 @@
 
 'use strict';
 
-import { required } from '../utils/validators';
+import { required, email } from '../utils/validators';
 
 export default () => {
     return {
-        name: [{ validator: required(), message: '请输入用户姓名' }],
-        username: [{ validator: required(), message: '请输入用户账号' }],
-        groupList: [{ validator: required(), message: '请输入所属角色' }]
+        email: [
+            { validator: required(), message: '请输入邮箱' },
+            { validator: email(), message: '请输入正确邮箱格式' }
+        ],
+        password: [{ validator: required(), message: '请输入密码' }],
+        name: [{ validator: required(), message: '请输入姓名' }, { max: 8, message: '不超过8个汉字', trigger: 'blur' }]
     };
 };

@@ -59,7 +59,7 @@ export async function deletePartner(id) {
         url: `/api/partner/deletePartner`,
         method: 'delete',
         params: {
-            partner: id
+            partnerId: id
         }
     });
     return res.data;
@@ -136,7 +136,7 @@ export async function deleteCareer(id) {
         url: `/api/career/deleteCareer`,
         method: 'delete',
         params: {
-            career: id
+            careerId: id
         }
     });
     return res.data;
@@ -280,7 +280,7 @@ export async function deleteCompany(id) {
         url: `/api/company/deleteCompany`,
         method: 'delete',
         params: {
-            company: id
+            companyId: id
         }
     });
     return res.data;

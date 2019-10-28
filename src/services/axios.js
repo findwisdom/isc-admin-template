@@ -44,6 +44,10 @@ service.interceptors.response.use(
         return res;
     },
     err => {
+        console.error(err);
+        if (!err.response) {
+            throw new Error('服务器异常');
+        }
         if (err.response.status === 401) {
             loginOut();
         }

@@ -125,7 +125,7 @@ export default {
                 await removeQuestion(data.id);
                 await this.getList();
             } catch (err) {
-                await error(err);
+                return await error(err);
             } finally {
                 ld.close();
             }

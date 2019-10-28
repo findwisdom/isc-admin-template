@@ -1,6 +1,6 @@
 <template>
     <div style="height: 100vh;overflow: hidden">
-        <el-scrollbar style="height: 100%">
+        <el-scrollbar style="height: 100%" class="scrollbar">
             <div class="system-header">
                 <div class="system-header__brand">
                     <span class="system-header__logo">
@@ -51,7 +51,12 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
+.scrollbar {
+    .el-scrollbar__wrap {
+        overflow-x: hidden;
+    }
+}
 .system-header {
     position: relative;
     color: $app-aside-font-color;

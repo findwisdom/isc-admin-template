@@ -9,7 +9,7 @@
                 <el-form-item label="产品名称" prop="name" class="is-required">
                     <el-input v-model="form.name" placeholder="请输入产品名称" maxlength="40"></el-input>
                 </el-form-item>
-                <el-form-item label="顺序" prop="order">
+                <el-form-item label="排序" prop="order" class="is-required">
                     <el-input-number v-model="form.order"></el-input-number>
                 </el-form-item>
                 <el-form-item label="产品所属" prop="productTypeId" class="is-required">

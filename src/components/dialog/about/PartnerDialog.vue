@@ -9,7 +9,7 @@
                 <el-form-item label="伙伴名称" prop="name" class="is-required">
                     <el-input v-model="form.name" placeholder="请输入伙伴名称"></el-input>
                 </el-form-item>
-                <el-form-item label="顺序" prop="order">
+                <el-form-item label="排序" prop="order" class="is-required">
                     <el-input-number v-model="form.order"></el-input-number>
                 </el-form-item>
                 <el-form-item label="图片" prop="name" class="is-required">
@@ -35,6 +35,7 @@ import AppUploadImg from '@/components/app/AppUploadImg';
 import { error, success } from '@/utils/message';
 import validation from '@/validations/partner';
 import { createPartner, updatePartner } from '@/services/about';
+import { uploadUrl } from '@/services/upload';
 export default {
     name: 'PartnerDialog',
     components: {
@@ -58,7 +59,7 @@ export default {
         return {
             loading: false,
             osTypeOptions: [],
-            uploadUrl: '',
+            uploadUrl,
             rules: validation(this)
         };
     },

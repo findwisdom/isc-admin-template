@@ -10,13 +10,13 @@
 
         <el-table :data="pageList" size="mini" v-loading="loading">
             <el-table-column prop="id" label="编号" width="50px"></el-table-column>
+            <el-table-column prop="order" label="排序"></el-table-column>
             <el-table-column prop="name" label="伙伴名称"></el-table-column>
             <el-table-column prop="picture" label="图片">
                 <template slot-scope="scope">
                     <Thumbnail :picture="scope.row.picture" />
                 </template>
             </el-table-column>
-            <el-table-column prop="order" label="排序"></el-table-column>
             <el-table-column label="操作" align="center" width="100px">
                 <template slot-scope="scope">
                     <div>
@@ -58,14 +58,7 @@ export default {
             pageNumber: 1,
             pageSize: 10,
             pageTotal: 0,
-            pageList: [
-                {
-                    id: 'xx',
-                    name: 'xx',
-                    order: 1,
-                    picture: 'http://b-ssl.duitang.com/uploads/blog/201312/04/20131204184148_hhXUT.jpeg'
-                }
-            ],
+            pageList: [],
             dialog: {
                 visible: false,
                 form: this.generateFrom()
@@ -91,7 +84,7 @@ export default {
                     id: undefined,
                     name: null,
                     order: null,
-                    picture: 'http://b-ssl.duitang.com/uploads/blog/201312/04/20131204184148_hhXUT.jpeg'
+                    picture: null
                 },
                 item
             );

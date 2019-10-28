@@ -43,7 +43,7 @@ import TableFooter from '@/components/table/TableFooter';
 import TableDelete from '@/components/table/TableDelete';
 import RoleDialog from '@/components/dialog/user/RoleDialog';
 import { fill } from '@/utils/object';
-import { error, loading, alertel } from '@/utils/message';
+import { error, loading } from '@/utils/message';
 
 export default {
     components: {
@@ -143,7 +143,7 @@ export default {
                 await deleteUser(item.id);
                 await this.getList();
             } catch (err) {
-                await alertel(err);
+                return await error(err);
             } finally {
                 ld.close();
             }

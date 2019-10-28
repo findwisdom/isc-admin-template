@@ -29,7 +29,11 @@
             <el-table-column prop="id" label="编号"></el-table-column>
             <el-table-column prop="order" label="排序"></el-table-column>
             <el-table-column prop="name" label="名称"></el-table-column>
-            <el-table-column prop="type" label="类型"></el-table-column>
+            <el-table-column prop="type" label="类型">
+                <template slot-scope="scope">
+                    {{ scope.row.type | honourType }}
+                </template>
+            </el-table-column>
             <el-table-column prop="obtainTime" label="获得时间"></el-table-column>
             <el-table-column prop="picture" label="图片">
                 <template slot-scope="scope">
@@ -79,17 +83,7 @@ export default {
             pageNumber: 1,
             pageSize: 10,
             pageTotal: 0,
-            pageList: [
-                {
-                    id: 'xx',
-                    order: 'xx',
-                    name: 'XX',
-                    type: 'XX',
-                    obtainTime: '2019-04-14',
-                    picture: 'http://b-ssl.duitang.com/uploads/blog/201312/04/20131204184148_hhXUT.jpeg',
-                    remark: 'DSADDSADSA'
-                }
-            ],
+            pageList: [],
             dialog: {
                 visible: false,
                 form: this.generateFrom()
@@ -97,11 +91,12 @@ export default {
         };
     },
     filters: {
-        orderFlow(value) {
-            if (Array.isArray(value.groupList)) {
-                return value.groupList[0].name;
+        honourType(value) {
+            let type = honourTypeOptions.filter(v => v.value === value) || [];
+            if (type.length > 0) {
+                return type[0].label;
             } else {
-                return '';
+                return '未知类型';
             }
         }
     },
@@ -130,7 +125,7 @@ export default {
                     name: null,
                     type: null,
                     obtainTime: null,
-                    picture: 'http://b-ssl.duitang.com/uploads/blog/201312/04/20131204184148_hhXUT.jpeg',
+                    picture: null,
                     remark: null
                 },
                 item

@@ -10,6 +10,7 @@
 
         <el-table :data="pageList" size="mini" v-loading="loading">
             <el-table-column prop="id" label="编号" width="50px"></el-table-column>
+            <el-table-column prop="order" label="排序"></el-table-column>
             <el-table-column prop="name" label="产品名称" :show-overflow-tooltip="true"></el-table-column>
             <el-table-column prop="banner" label="产品banner图" width="100px">
                 <template slot-scope="scope">
@@ -23,7 +24,6 @@
             </el-table-column>
             <el-table-column prop="description" label="简介" :show-overflow-tooltip="true"></el-table-column>
             <el-table-column prop="productType.name" label="所属类型"></el-table-column>
-            <el-table-column prop="order" label="顺序"></el-table-column>
             <el-table-column label="操作" align="center" width="100px">
                 <template slot-scope="scope">
                     <div>
@@ -46,7 +46,7 @@ import TableDelete from '@/components/table/TableDelete';
 import ProductDialog from '@/components/dialog/product/ProductDialog';
 import Thumbnail from '@/components/Thumbnail';
 import { fill } from '@/utils/object';
-import { error, alertel, loading } from '@/utils/message';
+import { error, loading } from '@/utils/message';
 
 export default {
     components: {
@@ -103,9 +103,9 @@ export default {
                 {
                     id: undefined,
                     name: null,
-                    banner: 'http://b-ssl.duitang.com/uploads/blog/201312/04/20131204184148_hhXUT.jpeg',
+                    banner: null,
                     order: null,
-                    picture: 'http://b-ssl.duitang.com/uploads/blog/201312/04/20131204184148_hhXUT.jpeg',
+                    picture: null,
                     description: null,
                     productTypeId: null
                 },
@@ -155,7 +155,7 @@ export default {
                 await deleteProduct(item.id);
                 await this.getList();
             } catch (err) {
-                await alertel(err);
+                return await error(err);
             } finally {
                 ld.close();
             }

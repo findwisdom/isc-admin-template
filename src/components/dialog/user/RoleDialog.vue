@@ -16,7 +16,7 @@
                 <el-form-item label="邮箱" prop="email" class="is-required">
                     <el-input v-model="form.email" :disabled="form.admin"></el-input>
                 </el-form-item>
-                <el-form-item label="密码" prop="email" class="is-required">
+                <el-form-item label="密码" prop="password" class="is-required">
                     <el-input type="password" v-model="form.password" :disabled="form.admin"></el-input>
                 </el-form-item>
                 <el-form-item label="姓名" prop="name" class="is-required">
@@ -30,7 +30,7 @@
 <script>
 import AppDialog from '@/components/app/AppDialog';
 import { error, success } from '@/utils/message';
-import validation from '@/validations/gateway';
+import validation from '@/validations/role';
 import { createUser, updateUser } from '@/services/user';
 export default {
     name: 'RoleDialog',

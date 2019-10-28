@@ -134,7 +134,7 @@ export default {
                 success('删除成功！');
                 await this.getList();
             } catch (err) {
-                await error(err);
+                return await error(err);
             } finally {
                 ld.close();
             }

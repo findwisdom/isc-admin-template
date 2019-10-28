@@ -10,6 +10,7 @@
 
         <el-table :data="pageList" size="mini" v-loading="loading">
             <el-table-column prop="id" label="编号" width="50px"></el-table-column>
+            <el-table-column prop="order" label="排序"></el-table-column>
             <el-table-column prop="name" label="案例名称" :show-overflow-tooltip="true"></el-table-column>
             <el-table-column prop="picture" label="案例图片">
                 <template slot-scope="scope">
@@ -18,7 +19,6 @@
             </el-table-column>
             <el-table-column prop="description" label="案例介绍" :show-overflow-tooltip="true"></el-table-column>
             <el-table-column prop="solution.name" label="所属解决方案"></el-table-column>
-            <el-table-column prop="order" label="顺序"></el-table-column>
             <el-table-column label="操作" align="center" width="100px">
                 <template slot-scope="scope">
                     <div>
@@ -41,7 +41,7 @@ import TableDelete from '@/components/table/TableDelete';
 import CaseDialog from '@/components/dialog/solution/CaseDialog';
 import Thumbnail from '@/components/Thumbnail';
 import { fill } from '@/utils/object';
-import { error, loading, alertel } from '@/utils/message';
+import { error, loading } from '@/utils/message';
 
 export default {
     components: {
@@ -59,16 +59,7 @@ export default {
             pageNumber: 1,
             pageSize: 10,
             pageTotal: 0,
-            pageList: [
-                {
-                    id: 'xx',
-                    name: 'xx',
-                    picture: 'http://b-ssl.duitang.com/uploads/blog/201312/04/20131204184148_hhXUT.jpeg',
-                    description: 'xxx',
-                    solutionId: 'xxx',
-                    updatedAt: 'xx'
-                }
-            ],
+            pageList: [],
             dialog: {
                 visible: false,
                 form: this.generateFrom()
@@ -146,7 +137,7 @@ export default {
                 await deleteCase(item.id);
                 await this.getList();
             } catch (err) {
-                await alertel(err);
+                return await error(err);
             } finally {
                 ld.close();
             }
