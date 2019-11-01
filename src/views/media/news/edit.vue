@@ -5,7 +5,7 @@
                 <el-input v-model="formData.title" maxlength="20"></el-input>
             </el-form-item>
             <el-form-item label="简介" prop="description">
-                <el-input v-model="formData.description" type="textarea" :rows="2" maxlength="15"></el-input>
+                <el-input v-model="formData.description" type="textarea" :rows="2" maxlength="150"></el-input>
             </el-form-item>
             <el-form-item label="时间" prop="publishTime">
                 <el-date-picker
