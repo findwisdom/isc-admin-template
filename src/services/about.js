@@ -84,18 +84,6 @@ export async function getCareerList(pageSize, pageNumber, name) {
     return res.data;
 }
 
-export async function getCareerByName(pageSize, pageNumber, name) {
-    const res = await axios({
-        url: '/api/career/getCareerByName',
-        params: {
-            pageSize,
-            pageNumber,
-            name
-        }
-    });
-    return res.data;
-}
-
 /** 新增岗位
  *
  * @param form
@@ -152,19 +140,6 @@ export async function deleteCareer(id) {
 export async function getPatentList(pageSize, pageNumber, name, type) {
     const res = await axios({
         url: '/api/patent/getPatentList',
-        params: {
-            pageSize,
-            pageNumber,
-            name,
-            type
-        }
-    });
-    return res.data;
-}
-
-export async function getPatentByName(pageSize, pageNumber, name, type) {
-    const res = await axios({
-        url: '/api/patent/getPatentByName',
         params: {
             pageSize,
             pageNumber,

@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { getCareerList, getCareerByName, deleteCareer } from '@/services/about';
+import { getCareerList, deleteCareer } from '@/services/about';
 import TableHeader from '@/components/table/TableHeader';
 import TableFooter from '@/components/table/TableFooter';
 import TableDelete from '@/components/table/TableDelete';
@@ -72,11 +72,6 @@ export default {
         };
     },
     filters: {},
-    computed: {
-        getCareer() {
-            return this.keywords ? getCareerByName : getCareerList;
-        }
-    },
     watch: {
         pageNumber() {
             this.getList();
@@ -106,7 +101,7 @@ export default {
             let data = null;
             this.loading = true;
             try {
-                data = data = await this.getCareer(this.pageSize, this.pageNumber, this.keywords);
+                data = data = await getCareerList(this.pageSize, this.pageNumber, this.keywords);
                 this.loading = false;
             } catch (err) {
                 error(err);

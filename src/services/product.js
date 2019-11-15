@@ -19,18 +19,6 @@ export async function getProductList(pageSize, pageNumber, name) {
     return res.data;
 }
 
-export async function getProductByName(pageSize, pageNumber, name) {
-    const res = await axios({
-        url: '/api/product/getProductByName',
-        params: {
-            pageSize,
-            pageNumber,
-            name
-        }
-    });
-    return res.data;
-}
-
 /**
  * 新增产品
  * @param form

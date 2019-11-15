@@ -4,32 +4,15 @@ const url1 = '/api/memorabilia';
 const url2 = '/api/report';
 
 /**
- * 获取all大事记列表数据
- * @param pageSize
- * @param pageNumber
- * @returns {Promise<void>}
- */
-export async function getEventListAll(pageSize, pageNumber) {
-    const res = await service({
-        url: `${url1}/getMemorabiliaList`,
-        params: {
-            pageSize,
-            pageNumber
-        }
-    });
-    return res.data;
-}
-
-/**
- * 获取筛选大事记列表数据
+ * 获取大事记列表数据
  * @param pageSize
  * @param pageNumber
  * @param date
  * @returns {Promise<void>}
  */
-export async function getEventListByDate(pageSize, pageNumber, date) {
+export async function getEventList(pageSize, pageNumber, date) {
     const res = await service({
-        url: `${url1}/getMemorabiliaByDate`,
+        url: `${url1}/getMemorabiliaList`,
         params: {
             pageSize,
             pageNumber,
@@ -88,29 +71,12 @@ export async function updateEvent(form) {
  * 获取all新闻列表列表数据
  * @param pageSize
  * @param pageNumber
- * @returns {Promise<void>}
- */
-export async function getNewsListAll(pageSize, pageNumber) {
-    const res = await service({
-        url: `${url2}/getReportList`,
-        params: {
-            pageSize,
-            pageNumber
-        }
-    });
-    return res.data;
-}
-
-/**
- * 获取筛选新闻列表列表数据
- * @param pageSize
- * @param pageNumber
  * @param title
  * @returns {Promise<void>}
  */
-export async function getNewsListByTitle(pageSize, pageNumber, title) {
+export async function getNewsList(pageSize, pageNumber, title) {
     const res = await service({
-        url: `${url2}/getReportByTitle`,
+        url: `${url2}/getReportList`,
         params: {
             pageSize,
             pageNumber,

@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { getEventListAll, getEventListByDate, removeEvent } from '@/services/media';
+import { getEventList, removeEvent } from '@/services/media';
 import TableHeader from '@/components/table/TableHeader';
 import TableFooter from '@/components/table/TableFooter';
 import TableDelete from '@/components/table/TableDelete';
@@ -58,11 +58,6 @@ export default {
                 form: this.generateFrom()
             }
         };
-    },
-    computed: {
-        getEventList() {
-            return this.keywords ? getEventListByDate : getEventListAll;
-        }
     },
     watch: {
         pageNumber() {
@@ -100,7 +95,7 @@ export default {
             }
 
             try {
-                data = await this.getEventList(this.pageSize, this.pageNumber, date);
+                data = await getEventList(this.pageSize, this.pageNumber, date);
             } catch (err) {
                 error(err);
                 data = { list: [], totalSize: 0 };
