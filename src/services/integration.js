@@ -6,32 +6,14 @@ const url3 = '/api/document';
 const url4 = '/api/question';
 
 /**
- * 获取all步骤列表数据
+ * 获取步骤列表数据
  * @param pageSize
  * @param pageNumber
  * @returns {Promise<void>}
  */
-export async function getEductionListAll(pageSize, pageNumber) {
+export async function getEductionList(pageSize, pageNumber, name) {
     const res = await service({
         url: `${url2}/getStepList`,
-        params: {
-            pageSize,
-            pageNumber
-        }
-    });
-    return res.data;
-}
-
-/**
- * 获取filter步骤列表数据
- * @param pageSize
- * @param pageNumber
- * @param name
- * @returns {Promise<void>}
- */
-export async function getEductionListByName(pageSize, pageNumber, name) {
-    const res = await service({
-        url: `${url2}/getStepByName`,
         params: {
             pageSize,
             pageNumber,
@@ -87,32 +69,14 @@ export async function updateEduction(form) {
 }
 
 /**
- * 获取all文档列表数据
+ * 获取文档列表数据
  * @param pageSize
  * @param pageNumber
  * @returns {Promise<void>}
  */
-export async function getDocumentListAll(pageSize, pageNumber) {
+export async function getDocumentList(pageSize, pageNumber, name) {
     const res = await service({
         url: `${url3}/getDocumentList`,
-        params: {
-            pageSize,
-            pageNumber
-        }
-    });
-    return res.data;
-}
-
-/**
- * 获取filter文档列表数据
- * @param pageSize
- * @param pageNumber
- * @param name
- * @returns {Promise<void>}
- */
-export async function getDocumentListByName(pageSize, pageNumber, name) {
-    const res = await service({
-        url: `${url3}/getDocumentByName`,
         params: {
             pageSize,
             pageNumber,

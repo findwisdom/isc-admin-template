@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { getNewsListAll, getNewsListByTitle, removeNews } from '@/services/media';
+import { getNewsList, removeNews } from '@/services/media';
 import TableHeader from '@/components/table/TableHeader';
 import TableFooter from '@/components/table/TableFooter';
 import TableDelete from '@/components/table/TableDelete';
@@ -64,11 +64,6 @@ export default {
             pageList: []
         };
     },
-    computed: {
-        getNewsList() {
-            return this.keywords ? getNewsListByTitle : getNewsListAll;
-        }
-    },
     watch: {
         pageNumber() {
             this.getList();
@@ -86,7 +81,7 @@ export default {
             this.loading = true;
 
             try {
-                data = await this.getNewsList(this.pageSize, this.pageNumber, this.keywords);
+                data = await getNewsList(this.pageSize, this.pageNumber, this.keywords);
             } catch (err) {
                 error(err);
                 data = { list: [], totalSize: 0 };

@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import { getPatentList, deletePatent, getPatentByName } from '@/services/about';
+import { getPatentList, deletePatent } from '@/services/about';
 import TableHeader from '@/components/table/TableHeader';
 import TableFooter from '@/components/table/TableFooter';
 import TableDelete from '@/components/table/TableDelete';
@@ -111,11 +111,6 @@ export default {
     created() {
         this.getList();
     },
-    computed: {
-        getPatent() {
-            return this.keywords || this.searchType ? getPatentByName : getPatentList;
-        }
-    },
     methods: {
         generateFrom(item) {
             return fill(
@@ -136,7 +131,7 @@ export default {
             let data = null;
             this.loading = true;
             try {
-                data = await this.getPatent(this.pageSize, this.pageNumber, this.keywords, this.searchType);
+                data = await getPatentList(this.pageSize, this.pageNumber, this.keywords, this.searchType);
                 this.loading = false;
             } catch (err) {
                 error(err);

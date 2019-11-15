@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { getProductList, deleteProduct, getProductByName } from '@/services/product';
+import { getProductList, deleteProduct } from '@/services/product';
 import TableHeader from '@/components/table/TableHeader';
 import TableFooter from '@/components/table/TableFooter';
 import TableDelete from '@/components/table/TableDelete';
@@ -81,11 +81,6 @@ export default {
     },
     created() {
         this.getList();
-    },
-    computed: {
-        getProduct() {
-            return this.keywords || this.searchType ? getProductByName : getProductList;
-        }
     },
     methods: {
         generateFrom(item) {

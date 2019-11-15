@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { getDocumentListAll, getDocumentListByName, removeDocument } from '@/services/integration';
+import { getDocumentList, removeDocument } from '@/services/integration';
 import TableHeader from '@/components/table/TableHeader';
 import TableFooter from '@/components/table/TableFooter';
 import TableDelete from '@/components/table/TableDelete';
@@ -61,11 +61,6 @@ export default {
             }
         };
     },
-    computed: {
-        getDocumentList() {
-            return this.keywords ? getDocumentListByName : getDocumentListAll;
-        }
-    },
     watch: {
         pageNumber() {
             this.getList();
@@ -95,7 +90,7 @@ export default {
             this.loading = true;
 
             try {
-                data = await this.getDocumentList(this.pageSize, this.pageNumber, this.keywords);
+                data = await getDocumentList(this.pageSize, this.pageNumber, this.keywords);
             } catch (err) {
                 error(err);
                 data = { list: [], totalSize: 0 };

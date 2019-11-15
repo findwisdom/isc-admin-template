@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { getEductionListAll, getEductionListByName, removeEduction } from '@/services/integration';
+import { getEductionList, removeEduction } from '@/services/integration';
 import TableHeader from '@/components/table/TableHeader';
 import TableFooter from '@/components/table/TableFooter';
 import TableDelete from '@/components/table/TableDelete';
@@ -59,11 +59,6 @@ export default {
                 form: this.generateFrom()
             }
         };
-    },
-    computed: {
-        getEductionList() {
-            return this.keywords ? getEductionListByName : getEductionListAll;
-        }
     },
     watch: {
         pageNumber() {
@@ -94,7 +89,7 @@ export default {
             this.loading = true;
 
             try {
-                data = await this.getEductionList(this.pageSize, this.pageNumber, this.keywords);
+                data = await getEductionList(this.pageSize, this.pageNumber, this.keywords);
             } catch (err) {
                 error(err);
                 data = { list: [], totalSize: 0 };
