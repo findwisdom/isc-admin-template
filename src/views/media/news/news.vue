@@ -19,6 +19,11 @@
             <el-table-column prop="description" label="简介"></el-table-column>
             <el-table-column prop="order" label="排序"></el-table-column>
             <el-table-column prop="publishTime" label="发布时间"></el-table-column>
+            <el-table-column prop="hot" label="是否热点新闻">
+                <template slot-scope="scope">
+                    <svg-icon name="hot" v-show="scope.row.hot"></svg-icon>
+                </template>
+            </el-table-column>
             <el-table-column label="操作" align="center" width="100px">
                 <template slot-scope="scope">
                     <div>
@@ -88,7 +93,6 @@ export default {
             } finally {
                 this.loading = false;
             }
-
             this.pageList = data.list;
             this.pageTotal = data.totalSize;
         },

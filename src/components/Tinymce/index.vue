@@ -3,7 +3,7 @@
         <textarea :id="tinymceId" class="tinymce-textarea" />
         <div class="editor-custom-btn-container">
             <!-- TODO:action -->
-            <AppUpload class="editor-upload-btn" action="https://httpbin.org/post" @success="imageSuccessCBK">
+            <AppUpload class="editor-upload-btn" :action="uploadUrl" @success="imageSuccessCBK">
                 <el-button icon="el-icon-upload" size="mini" type="primary" @click="dialogVisible = true">
                     添加图片
                 </el-button>
@@ -14,6 +14,7 @@
 
 <script>
 import AppUpload from '@/components/app/AppUpload';
+import { uploadUrl } from '@/services/upload';
 import plugins from './plugins';
 import toolbar from './toolbar';
 import load from './dynamicLoadScript';
@@ -58,6 +59,7 @@ export default {
     },
     data() {
         return {
+            uploadUrl,
             hasChange: false,
             hasInit: false,
             tinymceId: this.id,
@@ -168,7 +170,7 @@ export default {
         },
         imageSuccessCBK(data) {
             // TODO:根据接口返回值切换src，url/data:image
-            window.tinymce.get(this.tinymceId).insertContent(`<img class="wscnph" src="${data.files.file}" >`);
+            window.tinymce.get(this.tinymceId).insertContent(`<img class="wscnph" src="${data.url}" >`);
         }
     }
 };

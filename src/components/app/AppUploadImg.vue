@@ -1,7 +1,7 @@
 <template>
     <div class="wrap">
         <span class="wrap__icon-space" @click="handlePicturePreview">
-            <svg-icon name="icon-add"></svg-icon>
+            <svg-icon name="icon-add" v-show="!url"></svg-icon>
         </span>
         <img v-show="url" :src="url" alt="img" class="wrap__img" />
         <!--        <template v-show="detail">-->
@@ -50,6 +50,7 @@ export default {
 
 <style scoped lang="scss">
 .wrap {
+    padding: 5px;
     display: inline-block;
     position: relative;
     background-color: #fbfdff;

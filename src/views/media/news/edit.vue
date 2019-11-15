@@ -1,11 +1,11 @@
 <template>
     <div v-loading="ld.getLoading">
-        <el-form ref="form" :model="formData" :rules="rules" size="mini" class="from" label-width="80px">
+        <el-form ref="form" :model="formData" :rules="rules" size="mini" class="from" label-width="120px">
             <el-form-item label="标题" prop="title">
                 <el-input v-model="formData.title" maxlength="20"></el-input>
             </el-form-item>
             <el-form-item label="简介" prop="description">
-                <el-input v-model="formData.description" type="textarea" :rows="2" maxlength="15"></el-input>
+                <el-input v-model="formData.description" type="textarea" :rows="2" maxlength="150"></el-input>
             </el-form-item>
             <el-form-item label="时间" prop="publishTime">
                 <el-date-picker
@@ -29,6 +29,26 @@
                     <app-upload-img v-show="!formData.picture" />
                 </app-upload>
             </el-form-item>
+            <el-form-item label="热点banner" prop="picture" ref="upload" class="uploadPicture" style="margin-top: 8px">
+                <app-upload
+                    :action="uploadUrl"
+                    @error="uploadError"
+                    @success="imageSuccessBanner"
+                    style="display: inline-block"
+                >
+                    <app-upload-img v-show="formData.banner" :url="formData.banner" />
+                    <app-upload-img v-show="!formData.banner" />
+                </app-upload>
+            </el-form-item>
+            <el-form-item label="是否热点新闻">
+                <el-switch
+                    v-model="formData.hot"
+                    active-color="#13ce66"
+                    inactive-color="#000000"
+                    :active-value="active"
+                    :inactive-value="inactive"
+                ></el-switch>
+            </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="onSubmit('form')" :loading="ld.submitLoading">提交</el-button>
             </el-form-item>
@@ -43,6 +63,7 @@ import Tinymce from '@/components/Tinymce';
 import AppUpload from '@/components/app/AppUpload';
 import AppUploadImg from '@/components/app/AppUploadImg';
 import validation from '@/validations/news';
+import { uploadUrl } from '@/services/upload';
 import { getNewsContent, createNews, updateNews } from '@/services/media';
 import { error } from '@/utils/message';
 import { success } from '../../../utils/message';
@@ -52,6 +73,7 @@ export default {
     components: { Tinymce, AppUpload, AppUploadImg },
     data() {
         return {
+            uploadUrl,
             id: this.$route.query.id,
             ld: {
                 getLoading: false,
@@ -59,14 +81,17 @@ export default {
             },
             formData: {
                 title: '',
+                banner: '',
                 description: '',
                 order: '',
                 picture: '',
+                hot: null,
                 publishTime: '',
                 content: ''
             },
-            previewUrl: '',
-            rules: validation(this)
+            rules: validation(this),
+            active: true,
+            inactive: false
         };
     },
     computed: {
@@ -86,7 +111,6 @@ export default {
 
             try {
                 data = await getNewsContent(this.id);
-                this.previewUrl = data.picture;
             } catch (err) {
                 error(err);
                 data = {};
@@ -101,7 +125,12 @@ export default {
             const url = data.url;
             this.$refs.upload.clearValidate();
             this.formData.picture = url;
-            this.previewUrl = url;
+        },
+
+        imageSuccessBanner(data) {
+            const url = data.url;
+            this.$refs.upload.clearValidate();
+            this.formData.banner = url;
         },
 
         uploadError(err) {

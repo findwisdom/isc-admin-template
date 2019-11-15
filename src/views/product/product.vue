@@ -63,17 +63,7 @@ export default {
             pageNumber: 1,
             pageSize: 10,
             pageTotal: 0,
-            pageList: [
-                {
-                    id: 'xx',
-                    name: 'xx',
-                    banner: 'http://b-ssl.duitang.com/uploads/blog/201312/04/20131204184148_hhXUT.jpeg',
-                    picture: 'http://b-ssl.duitang.com/uploads/blog/201312/04/20131204184148_hhXUT.jpeg',
-                    description: 'xxx',
-                    order: null,
-                    productTypeId: null
-                }
-            ],
+            pageList: [],
             dialog: {
                 visible: false,
                 form: this.generateFrom()
