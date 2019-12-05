@@ -34,7 +34,6 @@ module.exports = (api, options, rootOptions) => {
             "eslint": "^6.1.0",
             "eslint-plugin-prettier": "^3.1.0",
             "eslint-plugin-vue": "^5.2.3",
-            "image-webpack-loader": "^6.0.0",
             "lint-staged": "^9.2.5",
             "node-sass": "^4.11.0",
             "prettier": "^1.18.2",

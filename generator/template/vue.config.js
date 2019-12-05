@@ -21,12 +21,6 @@ module.exports = {
     chainWebpack: config => {
         // 开启图片压缩;
         config.module
-            .rule('images')
-            .test(/\.(png|jpe?g|gif)(\?.*)?$/)
-            .use('image-webpack-loader')
-            .loader('image-webpack-loader')
-            .options({ bypassOnDebug: true });
-        config.module
             .rule('svg-sprite')
             .use('svgo-loader')
             .loader('svgo-loader');
