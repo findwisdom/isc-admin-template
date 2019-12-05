@@ -8,7 +8,7 @@ module.exports = [
     {
         name: 'appName',
         type: 'input',
-        message: '请输入构建项目名称',
+        message: '请输入构建项目名称:',
         default: '指令集操作系统'
     }
 ];
