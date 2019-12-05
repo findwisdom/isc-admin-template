@@ -9,6 +9,7 @@ module.exports = (api, options, rootOptions) => {
             "lint": "vue-cli-service lint"
         },
     })
+
     api.extendPackage({
         dependencies: {
             "axios": "^0.19.0",
@@ -47,11 +48,24 @@ module.exports = (api, options, rootOptions) => {
             "webpack-bundle-analyzer": "^3.5.2"
         },
     })
+    api.extendPackage({
+        "gitHooks": {
+            "pre-commit": "lint-staged"
+        },
+        "lint-staged": {
+            "*.{js,vue}": [
+                "vue-cli-service lint",
+                "prettier --write",
+                "git add"
+            ]
+        }
+    })
+
     // 删除 vue-cli3 默认目录
     api.render(files => {
         Object.keys(files)
             .filter(path => path.startsWith('src/') || path.startsWith('public/'))
             .forEach(path => delete files[path]);
     });
-    api.render('./template');
+    // api.render('./template');
 }
