@@ -30,7 +30,6 @@ module.exports = (api, options, rootOptions) => {
             "babel-eslint": "^10.0.2",
             "babel-plugin-component": "^1.1.1",
             "babel-plugin-transform-remove-console": "^6.9.4",
-            "compression-webpack-plugin": "^3.0.0",
             "cross-env": "^6.0.3",
             "eslint": "^6.1.0",
             "eslint-plugin-prettier": "^3.1.0",
