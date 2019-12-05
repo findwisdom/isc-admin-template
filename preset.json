@@ -3,7 +3,5 @@
   "packageManager": "npm",
   "useTaobaoRegistry": true,
   "cssPreprocessor": "sass",
-  "plugins": {
-    "@vue/cli-plugin-babel": {}
-  }
+  "plugins": {}
 }

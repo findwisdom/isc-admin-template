@@ -6,23 +6,9 @@
  */
 module.exports = [
     {
-        name: 'application',
-        type: 'list',
-        message: 'Choose whether your app is a PC or a mobile(default:mobile)',
-        choices: [
-            {
-                name: 'PC',
-                value: 'pc'
-            },
-            {
-                name: 'mobile',
-                value: 'mobile'
-            },
-            {
-                name: 'H5离线包',
-                value: 'offline'
-            }
-        ],
-        default: 'mobile'
+        name: 'appName',
+        type: 'input',
+        message: '请输入构建项目名称',
+        default: '指令集操作系统'
     }
 ];
