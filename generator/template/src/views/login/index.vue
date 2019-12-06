@@ -44,7 +44,7 @@
 
 <script>
 import { success, error } from '@/utils/message';
-import { login } from '@/services/user';
+// import { login } from '@/services/user';
 export default {
     name: 'index',
     data() {
@@ -69,7 +69,13 @@ export default {
                 if (valid) {
                     try {
                         this.loading = true;
-                        let data = await login(this.loginForm.username, this.loginForm.password);
+                        // let data = await login(this.loginForm.username, this.loginForm.password);
+                        let data = {
+                            name: 'admin',
+                            admin: 'true',
+                            email: '826206931@qq.com',
+                            roles: ['admin']
+                        };
                         let userInfo = {
                             login: true,
                             admin: data.admin,

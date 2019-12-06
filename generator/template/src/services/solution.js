@@ -1,4 +1,22 @@
 import axios from '@/services/axios';
+import Mock, { Random } from 'mockjs';
+Mock.mock(/\/api\/cases\/getCasesList/, 'get', {
+    'list|8': [
+        {
+            'id|+1': 1,
+            name: '@cname',
+            'order|+1': 0,
+            picture: Random.image('200x100', '#4A7BF7', '@cname'),
+            description: '@sentence(3, 5)',
+            'solutionId|1-3': '1',
+            solution: {
+                name: '@csentence(4)'
+            }
+        }
+    ],
+    totalSize: 8
+});
+
 
 /** 获取案例列表
  *

@@ -15,6 +15,7 @@ module.exports = (api, options, rootOptions) => {
             "axios": "^0.19.0",
             "core-js": "^2.6.9",
             "element-ui": "^2.4.8",
+            "mockjs": "^1.1.0",
             "moment": "^2.24.0",
             "normalize.css": "^8.0.1",
             "nprogress": "0.2.0",
@@ -59,11 +60,14 @@ module.exports = (api, options, rootOptions) => {
         }
     })
 
+
     // 删除 vue-cli3 默认目录
     api.render(files => {
         Object.keys(files)
             .filter(path => path.startsWith('src/') || path.startsWith('public/'))
             .forEach(path => delete files[path]);
     });
-    // api.render('./template');
+    api.render('./template');
+
+    // writeFileTree 函数不写文件直接退出，这样 vue-cli3 在写 README.md 时会直接跳过
 }

@@ -1,5 +1,19 @@
 import Vue from 'vue';
 import axios from '@/services/axios';
+import Mock, { Random } from 'mockjs';
+
+Mock.mock(/\/api\/user\/getUserList/, 'get', {
+    'list|8': [
+        {
+            'id|+1': 1,
+            name: '@cname',
+            password: Random.string('lower', 5),
+            email: '@email'
+        }
+    ],
+    totalSize: 8
+});
+
 
 /**
  * 获取用户列表数据

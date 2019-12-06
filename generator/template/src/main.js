@@ -14,7 +14,7 @@ import '@/scss/dialog-form.scss';
 import '@/scss/table-actions.scss';
 import '@/scss/table-operations.scss';
 import '@/services/axios';
-import '@/permission.js'; // permission control
+import '@/permission.js'; // 权限控制
 
 Vue.use(elements);
 Vue.component('svg-icon', SvgIcon);

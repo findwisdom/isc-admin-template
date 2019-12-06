@@ -1,5 +1,33 @@
 import axios from '@/services/axios';
 
+import Mock, { Random } from 'mockjs';
+
+Mock.mock(/\/api\/partner\/getPartnerList/, 'get', {
+    'list|8': [
+        {
+            'id|+1': 1,
+            name: '@cname',
+            'order|+1': 0,
+            picture: Random.image('200x100', '#4A7BF7', '@cname')
+        }
+    ],
+    totalSize: 8
+});
+
+Mock.mock(/\/api\/career\/getCareerList/, 'get', {
+    'list|8': [
+        {
+            'id|+1': 1,
+            name: '@cname',
+            city: '@city',
+            duty: '@csentence(4)',
+            qualification: '@csentence(4)',
+            publishTime: '@datetime("yyyy-MM-dd")'
+        }
+    ],
+    totalSize: 8
+});
+
 /** 获取合作伙伴列表
  *
  * @param pageSize
@@ -130,133 +158,3 @@ export async function deleteCareer(id) {
     return res.data;
 }
 
-/** 获取专利名称列表
- *
- * @param pageSize
- * @param pageNumber
- * @param name
- * @returns {Promise<*>}
- */
-export async function getPatentList(pageSize, pageNumber, name, type) {
-    const res = await axios({
-        url: '/api/patent/getPatentList',
-        params: {
-            pageSize,
-            pageNumber,
-            name,
-            type
-        }
-    });
-    return res.data;
-}
-
-/** 新增专利名称
- *
- * @param form
- * @returns {Promise<*>}
- */
-
-export async function createPatent(form) {
-    const res = await axios({
-        url: '/api/patent/addPatent',
-        method: 'post',
-        data: form
-    });
-    return res.data;
-}
-
-/**
- * 更新专利名称
- * @param form
- * @returns {Promise<*>}
- */
-
-export async function updatePatent(form) {
-    const res = await axios({
-        url: '/api/patent/updatePatent',
-        method: 'put',
-        data: form
-    });
-    return res.data;
-}
-
-/** 删除专利名称
- *
- * @param id
- * @returns {Promise<*>}
- */
-export async function deletePatent(id) {
-    const res = await axios({
-        url: `/api/patent/deletePatent`,
-        method: 'delete',
-        params: {
-            patentId: id
-        }
-    });
-    return res.data;
-}
-
-/** 获取公司列表
- *
- * @param pageSize
- * @param pageNumber
- * @param name
- * @returns {Promise<*>}
- */
-export async function getCompanyList(pageSize, pageNumber, name) {
-    const res = await axios({
-        url: '/api/company/getCompanyList',
-        params: {
-            pageSize,
-            pageNumber,
-            name
-        }
-    });
-    return res.data;
-}
-
-/** 添加公司
- *
- * @param form
- * @returns {Promise<*>}
- */
-
-export async function createCompany(form) {
-    const res = await axios({
-        url: '/api/company/addCompany',
-        method: 'post',
-        data: form
-    });
-    return res.data;
-}
-
-/**
- * 更新公司
- * @param form
- * @returns {Promise<*>}
- */
-
-export async function updateCompany(form) {
-    const res = await axios({
-        url: '/api/company/updateCompany',
-        method: 'put',
-        data: form
-    });
-    return res.data;
-}
-
-/** 删除专利名称
- *
- * @param id
- * @returns {Promise<*>}
- */
-export async function deleteCompany(id) {
-    const res = await axios({
-        url: `/api/company/deleteCompany`,
-        method: 'delete',
-        params: {
-            companyId: id
-        }
-    });
-    return res.data;
-}

@@ -25,7 +25,6 @@ module.exports = {
             .use('svgo-loader')
             .loader('svgo-loader');
         config.resolve.alias.set('@', resolve('src'));
-
         // 打包分析
         config.when(process.env.IS_ANALYZ, config => {
             config.plugin('webpack-report').use(BundleAnalyzerPlugin, [

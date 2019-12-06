@@ -2,6 +2,5 @@
   "useConfigFiles": true,
   "packageManager": "npm",
   "useTaobaoRegistry": true,
-  "cssPreprocessor": "sass",
   "plugins": {}
 }
